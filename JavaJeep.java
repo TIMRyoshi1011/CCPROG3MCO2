@@ -22,11 +22,19 @@ public class JavaJeep{
 	}
 
 	public void printTrucksInfo(){
-
+		for (CoffeeTruck truck : TRUCKS) {
+	            truck.printTruckInfo();
+	        }
 	}
 
 	public boolean createTruck(String location){
-
+		if (TRUCKS.size() < 10) {
+	            TRUCKS.add(new CoffeeTruck("DefaultLocation"));
+	            noOfTrucks++;
+	            return true;
+	        }
+		
+	        return false;
 	}
 
 	public static void main(String args[]){
