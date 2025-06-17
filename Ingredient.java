@@ -6,7 +6,8 @@
  * @author Coby Luna & Marcus Ramos
  */
 public class Ingredient{
-	/** The ingredient type of this specific ingredient instance. */
+	/** The ingredient type of this specific ingredient instance. 
+	 * In the StorageBin class, if the bin is empty the type is defaulted to "EMPTY"*/
 	private String ingredientType;
 	/** In the StorageBin class, this represents the amount of ingredients in the storage bin.
  	 * In the Transaction class, this represents the amount of ingredients in the drink. */
