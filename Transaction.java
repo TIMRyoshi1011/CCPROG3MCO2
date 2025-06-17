@@ -22,8 +22,11 @@ public class Transaction{
      	 * @param type The drink type
        	 * @param size The size of the drink. 
 	 */
-	public Transactions(String type, char size){
-
+	public Transaction(String type, char size){
+		this.drinkType = type;
+	        this.drinkSize = size;
+	        this.ingredients = new ArrayList<>();
+	        //this.drinkCost = insert operations here;
 	}
 
 	/**
@@ -31,13 +34,13 @@ public class Transaction{
    	 * @return Price of the transaction
      	 */
 	public float getPrice(){
-		return 0;
+		return drinkCost;
 	}
 
 	/**
  	 * Prints all transaction info.
    	 */
 	public void printTransaction(){
-		
+		System.out.println("Drink: " + drinkType + ", Size: " + drinkSize + ", Cost: " + drinkCost);
 	}
 }
