@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Represents a coffee truck.
@@ -45,22 +46,39 @@ public class CoffeeTruck(){
 
 	/**
  	 * Set the type of the coffee truck. FINAL, only called once.
-   	 * @param type The type of the truck in character form. S for special, R for regular.
+   	 * @param type The type of the truck in single character string form. P for JJ+, R for regular.
      	 * @return True if successful, false otherwise.
        	 */
-	public boolean setType(char type) {
-		TRUCK_TYPE = type;
-		return true;
+	public boolean setType(String type) {
+		/*if (type.equals("P")){
+			this.TRUCK_TYPE = 'P';
+			return true;*/
+		else if (type.equals("R")){
+			this.TRUCK_TYPE = 'R';
+			return true;
+		return false;
     	}
 
 	/**
  	 * Sets the location of the truck.
+   	 * Additionally, checks if inputted location is in-use by other trucks. (Results in a fail)
    	 * @param location The new location of the truck.
+     	 * @param trucks The arraylist of trucks, to check their location.
      	 * @return True if successful, false otherwise. 
        	 */
-	public boolean setLocation(String location) {
-		this.truckLocation = location;
-		return true;
+	public boolean setLocation(String location, ArrayList<CoffeeTruck> trucks) {
+		Iterator<CoffeeTruck> it = trucks.iterator();
+		boolean avail = true; // true = location is available
+
+		while (it.hasNext() && avail){
+			if (it.next().truckLocation.equals(location))
+				avail = false; // false = location is not available
+		}
+
+		if (avail){
+			this.truckLocation = location;}
+			
+		return avail;
 	}
 
 	/**
