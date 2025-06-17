@@ -49,13 +49,54 @@ public class JavaJeep{
    	 * @return True if truck is successfully created, false otherwise.
      	 */
 	public boolean createTruck(){
-		if (TRUCKS.size() < 10) {
-	            TRUCKS.add(new CoffeeTruck("DefaultLocation"));
-	            noOfTrucks++;
-	            return true;
-	        }
-		
-	        return false;
+		String choice;
+		boolean success;
+		CoffeeTruck tempTruck = new CoffeeTruck();
+		Scanner scan = new Scanner(System.in);
+
+		do {	// Setting the truck type.
+			/* Clear screen ansi. Should probs turn to method. */
+			System.out.print("\033[H\033[2J");
+    			System.out.flush();
+			
+			System.out.println("Create a brand new coffee truck!");
+			System.out.println("What kind of coffee truck would you like to make?");
+			System.out.println("");
+			System.out.println("P - JavaJeep+ (Not available yet!!!!)");
+			System.out.println("R - JavaJeep Regular");
+			System.out.println("");
+			System.out.println(">> ");
+			choice = scan.nextLine();
+
+			success = tempTruck.setType(choice);
+			if (!success){
+				System.out.println("Invalid input!);
+				scan.nextLine();
+			}
+		} while (!success);
+
+		do{	// Sets location
+			/* Clear screen ansi. Should probs turn to method. */
+			System.out.print("\033[H\033[2J");
+    			System.out.flush();
+
+			System.out.println("What location do you want your truck to stay in?");
+			System.out.println("To keep business efficient, we're limiting it to one truck per city!");
+			System.out.println("");
+			System.out.println(">> ");
+			choice = scan.nextLine();
+
+			success = tempTruck.setLocation(choice, TRUCKS);
+			if (!success){
+				System.out.println("There's already a truck here! Pick somewhere else!");
+				scan.nextLine();
+			}
+		} while (!success);
+
+		/* TO-DO:
+  			- Assign all storage bins
+     			- Edit prices
+		*/
 	}
 
 	/**
@@ -67,34 +108,38 @@ public class JavaJeep{
 	
 	        System.out.println("\nWelcome to JavaJeeps!\n");
 	        System.out.println("Select an Option:");
-	        System.out.println("1 - Create Regular Coffee Truck (JavaJeep)");
-	        System.out.println("2 - Create Special Coffee Truck (JavaJeep+)");
-	        System.out.println("3 - Exit");
-	        System.out.print("Enter Option: ");
-	
-	        do {
-	            choice = scan.nextInt();
-	
-	            if (choice < 1 || choice > 3)
-	                System.out.print("Invalid Option, Please Try Again: ");
-	
-	        } while (choice < 1 || choice > 3);
+	        System.out.println("1 - Create a coffee truck");
+	        System.out.println("2 - Simulate a coffee truck");
+	        System.out.println("3 - Dashboard");
+		System.out.println("4 - Exit");
+		System.out.println("");
+	        System.out.print(">> ");
 
-	        // do {
+		choice = scan.nextInt();
+		
+	        do {
 	            switch(choice) {
 	                case 1: 
-	                    System.out.println("Regular Coffee Truck (JavaJeep)"); 
+	                    System.out.println("Creating coffee truck!"); 
 	                    // insert codes here
 	                    break;
 	
 	                case 2: 
-	                    System.out.println("Special Coffee Truck (JavaJeep+)"); 
+	                    System.out.println("Choose a truck to simulate!"); 
 	                    break;   
+
+			case 3: 
+			    System.out.println("Dashboard");
+			    break;
+
+			case 4:
+			    System.out.println("Thank you for using JavaJeeps!");
+			    break;
 	
 	                default:
-	                    System.out.println("Thank You for using JavaJeeps!");
+	                    System.out.println("Invalid option, please try again!");
 	           }
-	        // } while (choice != 3);
+	        } while (choice != 4);
 	
 	        scan.close();
 	        System.exit(0);
