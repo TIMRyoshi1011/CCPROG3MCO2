@@ -1,19 +1,33 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Main class for the JavaJeep program. Contains the main functions.
+ * @author Coby Luna & Marcus Ramos
+ */
 public class JavaJeep{
+	/** Singleton instance of JavaJeep. */
 	private static JavaJeep javaJeepInstance = new JavaJeep();
+	/** ArrayList containing all trucks. */
 	private final ArrayList<CoffeeTrucks> TRUCKS;
-	private final ArrayList<Location> LOCATIONS;
+	/** The number of trucks made. <--- I dont think this is really that useful anymore lol but keeping it in for now  */
 	private int noOfTrucks;
+	/** static variable for the combined amount of sales. */
 	private static float combinedSales;
 
+	/**
+ 	 * Constructor for JavaJeep. Will only be called once, initializes all variables.
+   	 */
 	private JavaJeep(){
 		TRUCKS = new ArrayList<>();
 		noOfTrucks = 0;
 		combinedSales = 0;
 	}
 
+	/**
+ 	 * Method to get the singleton instance of JavaJeep.
+   	 * @return singleton instance of JavaJeep.
+     	 */
 	public static JavaJeep getInstance(){
 		if (javaJeepInstance == null) {
             javaJeepInstance = new JavaJeep();  
@@ -21,13 +35,20 @@ public class JavaJeep{
 		return javaJeepInstance;
 	}
 
+	/**
+  	 * Prints the info of all trucks.
+    	 */
 	public void printTrucksInfo(){
 		for (CoffeeTruck truck : TRUCKS) {
 	            truck.printTruckInfo();
 	        }
 	}
 
-	public boolean createTruck(String location){
+	/**
+ 	 * Creates a new truck.
+   	 * @return True if truck is successfully created, false otherwise.
+     	 */
+	public boolean createTruck(){
 		if (TRUCKS.size() < 10) {
 	            TRUCKS.add(new CoffeeTruck("DefaultLocation"));
 	            noOfTrucks++;
@@ -37,6 +58,9 @@ public class JavaJeep{
 	        return false;
 	}
 
+	/**
+ 	 * Main method for the full JavaJeep program.
+   	 */
 	public static void main(String args[]){
 		int choice;
 	        Scanner scan = new Scanner(System.in);
