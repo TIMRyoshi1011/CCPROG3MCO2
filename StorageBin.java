@@ -13,7 +13,7 @@ public class StorageBin{
 	 * Following this, all storage bins are automatically initiated empty.
   	 */
 	public StorageBin(){
-	
+		contents = null;
 	}
 
 	/**
@@ -23,7 +23,8 @@ public class StorageBin{
        	 * @return true if bin's contents was successfully set. False otherwise.
 	 */
 	public boolean setBin(String type, float amt){
-
+		contents = new Ingredient(type, amt);
+        	return true;
 	}
 
 	/**
@@ -32,14 +33,19 @@ public class StorageBin{
      	 * @return True if successfully replenished, false otherwise. Fails either because bin is empty or the max capacity is reached.
        	 */
 	public boolean replenishBin(float amt){
-
+		if (contents != null) {
+	            contents = new Ingredient(contents.getType(), contents.getAmt() + amt);
+	            return true;
+	        }
+		
+	        return false;
 	}
 
 	/**
  	 * This removes all contents of the bin and makes it empty.
    	 */
 	public void emptyBin(){
-
+		contents = null;
 	}
 
 	/**
@@ -49,7 +55,12 @@ public class StorageBin{
        	 * @param amt The amount to be decreased from the bin.
 	 */
 	public void lessenContents(float amt){
-	
+		if (contents != null && contents.getAmt() >= amount) {
+	            contents = new Ingredient(contents.getType(), contents.getAmt() - amount);
+	            return true;
+	        }
+		
+	        return false;
 	}
 
 	/**
@@ -57,6 +68,12 @@ public class StorageBin{
    	 * This includes the amount of items in the bin and the type of items in the bin.
      	 */
 	public void printBinInfo(){
-
+		if (contents != null) {
+	            System.out.println("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
+	        } 
+		
+		else {
+	            System.out.println("Bin is empty.");
+	        }
 	}
 }
