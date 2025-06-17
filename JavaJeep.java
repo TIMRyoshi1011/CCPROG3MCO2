@@ -9,6 +9,7 @@ public class JavaJeep{
 	private static float combinedSales;
 
 	private JavaJeep(){
+		TRUCKS = new ArrayList<>();
 		noOfTrucks = 0;
 		combinedSales = 0;
 	}
