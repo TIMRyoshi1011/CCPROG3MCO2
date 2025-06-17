@@ -33,7 +33,8 @@ public class Ingredient{
    	 * @param amt The amount of the ingredient.
  	 */
 	public Ingredient(String type, float amt){
-
+		this.ingredientType = type;
+        	this.ingredientAmt = amt;
 	}
 
 	/** 
@@ -42,7 +43,31 @@ public class Ingredient{
      	 * @param price The new price
 	 */
 	public void setPrice(String type, float price){
+		switch (type.toLowerCase()) {
+	            case "small": 
+			smallCupPrice = price; 
+			break;
+	
+	            case "medium": 
+			mediumCupPrice = price; 
+			break;
 
+	            case "large": 
+			largeCupPrice = price; 
+			break;
+	
+	            case "coffee": 
+			coffeePrice = price; 
+			break;
+	
+	            case "milk": 
+			milkPrice = price; 
+			break;
+					
+	            case "water": 
+			waterPrice = price; 
+			break;
+	        }
 	}
 		
 	/** 
@@ -50,7 +75,7 @@ public class Ingredient{
    	 * @return The type of the ingredient
      	 */
 	public String getType(){
-		return "blah";
+		return ingredientType;
 	}
 
 	/** 
@@ -58,7 +83,7 @@ public class Ingredient{
    	 * @return The amount of ingredient in the instance.
      	 */
 	public float getAmt(){
-		return 0;
+		return ingredientAmt;
 	}
 
 	/**
@@ -67,6 +92,27 @@ public class Ingredient{
     	 * @return The price of the ingredient.
       	 */
 	public float getPrice(String type){
-		return 0;
+		switch (type.toLowerCase()) {
+		    case "small": 
+			return smallCupPrice;
+	
+		    case "medium": 
+			return mediumCupPrice;
+	
+		    case "large": 
+			return largeCupPrice;
+	
+		    case "coffee": 
+			return coffeePrice;
+	
+		    case "milk": 
+			return milkPrice;
+	
+		    case "water": 
+			return waterPrice;
+	
+		    default: 
+			return 0;
+	        }
 	}
 }
