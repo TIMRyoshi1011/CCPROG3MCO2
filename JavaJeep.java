@@ -219,6 +219,9 @@ public class JavaJeep{
 		System.out.flush();
 
 		System.out.println("Congratulations! Your truck has successfully been created.");
+		System.out.println();
+		System.out.println("Below are the base information regarding the new truck:");
+		tempTruck.printBaseInfo();
 		TRUCKS.add(tempTruck);
 		scan.nextLine();
 	}
