@@ -42,7 +42,7 @@ public class Ingredient{
    	 * @param type The ingredient type that will have a new price.
      	 * @param price The new price
 	 */
-	public void setPrice(String type, float price){
+	public static void setPrice(String type, float price){
 		switch (type.toLowerCase()) {
 	            case "scup": 
 			smallCupPrice = price; 
@@ -91,7 +91,7 @@ public class Ingredient{
   	 * @param type The ingredient who's price will be returned.
     	 * @return The price of the ingredient.
       	 */
-	public float getPrice(String type){
+	public static float getPrice(String type){
 		switch (type.toLowerCase()) {
 		    case "scup": 
 			return smallCupPrice;
