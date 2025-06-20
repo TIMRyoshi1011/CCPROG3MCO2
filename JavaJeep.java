@@ -152,7 +152,7 @@ public class JavaJeep{
 
 				try{
 					floatChoice = Float.parseFloat(choice2);
-					inptCheck = tempTruck.fillStorageBin(intChoice, choice, choice2);
+					inptCheck = tempTruck.fillStorageBin(intChoice, choice, floatChoice);
 					if (inptCheck){
 						System.out.println("Success!");
 						inptCheck = false;
@@ -170,9 +170,57 @@ public class JavaJeep{
 			
 		} while(!end);
 		
-		/* TO-DO:
-     			- Edit prices
-		*/
+		do { // edit prices
+			/* Clear screen ansi. Should probs turn to method. */
+			System.out.print("\033[H\033[2J");
+			System.out.flush();
+			
+			System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.");
+			System.out.println("Below are the current prices for each ingredient:");
+			System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
+			System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
+			System.out.printf("1fl of water: %.2f\n", Ingredient.getPrice("water"));
+			System.out.printf("Small cup base price: %.2f\n", Ingredient.getPrice("scup"));
+			System.out.printf("Medium cup base price: %.2f\n", Ingredient.getPrice("mcup"));
+			System.out.printf("Large cup base price: %.2f\n", Ingredient.getPrice("lcup"));
+			System.out.println();
+
+			System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','coffee','scup','mcup','lcup']. If you'd like to exit, enter END.");
+			System.out.print(">> ");
+			choice = scan.nextLine();
+			System.out.println();
+
+			if (choice.equals("END")) end = true;
+
+			else if (choice.equals("milk") || choice.equals("water") || choice.equals("coffee") ||
+				 choice.equals("scup") || choice.equals("mcup") || choice.equals("lcup")) {
+				System.out.println("Enter the new price: (THIS IS EFFECTIVE FOR ALL TRUCKS)");
+				System.out.print(">> ");
+				choice2 = scan.nextLine();
+				System.out.println();
+
+				try{
+					floatChoice = Float.parseFloat(choice2);
+					Ingredient.setPrice(choice, floatchoice);
+					System.out.println("Successfully changed!");
+					scan.nextLine();
+					
+				} catch (NumberFormatException e){
+					System.out.println("Not a valid input!");
+					scan.nextLine();
+				}
+			}
+
+			else {System.out.println("Not a valid input!"); scan.nextLine();}
+		} while (!end);
+
+		/* Clear screen ansi. Should probs turn to method. */
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+
+		System.out.println("Congratulations! Your truck has successfully been created.");
+		TRUCKS.add(tempTruck);
+		scan.nextLine();
 	}
 
 	/**
