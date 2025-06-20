@@ -23,8 +23,20 @@ public class StorageBin{
        	 * @return true if bin's contents was successfully set. False otherwise.
 	 */
 	public boolean setBin(String type, float amt){
-		contents = new Ingredient(type, amt);
-        	return true;
+		if (amt < 0): return false
+
+		switch(type){
+			case "water":
+			case "milk":
+			case "coffee":
+			case "scup":
+			case "mcup":
+			case "lcup":
+				contents = new Ingredient(type, amt);
+				return true;
+		}
+			
+        	return false;
 	}
 
 	/**
