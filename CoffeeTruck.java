@@ -36,9 +36,9 @@ public class CoffeeTruck(){
  	 * Fills a storage bin with new items. 
    	 * @param storageBinIndx The index of the storage bin to be changed in the storageBins array. 0 if bin #1, and so on.
      	 */
-	public boolean fillStorageBin(int storageBinIndx){
+	public boolean fillStorageBin(int storageBinIndx, String type, float amt){
 		if (index >= 0 && index < STORAGEBINS.size()) {
-	            return STORAGEBINS.get(storageBinIndx).setBin("coffee", 100);
+	            return STORAGEBINS.get(storageBinIndx).setBin(type, amt);
 	        }
 	
 	        return false;
