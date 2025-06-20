@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Integer;
+import java.util.Float;
+import java.util.Iterator;
 
 /**
  * Main class for the JavaJeep program. Contains the main functions.
@@ -49,8 +52,10 @@ public class JavaJeep{
    	 * @return True if truck is successfully created, false otherwise.
      	 */
 	public boolean createTruck(){
-		String choice;
-		boolean success;
+		String choice, choice2;
+		int intChoice;
+		float floatChoice;
+		boolean success, end, inptCheck;
 		CoffeeTruck tempTruck = new CoffeeTruck();
 		Scanner scan = new Scanner(System.in);
 
@@ -92,9 +97,80 @@ public class JavaJeep{
 				scan.nextLine();
 			}
 		} while (!success);
+		
+		do { // Assigning storage bins
+			/* Clear screen ansi. Should probs turn to method. */
+			System.out.print("\033[H\033[2J");
+    			System.out.flush();
 
+			it = tempTruck.getStorageBins();
+			System.out.println("Here are the current contents of your storage bins:");
+
+			for (int i = 0; i < 8; i++){
+				System.out.printf("BIN #%d... ", (i+1));
+				tempTruck.getStorageBin(i).printBinInfo();
+				System.out.print("\n");
+			}
+
+			System.out.println();
+			System.out.println("Select a bin to edit, enter END to exit.");
+			System.out.print(">> ");
+			choice = scan.nextLine();
+			System.out.println();
+
+			inptCheck = true; // checking input
+			if (choice.equals("END")): end = true;
+			else{
+				try {
+					intChoice = Integer.parseInt(choice);
+					if (intChoice < 1 || intChoice > 8){
+						inptCheck = false;
+					}
+						
+				} catch (NumberFormatException e) inptCheck = false;
+			}
+
+			while (inptCheck && !end){
+				/* Clear screen ansi. Should probs turn to method. */
+				System.out.print("\033[H\033[2J");
+	    			System.out.flush();
+
+				System.out.println("Max quantity for all items:");
+				System.out.println("Small Cup - 80pcs [enter: 'scup']");
+				System.out.println("Medium Cup - 64pcs [enter: 'mcup']");
+				System.out.println("Large Cup - 40pcs [enter: 'lcup']");
+				System.out.println("Coffee Beans - 1008grams [enter: 'coffee']");
+				System.out.println("Milk - 640fl [enter: 'milk']");
+				System.out.println("Water - 640fl [enter: 'water']");
+				System.out.println();
+
+				System.out.print("Type: ");
+				choice = scan.nextLine();
+				System.out.print(", Amount: ");
+				choice2 = scan.nextLine();
+				System.out.println();
+
+				try{
+					floatChoice = Float.parseFloat(choice2);
+					inptCheck = tempTruck.getStorageBin(intChoice).setBin(choice, choice2);
+					if (inptCheck){
+						System.out.println("Success!");
+						inptCheck = false;
+					}
+					else {
+						System.out.println("Incorrect input, check if type matches the enter keywords and if the amount doesn't exceed max capacity.");
+					}
+					
+				} catch (NumberFormatException e){
+					System.out.println("Not a valid input!");
+				}
+			
+				scan.nextLine();
+			}
+			
+		} while(!end);
+		
 		/* TO-DO:
-  			- Assign all storage bins
      			- Edit prices
 		*/
 	}
