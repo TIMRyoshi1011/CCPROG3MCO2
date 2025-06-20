@@ -94,6 +94,14 @@ public class CoffeeTruck(){
 	}
 
 	/**
+ 	 * Returns the array of storagebins in the coffeetruck.
+   	 * @return The array of storagebins in the coffeetruck.
+     	 */
+	public getStorageBins(){
+		return storageBins;
+	}
+
+	/**
  	 * Simulates a sale. In simulating, it performs:
    	 * 1. Customer ordering a drink. Display menu. (unsure if this is randomized or user input, will consult with sir)
      	 * 2. Calculate the amount of ingredients for the drink
