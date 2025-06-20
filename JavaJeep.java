@@ -152,7 +152,7 @@ public class JavaJeep{
 
 				try{
 					floatChoice = Float.parseFloat(choice2);
-					inptCheck = tempTruck.getStorageBin(intChoice).setBin(choice, choice2);
+					inptCheck = tempTruck.fillStorageBin(intChoice, choice, choice2);
 					if (inptCheck){
 						System.out.println("Success!");
 						inptCheck = false;
