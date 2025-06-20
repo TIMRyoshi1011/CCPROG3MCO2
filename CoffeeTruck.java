@@ -94,15 +94,6 @@ public class CoffeeTruck(){
 	}
 
 	/**
- 	 * Returns one of the storage bins in the truck.
-   	 * @param indx The index of the storage bin that will be returned.
-   	 * @return The storage bin of index indx.
-     	 */
-	public StorageBin getStorageBin(int indx){
-		return storageBin.get(indx);
-	}
-
-	/**
  	 * Simulates a sale. In simulating, it performs:
    	 * 1. Customer ordering a drink. Display menu. (unsure if this is randomized or user input, will consult with sir)
      	 * 2. Calculate the amount of ingredients for the drink
