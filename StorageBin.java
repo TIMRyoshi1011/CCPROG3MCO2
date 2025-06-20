@@ -81,11 +81,14 @@ public class StorageBin{
      	 */
 	public void printBinInfo(){
 		if (contents != null) {
-	            System.out.println("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
+	            System.out.print("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
+		    if (type.equals("coffee"): System.out.print("grams");
+		    else if (type.equals("scup") || type.equals("mcup") || type.equals("lcup")): System.out.print("pcs");
+		    else: System.out.print("fl");
 	        } 
 		
 		else {
-	            System.out.println("Bin is empty.");
+	            System.out.print("Bin is empty.");
 	        }
 	}
 }
