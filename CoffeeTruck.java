@@ -11,7 +11,7 @@ public class CoffeeTruck(){
 	/** Represents the location of the truck. */
 	private String truckLocation;
 	/** The amount of money the truck earned from transactions. */
-	private float moneyEarned;
+	private float moneyEarned = 0;
 	/** ArrayList containing all transactions of the truck. */
 	private ArrayList<Transaction> transactions;
 	/** ArrayList containing all storage bins of the truck. For a regular truck, only 8 bins. */
@@ -23,7 +23,6 @@ public class CoffeeTruck(){
      	 */
 	public CoffeeTruck(){
 		this.truckLocation = "";
-		this.moneyEarned = 0;
 		this.STORAGEBINS = new ArrayList<>();
 	        this.TRANSACTIONS = new ArrayList<>();
 	
@@ -112,5 +111,17 @@ public class CoffeeTruck(){
    	 */
 	public void printTruckInfo() {
 		System.out.println("Truck at: " + truckLocation + " | Earned: " + moneyEarned);
+		System.out.println("Storage bins contain...");
+
+		for (int i = 0; i < 8; i++) {
+			System.out.printf("Storage bin #%d - ", (i+1));
+			storageBins[i].printBinInfo();
+			System.our.println();
+		}
+
+		/* Print menu */
+		
+		/* Print transaction info */
+		
 	}
 }
