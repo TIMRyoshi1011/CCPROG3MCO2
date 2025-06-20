@@ -124,4 +124,20 @@ public class CoffeeTruck(){
 		/* Print transaction info */
 		
 	}
+
+	/**
+ 	 * Called when a truck is initially made to show its basic information, including type, location, and storage bin contents.
+   	 */
+	public void printBaseInfo() {
+		Iterator<StorageBin> it = storageBins.iterator();
+		System.out.printf("Location: %s || Type %s\n", truckLocation, truckType);
+		System.out.println();
+		System.out.println("Storage bins contain...");
+
+		for (int i = 0; i < 8; i++) {
+			System.out.printf("Storage bin #%d - ", (i+1));
+			storageBins[i].printBinInfo();
+			System.our.println();
+		}
+	}
 }
