@@ -27,7 +27,7 @@ public class CoffeeTruck(){
 		this.STORAGEBINS = new ArrayList<>();
 	        this.TRANSACTIONS = new ArrayList<>();
 	
-	        for (int i = 0; i < 3; i++) {
+	        for (int i = 0; i < 8; i++) {
 	            STORAGEBINS.add(new StorageBin());
 	        }
 	}
