@@ -94,11 +94,12 @@ public class CoffeeTruck(){
 	}
 
 	/**
- 	 * Returns the array of storagebins in the coffeetruck.
-   	 * @return The array of storagebins in the coffeetruck.
+ 	 * Returns one of the storage bins in the truck.
+   	 * @param indx The index of the storage bin that will be returned.
+   	 * @return The storage bin of index indx.
      	 */
-	public getStorageBins(){
-		return storageBins;
+	public StorageBin getStorageBin(int indx){
+		return storageBin.get(indx);
 	}
 
 	/**
