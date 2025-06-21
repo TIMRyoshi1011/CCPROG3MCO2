@@ -23,8 +23,8 @@ public class StorageBin{
        	 * @return true if bin's contents was successfully set. False otherwise.
 	 */
 	public boolean setBin(String type, float amt){
-		boolean validAmt = true:
-		if (amt < 0): return false
+		boolean validAmt = true;
+		if (amt < 0) return false;
 
 		if (type == "water" || type == "milk" || type == "coffee" ||
 		    type == "scup" || type == "mcup" || type == "lcup") {
@@ -74,7 +74,7 @@ public class StorageBin{
      	 * The inventory of the truck is already considered in making the menu, and as such, it is assumed that this will always be a successful method.
        	 * @param amt The amount to be decreased from the bin.
 	 */
-	public void lessenContents(float amt){
+	public boolean lessenContents(float amt){
 		if (contents != null && contents.getAmt() >= amount) {
 	            contents = new Ingredient(contents.getType(), contents.getAmt() - amount);
 	            return true;
@@ -90,9 +90,9 @@ public class StorageBin{
 	public void printBinInfo(){
 		if (contents != null) {
 	            System.out.print("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
-		    if (type.equals("coffee"): System.out.print("grams");
-		    else if (type.equals("scup") || type.equals("mcup") || type.equals("lcup")): System.out.print("pcs");
-		    else: System.out.print("fl");
+		    if (type.equals("coffee")) System.out.print("grams");
+		    else if (type.equals("scup") || type.equals("mcup") || type.equals("lcup")) System.out.print("pcs");
+		    else System.out.print("fl");
 	        } 
 		
 		else {
