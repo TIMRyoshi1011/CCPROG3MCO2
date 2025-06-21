@@ -74,7 +74,7 @@ public class StorageBin{
      	 * The inventory of the truck is already considered in making the menu, and as such, it is assumed that this will always be a successful method.
        	 * @param amt The amount to be decreased from the bin.
 	 */
-	public boolean lessenContents(float amt){
+	public boolean lessenContents(float amt){  // changed void to boolean
 		if (contents != null && contents.getAmt() >= amount) {
 	            contents = new Ingredient(contents.getType(), contents.getAmt() - amount);
 	            return true;
