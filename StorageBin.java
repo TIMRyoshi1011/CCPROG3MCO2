@@ -74,8 +74,8 @@ public class StorageBin{
      	 * The inventory of the truck is already considered in making the menu, and as such, it is assumed that this will always be a successful method.
        	 * @param amt The amount to be decreased from the bin.
 	 */
-	public boolean lessenContents(float amt){  // changed void to boolean
-		if (contents != null && contents.getAmt() >= amount) {
+	public boolean lessenContents(float amount){							// changed void to boolean(also changed the uml)
+		if (contents != null && contents.getAmt() >= amount) {					// changed parameter from amt to amount
 	            contents = new Ingredient(contents.getType(), contents.getAmt() - amount);
 	            return true;
 	        }
@@ -90,8 +90,8 @@ public class StorageBin{
 	public void printBinInfo(){
 		if (contents != null) {
 	            System.out.print("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
-		    if (type.equals("coffee")) System.out.print("grams");
-		    else if (type.equals("scup") || type.equals("mcup") || type.equals("lcup")) System.out.print("pcs");
+		    if (contents.equals("coffee")) System.out.print("grams");						// changed type. to contents.
+		    else if (contents.equals("scup") || contents.equals("mcup") || contents.equals("lcup")) System.out.print("pcs");
 		    else System.out.print("fl");
 	        } 
 		
