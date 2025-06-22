@@ -23,9 +23,9 @@ public class Ingredient{
 	/** Static variable for the price of 1 gram of coffeebeans. */
 	private static float coffeePrice = 3;
 	/** Static variable for the price of 1 fl of milk. */
-	private static float milkPrice = 3.5;
+	private static float milkPrice = 3.5f;						// added f at the end of the values (causes error if there is no f)
 	/** Static variable for the price of 1 fl of water. */
-	private static float waterPrice = 0.5;
+	private static float waterPrice = 0.5f;
 
 	/** 
  	 * Ingredient constructor. Ingredient is typically instantiated in StorageBin and Transaction class. 
@@ -44,30 +44,30 @@ public class Ingredient{
 	 */
 	public static void setPrice(String type, float price){
 		switch (type.toLowerCase()) {
-	            case "scup": 
+		    case "scup": 
 			smallCupPrice = price; 
 			break;
 	
-	            case "mcup": 
+		    case "mcup": 
 			mediumCupPrice = price; 
 			break;
-
-	            case "lcup": 
+	
+		    case "lcup": 
 			largeCupPrice = price; 
 			break;
 	
-	            case "coffee": 
+		    case "coffee": 
 			coffeePrice = price; 
 			break;
 	
-	            case "milk": 
+		    case "milk": 
 			milkPrice = price; 
 			break;
 					
-	            case "water": 
+		    case "water": 
 			waterPrice = price; 
 			break;
-	        }
+		}
 	}
 		
 	/** 
