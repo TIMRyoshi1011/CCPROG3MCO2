@@ -5,7 +5,7 @@ import java.util.Iterator;
  * Represents a coffee truck.
  * @author Coby Luna & Marcus Ramos
  */
-public class CoffeeTruck(){
+public class CoffeeTruck {
 	/** Indicates the type of the truck. 'S' for special, 'R' for regular. */
 	private char truckType;
 	/** Represents the location of the truck. */
@@ -13,9 +13,9 @@ public class CoffeeTruck(){
 	/** The amount of money the truck earned from transactions. */
 	private float moneyEarned = 0;
 	/** ArrayList containing all transactions of the truck. */
-	private ArrayList<Transaction> transactions;
+	private ArrayList<Transaction> TRANSACTIONS;							//changed the names to uppercase (updated the uml)
 	/** ArrayList containing all storage bins of the truck. For a regular truck, only 8 bins. */
-	private ArrayList<StorageBin> storageBins;
+	private ArrayList<StorageBin> STORAGEBINS;
 
 	/**
  	 * Constructor for a CoffeeTruck. 
@@ -36,7 +36,7 @@ public class CoffeeTruck(){
    	 * @param storageBinIndx The index of the storage bin to be changed in the storageBins array. 0 if bin #1, and so on.
      	 */
 	public boolean fillStorageBin(int storageBinIndx, String type, float amt){
-		if (index >= 0 && index < STORAGEBINS.size()) {
+		if (storageBinIndx >= 0 && storageBinIndx < STORAGEBINS.size()) {			//changed the inside of if statement to storageBinIndx (was index)
 	            return STORAGEBINS.get(storageBinIndx).setBin(type, amt);
 	        }
 	
@@ -50,14 +50,14 @@ public class CoffeeTruck(){
        	 */
 	public boolean setType(String type) {
 		/*if (type.equals("P")){
-			this.TRUCK_TYPE = 'P';
-			return true;*/
-		else if (type.equals("R")){
-			this.TRUCK_TYPE = 'R';
+			this.truckType = 'P';						// changed .TRUCK_TYPE to .truckType (still closed the P for now)
+			return true; }*/
+		if (type.equals("R")){
+			this.truckType = 'R';
 			return true;
+		}
 		return false;
-    	}
-
+	}
 	/**
  	 * Sets the location of the truck.
    	 * Additionally, checks if inputted location is in-use by other trucks. (Results in a fail)
@@ -89,6 +89,8 @@ public class CoffeeTruck(){
   	 * @return a String array of all possible drinks the truck can make given inventory.
     	 */
 	public ArrayList<String> returnMenu() {
+		ArrayList<String> menu = new ArrayList<>();							// added this object (causes an error if there's no object)
+		// TODO: Populate the menu based on available inventory in STORAGEBINS
 		return menu;
 	}
 
@@ -115,8 +117,8 @@ public class CoffeeTruck(){
 
 		for (int i = 0; i < 8; i++) {
 			System.out.printf("Storage bin #%d - ", (i+1));
-			storageBins[i].printBinInfo();
-			System.our.println();
+			STORAGEBINS.get(i).printBinInfo();						// changed storageBins[i] to STORAGEBINS.get(i)
+			System.out.println();
 		}
 
 		/* Print menu */
@@ -129,15 +131,15 @@ public class CoffeeTruck(){
  	 * Called when a truck is initially made to show its basic information, including type, location, and storage bin contents.
    	 */
 	public void printBaseInfo() {
-		Iterator<StorageBin> it = storageBins.iterator();
+		Iterator<StorageBin> it = STORAGEBINS.iterator();
 		System.out.printf("Location: %s || Type %s\n", truckLocation, truckType);
 		System.out.println();
 		System.out.println("Storage bins contain...");
 
 		for (int i = 0; i < 8; i++) {
 			System.out.printf("Storage bin #%d - ", (i+1));
-			storageBins[i].printBinInfo();
-			System.our.println();
+			STORAGEBINS.get(i).printBinInfo();							// changed storageBins[i] to STORAGEBINS.get(i)
+			System.out.println();
 		}
 	}
 }
