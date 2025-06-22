@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Integer;
-import java.util.Float;
+//import java.util.Integer;			// we don't need this, causes an error
+//import java.util.Float;			// we don't need this, causes an error
 import java.util.Iterator;
 
 /**
@@ -12,7 +12,7 @@ public class JavaJeep{
 	/** Singleton instance of JavaJeep. */
 	private static JavaJeep javaJeepInstance = new JavaJeep();
 	/** ArrayList containing all trucks. */
-	private final ArrayList<CoffeeTrucks> TRUCKS;
+	private final ArrayList<CoffeeTruck> TRUCKS;								//changed CoffeeTrucks to CoffeeTruck
 	/** The number of trucks made. <--- I dont think this is really that useful anymore lol but keeping it in for now  */
 	private int noOfTrucks;
 	/** static variable for the combined amount of sales. */
@@ -22,7 +22,7 @@ public class JavaJeep{
  	 * Constructor for JavaJeep. Will only be called once, initializes all variables.
    	 */
 	private JavaJeep(){
-		TRUCKS = new ArrayList<>();
+		TRUCKS = new ArrayList<CoffeeTruck>();
 		noOfTrucks = 0;
 		combinedSales = 0;
 	}
@@ -51,9 +51,9 @@ public class JavaJeep{
  	 * Creates a new truck.
    	 * @return True if truck is successfully created, false otherwise.
      	 */
-	public boolean createTruck(){
+	public void createTruck(){							//changed boolean to void (doesn't really return anything) (also changed uml)
 		String choice, choice2;
-		int intChoice;
+		int intChoice = 0;							//added an instance of 0
 		float floatChoice;
 		boolean success, end, inptCheck;
 		CoffeeTruck tempTruck = new CoffeeTruck();
@@ -70,12 +70,12 @@ public class JavaJeep{
 			System.out.println("P - JavaJeep+ (Not available yet!!!!)");
 			System.out.println("R - JavaJeep Regular");
 			System.out.println("");
-			System.out.println(">> ");
+			System.out.print(">> ");							//changed println to print only
 			choice = scan.nextLine();
 
 			success = tempTruck.setType(choice);
 			if (!success){
-				System.out.println("Invalid input!);
+				System.out.println("Invalid input!");
 				scan.nextLine();
 			}
 		} while (!success);
@@ -83,12 +83,12 @@ public class JavaJeep{
 		do{	// Sets location
 			/* Clear screen ansi. Should probs turn to method. */
 			System.out.print("\033[H\033[2J");
-    			System.out.flush();
+				System.out.flush();
 
 			System.out.println("What location do you want your truck to stay in?");
 			System.out.println("To keep business efficient, we're limiting it to one truck per city!");
 			System.out.println("");
-			System.out.println(">> ");
+			System.out.print(">> ");									//changed println to print only
 			choice = scan.nextLine();
 
 			success = tempTruck.setLocation(choice, TRUCKS);
@@ -98,17 +98,18 @@ public class JavaJeep{
 			}
 		} while (!success);
 		
+		end = false; 												// Set end to false before use
 		do { // Assigning storage bins
 			/* Clear screen ansi. Should probs turn to method. */
 			System.out.print("\033[H\033[2J");
-    			System.out.flush();
+				System.out.flush();
 
-			it = tempTruck.getStorageBins();
+			//it = tempTruck.getStorageBin();								// commented this out for now (causes error)
 			System.out.println("Here are the current contents of your storage bins:");
 
 			for (int i = 0; i < 8; i++){
 				System.out.printf("BIN #%d... ", (i+1));
-				tempTruck.getStorageBin(i).printBinInfo();
+				//tempTruck.getStorageBin(i).printBinInfo();						// also commented this out for now (causes error)
 				System.out.print("\n");
 			}
 
@@ -119,7 +120,7 @@ public class JavaJeep{
 			System.out.println();
 
 			inptCheck = true; // checking input
-			if (choice.equals("END")): end = true;
+			if (choice.equals("END")) {end = true;}							//removed : and added { }
 			else{
 				try {
 					intChoice = Integer.parseInt(choice);
@@ -127,7 +128,7 @@ public class JavaJeep{
 						inptCheck = false;
 					}
 						
-				} catch (NumberFormatException e) inptCheck = false;
+				} catch (NumberFormatException e) {inptCheck = false;}				//added { }
 			}
 
 			while (inptCheck && !end){
@@ -146,7 +147,7 @@ public class JavaJeep{
 
 				System.out.print("Type: ");
 				choice = scan.nextLine();
-				System.out.print(", Amount: ");
+				System.out.print("Amount: ");								//removed , before Amount
 				choice2 = scan.nextLine();
 				System.out.println();
 
@@ -201,7 +202,7 @@ public class JavaJeep{
 
 				try{
 					floatChoice = Float.parseFloat(choice2);
-					Ingredient.setPrice(choice, floatchoice);
+					Ingredient.setPrice(choice, floatChoice);				//capitalized C in floatchoice
 					System.out.println("Successfully changed!");
 					scan.nextLine();
 					
@@ -231,44 +232,46 @@ public class JavaJeep{
    	 */
 	public static void main(String args[]){
 		int choice;
-	        Scanner scan = new Scanner(System.in);
-	
-	        System.out.println("\nWelcome to JavaJeeps!\n");
-	        System.out.println("Select an Option:");
-	        System.out.println("1 - Create a coffee truck");
-	        System.out.println("2 - Simulate a coffee truck");
-	        System.out.println("3 - Dashboard");
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("\nWelcome to JavaJeeps!\n");
+		System.out.println("Select an Option:");
+		System.out.println("1 - Create a coffee truck");
+		System.out.println("2 - Simulate a coffee truck");
+		System.out.println("3 - Dashboard");
 		System.out.println("4 - Exit");
 		System.out.println("");
-	        System.out.print(">> ");
+		System.out.print(">> ");
+		do {										// changed the logic here (initailly was causing an infinite loop)
+			choice = scan.nextInt();
 
-		choice = scan.nextInt();
-		
-	        do {
-	            switch(choice) {
-	                case 1: 
-	                    System.out.println("Creating coffee truck!"); 
-	                    // insert codes here
-	                    break;
-	
-	                case 2: 
-	                    System.out.println("Choose a truck to simulate!"); 
-	                    break;   
+			if(choice > 4 || choice < 1)
+				System.out.print("Invalid option, please try again: ");
+			
+		} while (choice > 4 || choice < 1);
+
+		JavaJeep newTruck = new JavaJeep();
+
+		switch(choice) {
+			case 1: 
+				System.out.println("Creating coffee truck!"); 
+				newTruck.createTruck();
+				break;
+
+			case 2: 
+				System.out.println("Choose a truck to simulate!"); 
+				break;   
 
 			case 3: 
-			    System.out.println("Dashboard");
-			    break;
+				System.out.println("Dashboard");
+				break;
 
 			case 4:
-			    System.out.println("Thank you for using JavaJeeps!");
-			    break;
-	
-	                default:
-	                    System.out.println("Invalid option, please try again!");
-	           }
-	        } while (choice != 4);
-	
-	        scan.close();
-	        System.exit(0);
+				System.out.println("Thank you for using JavaJeeps!");
+				break;
+		}
+		scan.close();
+		System.exit(0);
 	}
 }
+
