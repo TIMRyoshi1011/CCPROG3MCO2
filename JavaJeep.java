@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-//import java.util.Integer;			// we don't need this, causes an error 
-//import java.util.Float;			// we don't need this, causes an error
 import java.util.Iterator;
 
 /**
@@ -148,7 +146,7 @@ public class JavaJeep{
 				System.out.println();
 
 				System.out.print("Type: ");
-				choice = scan.nextLine();
+				choice = scan.nextLine().toLowerCase();
 				System.out.print("Amount: ");								//removed , before Amount
 				choice2 = scan.nextLine();
 				System.out.println();
@@ -195,7 +193,7 @@ public class JavaJeep{
 			choice = scan.nextLine();
 			System.out.println();
 
-			if (choice.equals("END")) end = true;
+			if (choice.toUpperCase().equals("END")) end = true;
 
 			else if (choice.equals("milk") || choice.equals("water") || choice.equals("coffee") ||
 				 choice.equals("scup") || choice.equals("mcup") || choice.equals("lcup")) {
@@ -227,52 +225,100 @@ public class JavaJeep{
 		System.out.println();
 		System.out.println("Below are the base information regarding the new truck:");
 		tempTruck.printBaseInfo();
-		TRUCKS.add(tempTruck);
+		System.out.println();
+		tempTruck.printBinInfo();
+		this.TRUCKS.add(tempTruck);
 		scan.nextLine();
+	}
+
+	/**
+	 * Simulates a truck. When choosing to simulate a truck, the user can: 
+	 * - Simulate a sale
+	 * - View truck informaiton
+	 * - Restock bins and perform maintenance.
+	 */
+	public void simulateTruck(){
+		String choice; int intChoice;
+		boolean end = false;
+		int count;
+		Iterator<CoffeeTruck> itTruck;
+		Scanner scan = new Scanner(System.in);
+
+		do {
+			itTruck = TRUCKS.iterator(); count = 1;
+			System.out.println("Choose a truck to simulate!"); 
+			while (itTruck.hasNext()){
+				System.out.printf("#%d || ", count);
+				itTruck.next().printBaseInfo();
+				count++;
+			}
+			System.out.println("Enter \"END\" to exit.");
+
+			System.out.println();
+			choice = scan.nextLine();
+
+			try {
+				intChoice = Integer.parseInt(choice);
+
+				if (intChoice > 0 && intChoice <= TRUCKS.size()){
+					System.out.println("yayyyy");
+				}
+
+				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
+			}
+
+			catch (Exception e) {
+				if (choice.toUpperCase().equals("END")) {end = true;}
+				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
+			}
+		} while (!end);
 	}
 
 	/**
  	 * Main method for the full JavaJeep program.
    	 */
 	public static void main(String args[]){
-		int choice;
+		int choice = 0;
 		Scanner scan = new Scanner(System.in);
 
-		System.out.println("\nWelcome to JavaJeeps!\n");
-		System.out.println("Select an Option:");
-		System.out.println("1 - Create a coffee truck");
-		System.out.println("2 - Simulate a coffee truck");
-		System.out.println("3 - Dashboard");
-		System.out.println("4 - Exit");
-		System.out.println("");
-		System.out.print(">> ");
-		do {										// changed the logic here (initailly was causing an infinite loop)
-			choice = scan.nextInt();
+		while (choice != 4){
 
-			if(choice > 4 || choice < 1)
-				System.out.print("Invalid option, please try again: ");
-			
-		} while (choice > 4 || choice < 1);
+			System.out.println("\nWelcome to JavaJeeps!\n");
+			System.out.println("Select an Option:");
+			System.out.println("1 - Create a coffee truck");
+			System.out.println("2 - Simulate a coffee truck");
+			System.out.println("3 - Dashboard");
+			System.out.println("4 - Exit");
+			System.out.println("");
+			System.out.print(">> ");
+			do {								
+				choice = scan.nextInt();   // I think we should use nextLine() and do a try-catch when trying to parse it into an int. gets an error when user enters a non-int value
 
-		JavaJeep newTruck = new JavaJeep();
+				if(choice > 4 || choice < 1)
+					System.out.print("Invalid option, please try again: ");
+				
+			} while (choice > 4 || choice < 1);
 
-		switch(choice) {
-			case 1: 
-				System.out.println("Creating coffee truck!"); 
-				newTruck.createTruck();
-				break;
+			/*JavaJeep newTruck = new JavaJeep();   // does not follow singleton, creates new instance and makes it so any changes to the variables (i.e., TRUCKS array) temporary */
 
-			case 2: 
-				System.out.println("Choose a truck to simulate!"); 
-				break;   
+			switch(choice) {
+				case 1: 
+					System.out.println("Creating coffee truck!"); 
+					JavaJeep.getInstance().createTruck();
+					break;
 
-			case 3: 
-				System.out.println("Dashboard");
-				break;
+				case 2: 
+					JavaJeep.getInstance().simulateTruck();
+					break;   
 
-			case 4:
-				System.out.println("Thank you for using JavaJeeps!");
-				break;
+				case 3: 
+					System.out.println("Dashboard");
+					break;
+
+				case 4:
+					System.out.println("Thank you for using JavaJeeps!");
+					break;
+			}
 		}
 		scan.close();
 		System.exit(0);
