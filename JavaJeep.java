@@ -59,10 +59,11 @@ public class JavaJeep{
 		CoffeeTruck tempTruck = new CoffeeTruck();
 		Scanner scan = new Scanner(System.in);
 
-		do {	// Setting the truck type.
-			/* Clear screen ansi. Should probs turn to method. */
-			System.out.print("\033[H\033[2J");
-    			System.out.flush();
+		/* Setting truck type. */
+		do {	
+			System.out.println("");
+			System.out.println("CLEAR SCREEN");
+			System.out.println("");
 			
 			System.out.println("Create a brand new coffee truck!");
 			System.out.println("What kind of coffee truck would you like to make?");
@@ -73,17 +74,18 @@ public class JavaJeep{
 			System.out.print(">> ");							//changed println to print only
 			choice = scan.nextLine();
 
-			success = tempTruck.setType(choice);
+			success = tempTruck.setType(choice.toUpperCase());
 			if (!success){
 				System.out.println("Invalid input!");
 				scan.nextLine();
 			}
 		} while (!success);
 
-		do{	// Sets location
-			/* Clear screen ansi. Should probs turn to method. */
-			System.out.print("\033[H\033[2J");
-				System.out.flush();
+		/* Setting truck location. */
+		do{	
+			System.out.println("");
+			System.out.println("CLEAR SCREEN");
+			System.out.println("");
 
 			System.out.println("What location do you want your truck to stay in?");
 			System.out.println("To keep business efficient, we're limiting it to one truck per city!");
@@ -98,18 +100,18 @@ public class JavaJeep{
 			}
 		} while (!success);
 		
-		end = false; 												// Set end to false before use
-		do { // Assigning storage bins
-			/* Clear screen ansi. Should probs turn to method. */
-			System.out.print("\033[H\033[2J");
-				System.out.flush();
+		end = false;
+		/* Setting storage bins. */
+		do { 
+			System.out.println("");
+			System.out.println("CLEAR SCREEN");
+			System.out.println("");
 
-			//it = tempTruck.getStorageBin();								// commented this out for now (causes error)
 			System.out.println("Here are the current contents of your storage bins:");
 
 			for (int i = 0; i < 8; i++){
 				System.out.printf("BIN #%d... ", (i+1));
-				//tempTruck.getStorageBin(i).printBinInfo();						// also commented this out for now (causes error)
+				tempTruck.getStorageBin(i).printBinInfo();					
 				System.out.print("\n");
 			}
 
@@ -120,7 +122,7 @@ public class JavaJeep{
 			System.out.println();
 
 			inptCheck = true; // checking input
-			if (choice.equals("END")) {end = true;}							//removed : and added { }
+			if (choice.toUpperCase().equals("END")) {end = true;}							//removed : and added { }
 			else{
 				try {
 					intChoice = Integer.parseInt(choice);
@@ -153,7 +155,7 @@ public class JavaJeep{
 
 				try{
 					floatChoice = Float.parseFloat(choice2);
-					inptCheck = tempTruck.fillStorageBin(intChoice, choice, floatChoice);
+					inptCheck = tempTruck.fillStorageBin((intChoice-1), choice, floatChoice);
 					if (inptCheck){
 						System.out.println("Success!");
 						inptCheck = false;
@@ -171,10 +173,12 @@ public class JavaJeep{
 			
 		} while(!end);
 		
-		do { // edit prices
-			/* Clear screen ansi. Should probs turn to method. */
-			System.out.print("\033[H\033[2J");
-			System.out.flush();
+		/* Setting prices. */
+		end = false;
+		do { 
+			System.out.println("");
+			System.out.println("CLEAR SCREEN");
+			System.out.println("");
 			
 			System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.");
 			System.out.println("Below are the current prices for each ingredient:");
@@ -215,9 +219,9 @@ public class JavaJeep{
 			else {System.out.println("Not a valid input!"); scan.nextLine();}
 		} while (!end);
 
-		/* Clear screen ansi. Should probs turn to method. */
-		System.out.print("\033[H\033[2J");
-		System.out.flush();
+		System.out.println("");
+		System.out.println("CLEAR SCREEN");
+		System.out.println("");
 
 		System.out.println("Congratulations! Your truck has successfully been created.");
 		System.out.println();
@@ -273,5 +277,6 @@ public class JavaJeep{
 		scan.close();
 		System.exit(0);
 	}
+
 }
 

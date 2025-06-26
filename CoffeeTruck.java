@@ -44,6 +44,15 @@ public class CoffeeTruck {
 	}
 
 	/**
+	 * Returns a storage bin given its index.
+	 * @param binIndex The index of the storage bin.
+	 * @return The storage bin under the given index.
+	 */
+	public StorageBin getStorageBin(int binIndex){
+		return STORAGEBINS.get(binIndex);
+	}
+
+	/**
  	 * Set the type of the coffee truck. FINAL, only called once.
    	 * @param type The type of the truck in single character string form. P for JJ+, R for regular.
      	 * @return True if successful, false otherwise.
@@ -58,6 +67,7 @@ public class CoffeeTruck {
 		}
 		return false;
 	}
+
 	/**
  	 * Sets the location of the truck.
    	 * Additionally, checks if inputted location is in-use by other trucks. (Results in a fail)

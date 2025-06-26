@@ -34,7 +34,7 @@ public class Ingredient{
  	 */
 	public Ingredient(String type, float amt){
 		this.ingredientType = type;
-        	this.ingredientAmt = amt;
+        this.ingredientAmt = amt;
 	}
 
 	/** 

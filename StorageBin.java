@@ -26,8 +26,8 @@ public class StorageBin{
 		boolean validAmt = true;
 		if (amt < 0) return false;
 
-		if (type == "water" || type == "milk" || type == "coffee" ||
-		    type == "scup" || type == "mcup" || type == "lcup") {
+		if (type.equals("water") || type.equals("milk") || type.equals("coffee") ||
+		    type.equals("scup") || type.equals("mcup") || type.equals("lcup")) {
 			
 			switch(type){
 				case "water": if(amt > 640) validAmt = false; break;
@@ -90,8 +90,8 @@ public class StorageBin{
 	public void printBinInfo(){
 		if (contents != null) {
 	            System.out.print("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
-		    if (contents.equals("coffee")) System.out.print("grams");						// changed type. to contents.
-		    else if (contents.equals("scup") || contents.equals("mcup") || contents.equals("lcup")) System.out.print("pcs");
+		    if (contents.getType().equals("coffee")) System.out.print("grams");						// changed type. to contents.
+		    else if (contents.getType().equals("scup") || contents.getType().equals("mcup") || contents.getType().equals("lcup")) System.out.print("pcs");
 		    else System.out.print("fl");
 	        } 
 		
