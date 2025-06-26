@@ -226,13 +226,14 @@ public class JavaJeep{
 	 */
 	public void simulateTruck(){
 		String choice; int intChoice;
-		boolean end = false;
+		boolean end = false, exitTruck;
+		int truckIndx;
 		int count;
 		Iterator<CoffeeTruck> itTruck;
 		Scanner scan = new Scanner(System.in);
 
 		do {
-			itTruck = TRUCKS.iterator(); count = 1;
+			itTruck = TRUCKS.iterator(); count = 1; truckIndx = -1; exitTruck = true;
 
 			this.clear();
 
@@ -251,8 +252,7 @@ public class JavaJeep{
 				intChoice = Integer.parseInt(choice);
 
 				if (intChoice > 0 && intChoice <= TRUCKS.size()){
-					/* User now picks what function to do*/
-
+					exitTruck = false; truckIndx = intChoice - 1;
 				}
 
 				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
@@ -262,6 +262,54 @@ public class JavaJeep{
 				if (choice.toUpperCase().equals("END")) {end = true;}
 				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
 			}
+
+
+
+			while (!exitTruck){
+
+				this.clear();
+
+				System.out.println("What would you like to do?");
+				System.out.println("1 - Simulate sale");
+				System.out.println("2 - View truck information");
+				System.out.println("3 - Manage bins");
+				System.out.println("4 - Maintenance");
+				System.out.println("5 - Exit");
+				System.out.println();
+
+				choice = scan.nextLine();
+
+				try {
+					intChoice = Integer.parseInt(choice);
+
+					if (intChoice > 0 && intChoice < 6) {
+						switch(intChoice){
+							case 1: 
+								// simulate sale
+								break;
+							case 2:
+								// view truck info
+								break;
+							case 3: 
+								// manage bins
+								break;
+							case 4:
+								// maintenance
+								break; 
+							case 5:
+								exitTruck = true;
+								break;
+						}
+					}
+
+					else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
+				}
+
+				catch (Exception e) {
+					System.out.println("Invalid input! Please try again."); scan.nextLine();}
+
+			}
+
 		} while (!end);
 	}
 
