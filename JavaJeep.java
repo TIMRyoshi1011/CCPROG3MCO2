@@ -59,9 +59,7 @@ public class JavaJeep{
 
 		/* Setting truck type. */
 		do {	
-			System.out.println("");
-			System.out.println("CLEAR SCREEN");
-			System.out.println("");
+			this.clear();
 			
 			System.out.println("Create a brand new coffee truck!");
 			System.out.println("What kind of coffee truck would you like to make?");
@@ -81,9 +79,7 @@ public class JavaJeep{
 
 		/* Setting truck location. */
 		do{	
-			System.out.println("");
-			System.out.println("CLEAR SCREEN");
-			System.out.println("");
+			this.clear();
 
 			System.out.println("What location do you want your truck to stay in?");
 			System.out.println("To keep business efficient, we're limiting it to one truck per city!");
@@ -101,10 +97,7 @@ public class JavaJeep{
 		end = false;
 		/* Setting storage bins. */
 		do { 
-			System.out.println("");
-			System.out.println("CLEAR SCREEN");
-			System.out.println("");
-
+			this.clear();
 			System.out.println("Here are the current contents of your storage bins:");
 
 			for (int i = 0; i < 8; i++){
@@ -132,9 +125,7 @@ public class JavaJeep{
 			}
 
 			while (inptCheck && !end){
-				/* Clear screen ansi. Should probs turn to method. */
-				System.out.print("\033[H\033[2J");
-	    			System.out.flush();
+				this.clear();
 
 				System.out.println("Max quantity for all items:");
 				System.out.println("Small Cup - 80pcs [enter: 'scup']");
@@ -174,9 +165,7 @@ public class JavaJeep{
 		/* Setting prices. */
 		end = false;
 		do { 
-			System.out.println("");
-			System.out.println("CLEAR SCREEN");
-			System.out.println("");
+			this.clear();
 			
 			System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.");
 			System.out.println("Below are the current prices for each ingredient:");
@@ -217,9 +206,7 @@ public class JavaJeep{
 			else {System.out.println("Not a valid input!"); scan.nextLine();}
 		} while (!end);
 
-		System.out.println("");
-		System.out.println("CLEAR SCREEN");
-		System.out.println("");
+		this.clear();
 
 		System.out.println("Congratulations! Your truck has successfully been created.");
 		System.out.println();
@@ -246,6 +233,9 @@ public class JavaJeep{
 
 		do {
 			itTruck = TRUCKS.iterator(); count = 1;
+
+			this.clear();
+
 			System.out.println("Choose a truck to simulate!"); 
 			while (itTruck.hasNext()){
 				System.out.printf("#%d || ", count);
@@ -261,7 +251,8 @@ public class JavaJeep{
 				intChoice = Integer.parseInt(choice);
 
 				if (intChoice > 0 && intChoice <= TRUCKS.size()){
-					System.out.println("yayyyy");
+					/* User now picks what function to do*/
+
 				}
 
 				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
@@ -282,6 +273,8 @@ public class JavaJeep{
 		Scanner scan = new Scanner(System.in);
 
 		while (choice != 4){
+
+			JavaJeep.getInstance().clear();
 
 			System.out.println("\nWelcome to JavaJeeps!\n");
 			System.out.println("Select an Option:");
@@ -322,6 +315,17 @@ public class JavaJeep{
 		}
 		scan.close();
 		System.exit(0);
+	}
+
+	/**
+	 * Clears the console, for clarity purposes.
+	 * Unsure if theres an actual way to clear the screen thats compatible with all terminals... For now it just prints 40 empty lines.
+	 */
+	private void clear(){
+		int i;
+		for (i = 0; i < 40; i++){
+			System.out.println();
+		}
 	}
 
 }
