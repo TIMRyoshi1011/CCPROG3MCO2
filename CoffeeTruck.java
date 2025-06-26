@@ -99,8 +99,93 @@ public class CoffeeTruck {
   	 * @return a String array of all possible drinks the truck can make given inventory.
     	 */
 	public ArrayList<String> returnMenu() {
-		ArrayList<String> menu = new ArrayList<>();							// added this object (causes an error if there's no object)
-		// TODO: Populate the menu based on available inventory in STORAGEBINS
+
+		/* Not very happy with the efficiency of the code here lols... 
+		if u find a better way logic-wise to write this just go ahead */
+
+		ArrayList<String> menu = new ArrayList<String>();
+		double milk = 0, coffee = 0, water = 0, scup = 0, mcup = 0, lcup = 0;
+		double ratio1, ratio2, ratio3;
+		Iterator<StorageBin> itBin = STORAGEBINS.iterator();
+		Ingredient tempIngr; String tempStr;
+
+		while (itBin.hasNext()){
+			tempIngr = itBin.next().getContents();
+
+			if (tempIngr != null){	
+				switch(tempIngr.getType()){
+					case "milk": milk += tempIngr.getAmt(); break;
+					case "water": water += tempIngr.getAmt(); break;
+					case "coffee": coffee += tempIngr.getAmt(); break;
+					case "scup": scup += tempIngr.getAmt(); break;
+					case "mcup": mcup += tempIngr.getAmt(); break;
+					case "lcup": lcup += tempIngr.getAmt(); break;
+				}
+			}
+		}
+		coffee = coffee / 28.34952; /* Converting from grams to fl */
+
+
+		/* small = 8fl, med = 12fl, large = 16fl */
+
+		/* cafe americano: 1/3 espresso, 2/3 water. */
+		tempStr = "Cafe Americano [";
+		ratio1 = (1.0/3)/(1.0/19); // Ratio of coffee
+		ratio2 = (1.0/3)/(18.0/19); // Ratio of water in espresso
+		ratio3 = 2.0/3; // Ratio of water
+
+		if (coffee >= 8/ratio1 && water >= ((8/ratio2) + (8/ratio3))){
+			if (scup > 0) tempStr += " S";
+
+			if (coffee > 12/ratio1 && water >= ((12/ratio2) + (12/ratio3))){
+				if (mcup > 0) tempStr += " M";
+
+				if (coffee > 16/ratio1 && water >= ((16/ratio2) + (16/ratio3))){
+					if (lcup > 0) tempStr += " L";}
+			}
+
+		}
+
+		if (!tempStr.equals("Cafe Americano [")) {tempStr += " ]"; menu.add(tempStr);}
+
+		/* latte: 1/5 espresso, 4/5 milk */
+		tempStr = "Latte [";
+		ratio1 = (1.0/5)/(1.0/19); // ratio for coffee
+		ratio2 = (1.0/5)/(18.0/19); // ratio for water
+		ratio3 = (4/5.0); // ratio for milk
+
+		if (coffee >= 8/ratio1 && water >= 8/ratio2 && milk >= 8/ratio3){
+			if (scup > 0) tempStr += " S";
+
+			if (coffee >= 12/ratio1 && water >= 12/ratio2 && milk >= 12/ratio3){
+				if (mcup > 0) tempStr += " M";
+
+				if (coffee >= 16/ratio1 && water >= 16/ratio2 && milk >= 16/ratio3){
+					if (lcup > 0) tempStr += " L";}
+			}
+		}
+
+		if (!tempStr.equals("Latte [")) {tempStr += " ]"; menu.add(tempStr);}
+
+		/* cappucino: 1/3 espresso, 2/3 milk */
+		tempStr = "Cappucino [";
+		ratio1 = (1.0/3)/(1.0/19); // ratio for coffee
+		ratio2 = (1.0/3)/(18.0/19); // ratio for water
+		ratio3 = (2.0/3); // ratio for milk
+
+		if (coffee >= 8/ratio1 && water >= 8/ratio2 && milk >= 8/ratio3){
+			if (scup > 0) tempStr += " S";
+
+			if (coffee >= 12/ratio1 && water >= 12/ratio2 && milk >= 12/ratio3){
+				if (mcup > 0) tempStr += " M";
+
+				if (coffee >= 16/ratio1 && water >= 16/ratio2 && milk >= 16/ratio3){
+					if (lcup > 0) tempStr += " L";}
+			}
+		}
+
+		if (!tempStr.equals("Cappucino [")) {tempStr += " ]"; menu.add(tempStr);}
+
 		return menu;
 	}
 
@@ -113,6 +198,19 @@ public class CoffeeTruck {
   	 * 5. Print all information.
     	 */
 	public void simulateSale() {
+		ArrayList<String> menu = this.returnMenu();
+		Iterator<String> it = menu.iterator();
+
+		if (menu.size() == 0){System.out.println("NO AVAILABLE ITEMS.");}
+		else {
+			System.out.println("AVAILABLE ITEMS:");
+			while (it.hasNext()) {System.out.println(it.next());}
+		}
+
+		while (it.hasNext()){
+			System.out.println(it.next());
+		}
+
 		Transaction t = new Transaction("Latte", 'M');
 		moneyEarned += t.getPrice();
 		TRANSACTIONS.add(t);

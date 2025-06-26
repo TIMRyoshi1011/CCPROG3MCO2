@@ -17,6 +17,14 @@ public class StorageBin{
 	}
 
 	/**
+	 * Returns the contents of the storage bin.
+	 * @return The contents of the storage bin in the form of an Ingredient object.
+	 */
+	public Ingredient getContents(){
+		return contents;
+	}
+
+	/**
  	 * This completely changes, or sets (if it is empty) a storage bin's contents with a new item.
    	 * @param type The type of item the storage bin will hold.
      	 * @param amt The amount of the item the storage bin will hold.

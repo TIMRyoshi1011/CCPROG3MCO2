@@ -252,7 +252,7 @@ public class JavaJeep{
 				intChoice = Integer.parseInt(choice);
 
 				if (intChoice > 0 && intChoice <= TRUCKS.size()){
-					exitTruck = false; truckIndx = intChoice - 1;
+					truckIndx = intChoice - 1;
 				}
 
 				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
@@ -265,7 +265,7 @@ public class JavaJeep{
 
 
 
-			while (!exitTruck){
+			while (truckIndx > -1){
 
 				this.clear();
 
@@ -285,7 +285,8 @@ public class JavaJeep{
 					if (intChoice > 0 && intChoice < 6) {
 						switch(intChoice){
 							case 1: 
-								// simulate sale
+								TRUCKS.get(truckIndx).simulateSale();
+								scan.nextLine();
 								break;
 							case 2:
 								// view truck info
@@ -297,12 +298,12 @@ public class JavaJeep{
 								// maintenance
 								break; 
 							case 5:
-								exitTruck = true;
+								truckIndx = -1;
 								break;
 						}
 					}
 
-					else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
+					else {System.out.println("Invalid input! Please try again."); scan.nextLine(); System.out.println("bfskjdfks");}
 				}
 
 				catch (Exception e) {
