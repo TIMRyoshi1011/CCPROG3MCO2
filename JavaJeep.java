@@ -10,8 +10,8 @@ public class JavaJeep{
 	/** Singleton instance of JavaJeep. */
 	private static JavaJeep javaJeepInstance = new JavaJeep();
 	/** ArrayList containing all trucks. */
-	private final ArrayList<CoffeeTruck> TRUCKS;								//changed CoffeeTrucks to CoffeeTruck
-	/** The number of trucks made. <--- I dont think this is really that useful anymore lol but keeping it in for now  */
+	private final ArrayList<CoffeeTruck> TRUCKS;
+	/** The number of trucks made. */
 	private int noOfTrucks;
 	/** static variable for the combined amount of sales. */
 	private static float combinedSales;
@@ -49,9 +49,9 @@ public class JavaJeep{
  	 * Creates a new truck.
    	 * @return True if truck is successfully created, false otherwise.
      	 */
-	public void createTruck(){							//changed boolean to void (doesn't really return anything) (also changed uml)
+	public void createTruck(){
 		String choice, choice2;
-		int intChoice = 0;							//added an instance of 0
+		int intChoice = 0;
 		float floatChoice;
 		boolean success, end, inptCheck;
 		CoffeeTruck tempTruck = new CoffeeTruck();
@@ -67,12 +67,12 @@ public class JavaJeep{
 			System.out.println("P - JavaJeep+ (Not available yet!!!!)");
 			System.out.println("R - JavaJeep Regular");
 			System.out.println("");
-			System.out.print(">> ");							//changed println to print only
+			System.out.print(">> ");
 			choice = scan.nextLine();
 
 			success = tempTruck.setType(choice.toUpperCase());
 			if (!success){
-				System.out.println("Invalid input!");
+				System.out.print("Invalid input! Press Enter to continue . . .");
 				scan.nextLine();
 			}
 		} while (!success);
@@ -84,7 +84,7 @@ public class JavaJeep{
 			System.out.println("What location do you want your truck to stay in?");
 			System.out.println("To keep business efficient, we're limiting it to one truck per city!");
 			System.out.println("");
-			System.out.print(">> ");									//changed println to print only
+			System.out.print(">> ");
 			choice = scan.nextLine();
 
 			success = tempTruck.setLocation(choice, TRUCKS);
@@ -113,7 +113,7 @@ public class JavaJeep{
 			System.out.println();
 
 			inptCheck = true; // checking input
-			if (choice.toUpperCase().equals("END")) {end = true;}							//removed : and added { }
+			if (choice.toUpperCase().equals("END")) {end = true;}
 			else{
 				try {
 					intChoice = Integer.parseInt(choice);
@@ -121,7 +121,7 @@ public class JavaJeep{
 						inptCheck = false;
 					}
 						
-				} catch (NumberFormatException e) {inptCheck = false;}				//added { }
+				} catch (NumberFormatException e) {inptCheck = false;}
 			}
 
 			while (inptCheck && !end){
@@ -138,7 +138,7 @@ public class JavaJeep{
 
 				System.out.print("Type: ");
 				choice = scan.nextLine().toLowerCase();
-				System.out.print("Amount: ");								//removed , before Amount
+				System.out.print("Amount: ");
 				choice2 = scan.nextLine();
 				System.out.println();
 
@@ -146,15 +146,15 @@ public class JavaJeep{
 					floatChoice = Float.parseFloat(choice2);
 					inptCheck = tempTruck.fillStorageBin((intChoice-1), choice, floatChoice);
 					if (inptCheck){
-						System.out.println("Success!");
+						System.out.print("Success! Press Enter to continue . . .");
 						inptCheck = false;
 					}
 					else {
-						System.out.println("Incorrect input, check if type matches the enter keywords and if the amount doesn't exceed max capacity.");
+						System.out.print("Incorrect input, check if type matches the enter keywords and if the amount doesn't exceed max capacity. Press Enter to continue . . .");
 					}
 					
 				} catch (NumberFormatException e){
-					System.out.println("Not a valid input!");
+					System.out.print("Not a valid input! Press Enter to continue . . .");
 				}
 			
 				scan.nextLine();
@@ -167,7 +167,7 @@ public class JavaJeep{
 		do { 
 			this.clear();
 			
-			System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.");
+			System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.\n");
 			System.out.println("Below are the current prices for each ingredient:");
 			System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
 			System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
@@ -193,17 +193,17 @@ public class JavaJeep{
 
 				try{
 					floatChoice = Float.parseFloat(choice2);
-					Ingredient.setPrice(choice, floatChoice);				//capitalized C in floatchoice
-					System.out.println("Successfully changed!");
+					Ingredient.setPrice(choice, floatChoice);
+					System.out.print("Successfully changed! Press Enter to continue . . .");
 					scan.nextLine();
 					
 				} catch (NumberFormatException e){
-					System.out.println("Not a valid input!");
+					System.out.print("Not a valid input! Press Enter to continue . . .");
 					scan.nextLine();
 				}
 			}
 
-			else {System.out.println("Not a valid input!"); scan.nextLine();}
+			else {System.out.print("Not a valid input! Press Enter to continue . . ."); scan.nextLine();}
 		} while (!end);
 
 		this.clear();
@@ -215,6 +215,7 @@ public class JavaJeep{
 		System.out.println();
 		tempTruck.printBinInfo();
 		this.TRUCKS.add(tempTruck);
+		System.out.print("\nPress Enter to continue . . .");
 		scan.nextLine();
 	}
 
@@ -255,12 +256,12 @@ public class JavaJeep{
 					truckIndx = intChoice - 1;
 				}
 
-				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
+				else {System.out.print("Invalid input! Press Enter to try again."); scan.nextLine();}
 			}
 
 			catch (Exception e) {
 				if (choice.toUpperCase().equals("END")) {end = true;}
-				else {System.out.println("Invalid input! Please try again."); scan.nextLine();}
+				else {System.out.print("Invalid input! Press Enter to try again."); scan.nextLine();}
 			}
 
 
@@ -325,7 +326,7 @@ public class JavaJeep{
 
 			JavaJeep.getInstance().clear();
 
-			System.out.println("\nWelcome to JavaJeeps!\n");
+			System.out.println("Welcome to JavaJeeps!\n");
 			System.out.println("Select an Option:");
 			System.out.println("1 - Create a coffee truck");
 			System.out.println("2 - Simulate a coffee truck");
@@ -341,11 +342,8 @@ public class JavaJeep{
 				
 			} while (choice > 4 || choice < 1);
 
-			/*JavaJeep newTruck = new JavaJeep();   // does not follow singleton, creates new instance and makes it so any changes to the variables (i.e., TRUCKS array) temporary */
-
 			switch(choice) {
 				case 1: 
-					System.out.println("Creating coffee truck!"); 
 					JavaJeep.getInstance().createTruck();
 					break;
 
@@ -370,12 +368,16 @@ public class JavaJeep{
 	 * Clears the console, for clarity purposes.
 	 * Unsure if theres an actual way to clear the screen thats compatible with all terminals... For now it just prints 40 empty lines.
 	 */
-	public static void clear(){
-		int i;
-		for (i = 0; i < 40; i++){
-			System.out.println();
-		}
+	public static void clear(){						// changed this to clear the console nice
+		try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.println("Error clearing console: " + e.getMessage());
+        }
 	}
 
 }
-
