@@ -14,7 +14,7 @@ public class CoffeeTruck {
 	/** The amount of money the truck earned from transactions. */
 	private float moneyEarned = 0;
 	/** ArrayList containing all transactions of the truck. */
-	private ArrayList<Transaction> TRANSACTIONS;							//changed the names to uppercase (updated the uml)
+	private ArrayList<Transaction> TRANSACTIONS;
 	/** ArrayList containing all storage bins of the truck. For a regular truck, only 8 bins. */
 	private ArrayList<StorageBin> STORAGEBINS;
 
@@ -37,7 +37,7 @@ public class CoffeeTruck {
    	 * @param storageBinIndx The index of the storage bin to be changed in the storageBins array. 0 if bin #1, and so on.
      	 */
 	public boolean fillStorageBin(int storageBinIndx, String type, float amt){
-		if (storageBinIndx >= 0 && storageBinIndx < STORAGEBINS.size()) {			//changed the inside of if statement to storageBinIndx (was index)
+		if (storageBinIndx >= 0 && storageBinIndx < STORAGEBINS.size()) {
 	            return STORAGEBINS.get(storageBinIndx).setBin(type, amt);
 	        }
 	
@@ -60,7 +60,7 @@ public class CoffeeTruck {
        	 */
 	public boolean setType(String type) {
 		/*if (type.equals("P")){
-			this.truckType = 'P';						// changed .TRUCK_TYPE to .truckType (still closed the P for now)
+			this.truckType = 'P';
 			return true; }*/
 		if (type.equals("R")){
 			this.truckType = 'R';
@@ -221,7 +221,7 @@ public class CoffeeTruck {
 
 	/**
  	 * Simulates a sale. In simulating, it performs:
-   	 * 1. Customer ordering a drink. Display menu. (unsure if this is randomized or user input, will consult with sir)
+   	 * 1. Customer ordering a drink. Display menu.
      	 * 2. Calculate the amount of ingredients for the drink
        	 * 3. Deduce that amount from the respective storage bins.
 	 * 4. Create a new transaction variable containing all information, add it to transactions list.
@@ -255,7 +255,7 @@ public class CoffeeTruck {
 				System.out.print("Would you like to make an order? (y/n): ");
 				exit = scan.nextLine().trim();
 
-				if (exit.equalsIgnoreCase("n")) {end = true; System.out.println("Come back again!");}
+				if (exit.equalsIgnoreCase("n")) {end = true; System.out.print("Come back again! Press enter to continue . . .");}
 
 				else if(exit.equalsIgnoreCase("y")) {
 					/* Getting user input */
@@ -268,8 +268,15 @@ public class CoffeeTruck {
 					System.out.println();
 
 					if (drinkIsAvail){
-						System.out.println("here");
+						System.out.println("Here is a simulation of your order: ");
 						Transaction newT = new Transaction(drinkType, drinkSize);
+
+						try {
+							Thread.sleep(1000); // Delay for 1 second
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+
 						newT.printTransaction();
 						this.moneyEarned += newT.getPrice();
 
@@ -288,6 +295,8 @@ public class CoffeeTruck {
 
 						this.TRANSACTIONS.add(newT);
 						this.printBinInfo();
+
+						System.out.print("Press enter to return . . .");
 						scan.nextLine();
 
 					}
@@ -308,7 +317,7 @@ public class CoffeeTruck {
 
 		for (int i = 0; i < 8; i++) {
 			System.out.printf("Storage bin #%d - ", (i+1));
-			STORAGEBINS.get(i).printBinInfo();						// changed storageBins[i] to STORAGEBINS.get(i)
+			STORAGEBINS.get(i).printBinInfo();
 			System.out.println();
 		}
 
@@ -334,8 +343,14 @@ public class CoffeeTruck {
 
 		for (int i = 0; i < 8; i++) {
 			System.out.printf("Storage bin #%d - ", (i+1));
-			STORAGEBINS.get(i).printBinInfo();							// changed storageBins[i] to STORAGEBINS.get(i)
+			STORAGEBINS.get(i).printBinInfo();
 			System.out.println();
+
+			try {
+				Thread.sleep(500); // Delay for 0.5 seconds
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
