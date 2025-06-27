@@ -370,7 +370,7 @@ public class JavaJeep{
 	 * Clears the console, for clarity purposes.
 	 * Unsure if theres an actual way to clear the screen thats compatible with all terminals... For now it just prints 40 empty lines.
 	 */
-	private void clear(){
+	public static void clear(){
 		int i;
 		for (i = 0; i < 40; i++){
 			System.out.println();

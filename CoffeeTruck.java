@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * Represents a coffee truck.
@@ -130,9 +131,9 @@ public class CoffeeTruck {
 
 		/* cafe americano: 1/3 espresso, 2/3 water. */
 		tempStr = "Cafe Americano [";
-		ratio1 = (1.0/3)/(1.0/19); // Ratio of coffee
-		ratio2 = (1.0/3)/(18.0/19); // Ratio of water in espresso
-		ratio3 = 2.0/3; // Ratio of water
+		ratio1 = (1.0/3.0)/(1.0/19.0); // Ratio of coffee
+		ratio2 = (1.0/3.0)/(18.0/19.0); // Ratio of water in espresso
+		ratio3 = 2.0/3.0; // Ratio of water
 
 		if (coffee >= 8/ratio1 && water >= ((8/ratio2) + (8/ratio3))){
 			if (scup > 0) tempStr += " S";
@@ -150,9 +151,9 @@ public class CoffeeTruck {
 
 		/* latte: 1/5 espresso, 4/5 milk */
 		tempStr = "Latte [";
-		ratio1 = (1.0/5)/(1.0/19); // ratio for coffee
-		ratio2 = (1.0/5)/(18.0/19); // ratio for water
-		ratio3 = (4/5.0); // ratio for milk
+		ratio1 = (1.0/5.0)/(1.0/19.0); // ratio for coffee
+		ratio2 = (1.0/5.0)/(18.0/19.0); // ratio for water
+		ratio3 = (4.0/5.0); // ratio for milk
 
 		if (coffee >= 8/ratio1 && water >= 8/ratio2 && milk >= 8/ratio3){
 			if (scup > 0) tempStr += " S";
@@ -169,9 +170,9 @@ public class CoffeeTruck {
 
 		/* cappucino: 1/3 espresso, 2/3 milk */
 		tempStr = "Cappucino [";
-		ratio1 = (1.0/3)/(1.0/19); // ratio for coffee
-		ratio2 = (1.0/3)/(18.0/19); // ratio for water
-		ratio3 = (2.0/3); // ratio for milk
+		ratio1 = (1.0/3.0)/(1.0/19.0); // ratio for coffee
+		ratio2 = (1.0/3.0)/(18.0/19.0); // ratio for water
+		ratio3 = (2.0/3.0); // ratio for milk
 
 		if (coffee >= 8/ratio1 && water >= 8/ratio2 && milk >= 8/ratio3){
 			if (scup > 0) tempStr += " S";
@@ -190,6 +191,35 @@ public class CoffeeTruck {
 	}
 
 	/**
+	 * Using the menu array from returnMenu(), check if a drink is available.
+	 * @param drink The name of the drink (i.e., "Latte")
+	 * @param size 1 character string depicting size of drink (i.e., "S", "L")
+	 * @return true if drink is available, false otherwise.
+	 */
+	public boolean isDrinkAvailable(String inptDrink, String inptSize){
+		int openBracket, closeBracket;
+		String sizes;
+		String[] availableSizes;
+
+		for (String item : this.returnMenu()) {
+			if (item.toLowerCase().startsWith(inptDrink.toLowerCase())) {
+				openBracket = item.indexOf('[');
+				closeBracket = item.indexOf(']');
+
+				sizes = item.substring(openBracket + 1, closeBracket).trim();
+
+				availableSizes = sizes.trim().split("\\s+");
+				for (String size : availableSizes) {
+					if (size.trim().equalsIgnoreCase(inptSize.trim())) {
+						return true;}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
  	 * Simulates a sale. In simulating, it performs:
    	 * 1. Customer ordering a drink. Display menu. (unsure if this is randomized or user input, will consult with sir)
      	 * 2. Calculate the amount of ingredients for the drink
@@ -198,22 +228,75 @@ public class CoffeeTruck {
   	 * 5. Print all information.
     	 */
 	public void simulateSale() {
-		ArrayList<String> menu = this.returnMenu();
-		Iterator<String> it = menu.iterator();
+		ArrayList<String> menu;
+		Iterator<String> it;
+		Scanner scan = new Scanner(System.in);
 
-		if (menu.size() == 0){System.out.println("NO AVAILABLE ITEMS.");}
-		else {
-			System.out.println("AVAILABLE ITEMS:");
-			while (it.hasNext()) {System.out.println(it.next());}
+		String drinkType, drinkSize, exit;
+		boolean end = false, drinkIsAvail;
+
+		while (!end){
+			menu = this.returnMenu();
+			JavaJeep.clear();
+			if (menu.size() == 0){
+				System.out.println("NO AVAILABLE ITEMS.");
+				System.out.println("Press enter to return to menu.");
+				end = true;
+			}
+
+			else { 
+				/* Printing menu*/
+				System.out.println("AVAILABLE ITEMS:");
+				it = menu.iterator();
+				while (it.hasNext()) {System.out.println(it.next());}
+				System.out.println();
+
+				/* Asking if user would like to exit */
+				System.out.print("Would you like to make an order? (y/n): ");
+				exit = scan.nextLine().trim();
+
+				if (exit.equalsIgnoreCase("n")) {end = true; System.out.println("Come back again!");}
+
+				else if(exit.equalsIgnoreCase("y")) {
+					/* Getting user input */
+					System.out.print("What drink would you like?: ");
+					drinkType = scan.nextLine().trim();
+					System.out.print("What size would you like? [S M L]: ");
+					drinkSize = scan.nextLine().trim();
+
+					drinkIsAvail = this.isDrinkAvailable(drinkType, drinkSize);
+					System.out.println();
+
+					if (drinkIsAvail){
+						System.out.println("here");
+						Transaction newT = new Transaction(drinkType, drinkSize);
+						newT.printTransaction();
+						this.moneyEarned += newT.getPrice();
+
+						boolean found;
+						for (Ingredient ingr : newT.getIngredients()){
+							found = false;
+							System.out.printf("");
+							for (StorageBin bin : STORAGEBINS){ 
+								if (!found && bin.getContents().getType().equals(ingr.getType())){
+									bin.lessenContents(ingr.getAmt());
+									found = true;
+									/* if (bin.getContents().getAmt() < ingr.getAmt() */
+								}
+							}
+						}
+
+						this.TRANSACTIONS.add(newT);
+						this.printBinInfo();
+						scan.nextLine();
+
+					}
+
+					else {System.out.println("That drink is not available!"); scan.nextLine();}
+				}
+			}
 		}
 
-		while (it.hasNext()){
-			System.out.println(it.next());
-		}
-
-		Transaction t = new Transaction("Latte", 'M');
-		moneyEarned += t.getPrice();
-		TRANSACTIONS.add(t);
 	}
 
 	/**

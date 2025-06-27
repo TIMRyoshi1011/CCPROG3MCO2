@@ -21,9 +21,9 @@ public class Ingredient{
 	private static float largeCupPrice = 70;
 
 	/** Static variable for the price of 1 gram of coffeebeans. */
-	private static float coffeePrice = 3;
+	private static float coffeePrice = 1;
 	/** Static variable for the price of 1 fl of milk. */
-	private static float milkPrice = 3.5f;						// added f at the end of the values (causes error if there is no f)
+	private static float milkPrice = 2f;						// added f at the end of the values (causes error if there is no f)
 	/** Static variable for the price of 1 fl of water. */
 	private static float waterPrice = 0.5f;
 

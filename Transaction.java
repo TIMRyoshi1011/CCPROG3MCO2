@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Represents a transaction.
@@ -22,11 +23,48 @@ public class Transaction{
      	 * @param type The drink type
        	 * @param size The size of the drink. 
 	 */
-	public Transaction(String type, char size){
+	public Transaction(String type, String size){
+		int sizeFl;
+
 		this.drinkType = type;
-	        this.drinkSize = size;
-	        this.ingredients = new ArrayList<>();
-	        //this.drinkCost = insert operations here;
+        this.drinkSize = size.charAt(0);
+        this.drinkCost = 0;
+        this.ingredients = new ArrayList<Ingredient>();
+
+        switch(size.toLowerCase()){
+        	case "s": sizeFl = 8; ingredients.add(new Ingredient("scup", 1)); break;
+        	case "m": sizeFl = 12; ingredients.add(new Ingredient("mcup", 1)); break;
+        	case "l": sizeFl = 16; ingredients.add(new Ingredient("lcup", 1)); break;
+        	default: sizeFl = 0; break;
+        }
+
+        /* 1/3 espresso, 2/3 water */
+        if (type.equalsIgnoreCase("cafe americano")){
+        	ingredients.add(new Ingredient("coffee", (float)((sizeFl/((1.0/3.0)/(1.0/19.0))) * 28.34952)));
+        	ingredients.add(new Ingredient("water", (float)((sizeFl/((1.0/3.0)/(18.0/19.0))) + (sizeFl/(2.0/3.0)))));
+		}
+
+		/* 1/5 espresso, 4/5 milk */
+		else if (type.equalsIgnoreCase("latte")){
+			ingredients.add(new Ingredient("coffee", (float)((sizeFl/((1.0/5.0)/(1.0/19.0))) * 28.34952)));
+			ingredients.add(new Ingredient("water", (float)(sizeFl/((1.0/5.0)/(18.0/19.0)))));
+			ingredients.add(new Ingredient("milk", (float)(sizeFl/(4.0/5.0))));
+		}
+
+		/* 1/5 espresso, 4/5 milk */
+		else if (type.equalsIgnoreCase("cappucino")){
+			ingredients.add(new Ingredient("coffee", (float)((sizeFl/((1.0/3.0)/(1.0/19.0))) * 28.34952)));
+			ingredients.add(new Ingredient("water", (float)(sizeFl/((1.0/3.0)/(18.0/19.0)))));
+			ingredients.add(new Ingredient("milk", (float)(sizeFl/(2.0/3.0))));
+		}
+
+		Iterator<Ingredient> it = ingredients.iterator();
+		Ingredient tempIngr;
+
+		while (it.hasNext()){
+			tempIngr = it.next();
+			this.drinkCost += Ingredient.getPrice(tempIngr.getType()) * tempIngr.getAmt();
+		}
 	}
 
 	/**
@@ -35,6 +73,14 @@ public class Transaction{
      	 */
 	public float getPrice(){
 		return drinkCost;
+	}
+
+	/**
+	 * Returns the list of ingredients used in the transaction.
+	 * @return The list of ingredients used in the transaction.
+	 */
+	public ArrayList<Ingredient> getIngredients(){
+		return ingredients;
 	}
 
 	/**
