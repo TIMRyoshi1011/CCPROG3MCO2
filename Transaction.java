@@ -87,6 +87,7 @@ public class Transaction{
  	 * Prints all transaction info.
    	 */
 	public void printTransaction(){
-		System.out.println("Drink: " + drinkType + ", Size: " + drinkSize + ", Cost: " + drinkCost);
+		System.out.println("Drink: " + drinkType + ", Size: " + drinkSize + ", Cost: " + drinkCost + "\n");
 	}
 }
+
