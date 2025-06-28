@@ -62,12 +62,37 @@ public class CoffeeTruck {
 		/*if (type.equals("P")){
 			this.truckType = 'P';
 			return true; }*/
-		if (type.equals("R")){
+		if (type.trim().equalsIgnoreCase("R")){
 			this.truckType = 'R';
 			return true;
 		}
 		return false;
 	}
+
+	/**
+	 * Returns the type of the truck 
+	 * @return Type of the truck.
+	 */
+	public char getType(){
+		return truckType;
+	}
+
+	/**
+	 * Get the total amount of money the truck has earned.
+	 * @return the total amount of earnings of the truck.
+	 */
+	public float getEarnings(){
+		return moneyEarned;
+	}
+
+	/**
+	 * Returns the ArrayList of transactions the truck has.
+	 * @return ArrayList of all transactions of the truck.
+	 */
+	public ArrayList<Transaction> getTransactions(){
+		return TRANSACTIONS;
+	}
+
 
 	/**
  	 * Sets the location of the truck.
@@ -277,24 +302,31 @@ public class CoffeeTruck {
 							e.printStackTrace();
 						}
 
-						newT.printTransaction();
 						this.moneyEarned += newT.getPrice();
 
-						boolean found;
+						float amtLeft;
 						for (Ingredient ingr : newT.getIngredients()){
-							found = false;
+							amtLeft = ingr.getAmt();
 							System.out.printf("");
 							for (StorageBin bin : STORAGEBINS){ 
-								if (!found && bin.getContents().getType().equals(ingr.getType())){
-									bin.lessenContents(ingr.getAmt());
-									found = true;
-									/* if (bin.getContents().getAmt() < ingr.getAmt() */
+								if (amtLeft > 0 && bin.getContents().getType().equals(ingr.getType())){
+
+									if (bin.getContents().getAmt() < amtLeft){
+										bin.lessenContents(bin.getContents().getAmt());
+										amtLeft -= bin.getContents().getAmt();
+									}
+
+									else{
+										bin.lessenContents(amtLeft);
+										amtLeft = 0;
+									}
 								}
 							}
 						}
 
 						this.TRANSACTIONS.add(newT);
-						this.printBinInfo();
+						newT.printBrew();
+						newT.printTransaction();
 
 						System.out.print("Press enter to return . . .");
 						scan.nextLine();
@@ -313,7 +345,7 @@ public class CoffeeTruck {
    	 */
 	public void printTruckInfo() {
 		System.out.println("Type: " + truckType + " | Truck at: " + truckLocation + " | Earned: " + moneyEarned);
-		System.out.println("\nStorage bins contain...");
+		System.out.println("Storage bins contain...");
 
 		for (int i = 0; i < 8; i++) {
 			System.out.printf("Storage bin #%d - ", (i+1));
@@ -345,41 +377,43 @@ public class CoffeeTruck {
 			System.out.printf("Storage bin #%d - ", (i+1));
 			STORAGEBINS.get(i).printBinInfo();
 			System.out.println();
+
+			JavaJeep.pause();
 		}
 	}
 
 	public void restockStorageBins() {
-		String choice, choice2;
-		int intChoice = 0;
-		float floatChoice;
-		boolean end, inptCheck;
-		Scanner scan = new Scanner(System.in);
+	String choice, choice2;
+	int intChoice = 0;
+	float floatChoice;
+	boolean end, inptCheck;
+	Scanner scan = new Scanner(System.in);
 
-		end = false;
-		do { 
-			JavaJeep.clear();
-			System.out.println("Here are the current contents of your storage bins:");
+	end = false;
+	do { 
+		JavaJeep.clear();
+		System.out.println("Here are the current contents of your storage bins:");
 
-				printBinInfo();					
-				System.out.print("\n");
+			printBinInfo();					
+			System.out.print("\n");
 
-			System.out.println();
-			System.out.println("Select a bin to edit, enter END to exit.");
-			System.out.print(">> ");
-			choice = scan.nextLine();
-			System.out.println();
+		System.out.println();
+		System.out.println("Select a bin to edit, enter END to exit.");
+		System.out.print(">> ");
+		choice = scan.nextLine();
+		System.out.println();
 
-			inptCheck = true; // checking input
-			if (choice.toUpperCase().equals("END")) {end = true;}
-			else{
-				try {
-					intChoice = Integer.parseInt(choice);
-					if (intChoice < 1 || intChoice > 8){
-						inptCheck = false;
-					}
-						
-				} catch (NumberFormatException e) {inptCheck = false;}
-			}
+		inptCheck = true; // checking input
+		if (choice.toUpperCase().equals("END")) {end = true;}
+		else{
+			try {
+				intChoice = Integer.parseInt(choice);
+				if (intChoice < 1 || intChoice > 8){
+					inptCheck = false;
+				}
+					
+			} catch (NumberFormatException e) {inptCheck = false;}
+		}
 
 			while (inptCheck && !end){
 				JavaJeep.clear();
@@ -416,7 +450,7 @@ public class CoffeeTruck {
 
 				scan.nextLine();
 			}
-			
+		
 		} while(!end);
 	}
 		
@@ -469,4 +503,5 @@ public class CoffeeTruck {
 			else {System.out.print("Not a valid input! Press Enter to continue . . ."); scan.nextLine();}
 	}
 }
+
 
