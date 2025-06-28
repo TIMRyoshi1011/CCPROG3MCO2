@@ -288,13 +288,16 @@ public class JavaJeep{
 								scan.nextLine();
 								break;
 							case 2:
-								// view truck info
+								clear();
+								TRUCKS.get(truckIndx).printTruckInfo();
+								// insert menu
+								// insert transactions
 								break;
 							case 3: 
-								// manage bins
+								TRUCKS.get(truckIndx).restockStorageBins();
 								break;
 							case 4:
-								// maintenance
+								TRUCKS.get(truckIndx).setMaintenance();
 								break; 
 							case 5:
 								truckIndx = -1;
@@ -479,7 +482,7 @@ public class JavaJeep{
 			System.out.println("");
 			System.out.print(">> ");
 			do {								
-				choice = scan.nextInt();   // I think we should use nextLine() and do a try-catch when trying to parse it into an int. gets an error when user enters a non-int value
+				choice = scan.nextInt();   
 
 				if(choice > 4 || choice < 1)
 					System.out.print("Invalid option, please try again: ");
@@ -511,7 +514,7 @@ public class JavaJeep{
 	/**
 	 * Clears the console, for clarity purposes.
 	 */
-	public static void clear(){						// changed this to clear the console nice
+	public static void clear(){
 		try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -536,3 +539,4 @@ public class JavaJeep{
 	}
 
 }
+
