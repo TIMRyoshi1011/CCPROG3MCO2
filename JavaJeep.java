@@ -290,8 +290,7 @@ public class JavaJeep{
 							case 2:
 								clear();
 								TRUCKS.get(truckIndx).printTruckInfo();
-								// insert menu
-								// insert transactions
+								scan.nextLine();
 								break;
 							case 3: 
 								TRUCKS.get(truckIndx).restockStorageBins();
