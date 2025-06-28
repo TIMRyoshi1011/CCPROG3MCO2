@@ -62,37 +62,12 @@ public class CoffeeTruck {
 		/*if (type.equals("P")){
 			this.truckType = 'P';
 			return true; }*/
-		if (type.trim().equalsIgnoreCase("R")){
+		if (type.equals("R")){
 			this.truckType = 'R';
 			return true;
 		}
 		return false;
 	}
-
-	/**
-	 * Returns the type of the truck 
-	 * @return Type of the truck.
-	 */
-	public char getType(){
-		return truckType;
-	}
-
-	/**
-	 * Get the total amount of money the truck has earned.
-	 * @return the total amount of earnings of the truck.
-	 */
-	public float getEarnings(){
-		return moneyEarned;
-	}
-
-	/**
-	 * Returns the ArrayList of transactions the truck has.
-	 * @return ArrayList of all transactions of the truck.
-	 */
-	public ArrayList<Transaction> getTransactions(){
-		return TRANSACTIONS;
-	}
-
 
 	/**
  	 * Sets the location of the truck.
@@ -302,31 +277,24 @@ public class CoffeeTruck {
 							e.printStackTrace();
 						}
 
+						newT.printTransaction();
 						this.moneyEarned += newT.getPrice();
 
-						float amtLeft;
+						boolean found;
 						for (Ingredient ingr : newT.getIngredients()){
-							amtLeft = ingr.getAmt();
+							found = false;
 							System.out.printf("");
 							for (StorageBin bin : STORAGEBINS){ 
-								if (amtLeft > 0 && bin.getContents().getType().equals(ingr.getType())){
-
-									if (bin.getContents().getAmt() < amtLeft){
-										bin.lessenContents(bin.getContents().getAmt());
-										amtLeft -= bin.getContents().getAmt();
-									}
-
-									else{
-										bin.lessenContents(amtLeft);
-										amtLeft = 0;
-									}
+								if (!found && bin.getContents().getType().equals(ingr.getType())){
+									bin.lessenContents(ingr.getAmt());
+									found = true;
+									/* if (bin.getContents().getAmt() < ingr.getAmt() */
 								}
 							}
 						}
 
 						this.TRANSACTIONS.add(newT);
-						newT.printBrew();
-						newT.printTransaction();
+						this.printBinInfo();
 
 						System.out.print("Press enter to return . . .");
 						scan.nextLine();
@@ -344,8 +312,8 @@ public class CoffeeTruck {
  	 * Prints the info of the truck.
    	 */
 	public void printTruckInfo() {
-		System.out.println("Truck at: " + truckLocation + " | Earned: " + moneyEarned);
-		System.out.println("Storage bins contain...");
+		System.out.println("Type: " + truckType + " | Truck at: " + truckLocation + " | Earned: " + moneyEarned);
+		System.out.println("\nStorage bins contain...");
 
 		for (int i = 0; i < 8; i++) {
 			System.out.printf("Storage bin #%d - ", (i+1));
@@ -377,8 +345,128 @@ public class CoffeeTruck {
 			System.out.printf("Storage bin #%d - ", (i+1));
 			STORAGEBINS.get(i).printBinInfo();
 			System.out.println();
-
-			JavaJeep.pause();
 		}
 	}
+
+	public void restockStorageBins() {
+		String choice, choice2;
+		int intChoice = 0;
+		float floatChoice;
+		boolean end, inptCheck;
+		Scanner scan = new Scanner(System.in);
+
+		end = false;
+		do { 
+			JavaJeep.clear();
+			System.out.println("Here are the current contents of your storage bins:");
+
+				printBinInfo();					
+				System.out.print("\n");
+
+			System.out.println();
+			System.out.println("Select a bin to edit, enter END to exit.");
+			System.out.print(">> ");
+			choice = scan.nextLine();
+			System.out.println();
+
+			inptCheck = true; // checking input
+			if (choice.toUpperCase().equals("END")) {end = true;}
+			else{
+				try {
+					intChoice = Integer.parseInt(choice);
+					if (intChoice < 1 || intChoice > 8){
+						inptCheck = false;
+					}
+						
+				} catch (NumberFormatException e) {inptCheck = false;}
+			}
+
+			while (inptCheck && !end){
+				JavaJeep.clear();
+
+				System.out.println("Max quantity for all items:");
+				System.out.println("Small Cup - 80pcs [enter: 'scup']");
+				System.out.println("Medium Cup - 64pcs [enter: 'mcup']");
+				System.out.println("Large Cup - 40pcs [enter: 'lcup']");
+				System.out.println("Coffee Beans - 1008grams [enter: 'coffee']");
+				System.out.println("Milk - 640fl [enter: 'milk']");
+				System.out.println("Water - 640fl [enter: 'water']");
+				System.out.println();
+
+				System.out.print("Type: ");
+				choice = scan.nextLine().toLowerCase();
+				System.out.print("Amount: ");
+				choice2 = scan.nextLine();
+				System.out.println();
+
+				try{
+					floatChoice = Float.parseFloat(choice2);
+					inptCheck = fillStorageBin((intChoice-1), choice, floatChoice);
+					if (inptCheck){
+						System.out.print("Success! Press Enter to continue . . .");
+						inptCheck = false;
+					}
+					else {
+						System.out.print("Incorrect input, check if type matches the enter keywords and if the amount doesn't exceed max capacity. Press Enter to continue . . .");
+					}
+					
+				} catch (NumberFormatException e){
+					System.out.print("Not a valid input! Press Enter to continue . . .");
+				}
+
+				scan.nextLine();
+			}
+			
+		} while(!end);
+	}
+		
+	public void setMaintenance() {
+		String choice, choice2;
+		float floatChoice;
+		Scanner scan = new Scanner(System.in);
+
+			JavaJeep.clear();
+			System.out.println("What location do you want your truck to stay in?");
+			System.out.print(">> ");
+			choice = scan.nextLine();
+
+			this.truckLocation = choice;
+		
+			JavaJeep.clear();	
+			System.out.println("Below are the current prices for each ingredient:");
+			System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
+			System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
+			System.out.printf("1fl of water: %.2f\n", Ingredient.getPrice("water"));
+			System.out.printf("Small cup base price: %.2f\n", Ingredient.getPrice("scup"));
+			System.out.printf("Medium cup base price: %.2f\n", Ingredient.getPrice("mcup"));
+			System.out.printf("Large cup base price: %.2f\n", Ingredient.getPrice("lcup"));
+			System.out.println();
+
+			System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','coffee','scup','mcup','lcup'].");
+			System.out.print(">> ");
+			choice = scan.nextLine();
+			System.out.println();
+
+			if (choice.equals("milk") || choice.equals("water") || choice.equals("coffee") ||
+				 choice.equals("scup") || choice.equals("mcup") || choice.equals("lcup")) {
+				System.out.println("Enter the new price: (THIS IS EFFECTIVE FOR THIS TRUCK ONLY)");
+				System.out.print(">> ");
+				choice2 = scan.nextLine();
+				System.out.println();
+
+				try{
+					floatChoice = Float.parseFloat(choice2);
+					Ingredient.setPrice(choice, floatChoice);
+					System.out.print("Successfully changed! Press Enter to continue . . .");
+					scan.nextLine();
+					
+				} catch (NumberFormatException e){
+					System.out.print("Not a valid input! Press Enter to continue . . .");
+					scan.nextLine();
+				}
+			}
+
+			else {System.out.print("Not a valid input! Press Enter to continue . . ."); scan.nextLine();}
+	}
 }
+
