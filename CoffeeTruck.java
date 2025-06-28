@@ -328,7 +328,7 @@ public class CoffeeTruck {
 						newT.printBrew();
 						newT.printTransaction();
 
-						System.out.print("Press enter to return . . .");
+						System.out.print("\n\nPress enter to return . . .");
 						scan.nextLine();
 
 					}
@@ -353,10 +353,14 @@ public class CoffeeTruck {
 			System.out.println();
 		}
 
-		/* Print menu */
+		System.out.println("\nMenu: ");
+		printMenu();
 		
-		/* Print transaction info */
-		
+		System.out.println("\nTransactions: ");
+		Iterator<Transaction> it = TRANSACTIONS.iterator();
+		while (it.hasNext()) {
+			it.next().printTransaction();
+		}		
 	}
 
 	/**
@@ -459,49 +463,58 @@ public class CoffeeTruck {
 		float floatChoice;
 		Scanner scan = new Scanner(System.in);
 
-			JavaJeep.clear();
-			System.out.println("What location do you want your truck to stay in?");
-			System.out.print(">> ");
-			choice = scan.nextLine();
+		JavaJeep.clear();
+		System.out.println("What location do you want your truck to stay in?");
+		System.out.print(">> ");
+		choice = scan.nextLine();
 
-			this.truckLocation = choice;
-		
-			JavaJeep.clear();	
-			System.out.println("Below are the current prices for each ingredient:");
-			System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
-			System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
-			System.out.printf("1fl of water: %.2f\n", Ingredient.getPrice("water"));
-			System.out.printf("Small cup base price: %.2f\n", Ingredient.getPrice("scup"));
-			System.out.printf("Medium cup base price: %.2f\n", Ingredient.getPrice("mcup"));
-			System.out.printf("Large cup base price: %.2f\n", Ingredient.getPrice("lcup"));
+		this.truckLocation = choice;
+	
+		JavaJeep.clear();	
+		System.out.println("Below are the current prices for each ingredient:");
+		System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
+		System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
+		System.out.printf("1fl of water: %.2f\n", Ingredient.getPrice("water"));
+		System.out.printf("Small cup base price: %.2f\n", Ingredient.getPrice("scup"));
+		System.out.printf("Medium cup base price: %.2f\n", Ingredient.getPrice("mcup"));
+		System.out.printf("Large cup base price: %.2f\n", Ingredient.getPrice("lcup"));
+		System.out.println();
+
+		System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','coffee','scup','mcup','lcup'].");
+		System.out.print(">> ");
+		choice = scan.nextLine();
+		System.out.println();
+
+		if (choice.equals("milk") || choice.equals("water") || choice.equals("coffee") ||
+				choice.equals("scup") || choice.equals("mcup") || choice.equals("lcup")) {
+			System.out.println("Enter the new price: (THIS IS EFFECTIVE FOR THIS TRUCK ONLY)");
+			System.out.print(">> ");
+			choice2 = scan.nextLine();
 			System.out.println();
 
-			System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','coffee','scup','mcup','lcup'].");
-			System.out.print(">> ");
-			choice = scan.nextLine();
-			System.out.println();
-
-			if (choice.equals("milk") || choice.equals("water") || choice.equals("coffee") ||
-				 choice.equals("scup") || choice.equals("mcup") || choice.equals("lcup")) {
-				System.out.println("Enter the new price: (THIS IS EFFECTIVE FOR THIS TRUCK ONLY)");
-				System.out.print(">> ");
-				choice2 = scan.nextLine();
-				System.out.println();
-
-				try{
-					floatChoice = Float.parseFloat(choice2);
-					Ingredient.setPrice(choice, floatChoice);
-					System.out.print("Successfully changed! Press Enter to continue . . .");
-					scan.nextLine();
-					
-				} catch (NumberFormatException e){
-					System.out.print("Not a valid input! Press Enter to continue . . .");
-					scan.nextLine();
-				}
+			try{
+				floatChoice = Float.parseFloat(choice2);
+				Ingredient.setPrice(choice, floatChoice);
+				System.out.print("Successfully changed! Press Enter to continue . . .");
+				scan.nextLine();
+				
+			} catch (NumberFormatException e){
+				System.out.print("Not a valid input! Press Enter to continue . . .");
+				scan.nextLine();
 			}
+		}
 
-			else {System.out.print("Not a valid input! Press Enter to continue . . ."); scan.nextLine();}
+		else {System.out.print("Not a valid input! Press Enter to continue . . ."); scan.nextLine();}
+	}
+
+	public void printMenu() {
+		ArrayList<String> menu = this.returnMenu();
+		Iterator<String> it;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("AVAILABLE ITEMS:");
+				it = menu.iterator();
+				while (it.hasNext()) {System.out.println(it.next());}
+				System.out.println();
 	}
 }
-
 
