@@ -277,24 +277,31 @@ public class CoffeeTruck {
 							e.printStackTrace();
 						}
 
-						newT.printTransaction();
 						this.moneyEarned += newT.getPrice();
 
-						boolean found;
+						float amtLeft;
 						for (Ingredient ingr : newT.getIngredients()){
-							found = false;
+							amtLeft = ingr.getAmt();
 							System.out.printf("");
 							for (StorageBin bin : STORAGEBINS){ 
-								if (!found && bin.getContents().getType().equals(ingr.getType())){
-									bin.lessenContents(ingr.getAmt());
-									found = true;
-									/* if (bin.getContents().getAmt() < ingr.getAmt() */
+								if (amtLeft > 0 && bin.getContents().getType().equals(ingr.getType())){
+
+									if (bin.getContents().getAmt() < amtLeft){
+										bin.lessenContents(bin.getContents().getAmt());
+										amtLeft -= bin.getContents().getAmt();
+									}
+
+									else{
+										bin.lessenContents(amtLeft);
+										amtLeft = 0;
+									}
 								}
 							}
 						}
 
 						this.TRANSACTIONS.add(newT);
-						this.printBinInfo();
+						newT.printBrew();
+						newT.printTransaction();
 
 						System.out.print("Press enter to return . . .");
 						scan.nextLine();
@@ -346,11 +353,7 @@ public class CoffeeTruck {
 			STORAGEBINS.get(i).printBinInfo();
 			System.out.println();
 
-			try {
-				Thread.sleep(500); // Delay for 0.5 seconds
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			JavaJeep.pause();
 		}
 	}
 }

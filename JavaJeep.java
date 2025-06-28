@@ -366,7 +366,6 @@ public class JavaJeep{
 
 	/**
 	 * Clears the console, for clarity purposes.
-	 * Unsure if theres an actual way to clear the screen thats compatible with all terminals... For now it just prints 40 empty lines.
 	 */
 	public static void clear(){						// changed this to clear the console nice
 		try {
@@ -378,6 +377,18 @@ public class JavaJeep{
         } catch (Exception e) {
             System.out.println("Error clearing console: " + e.getMessage());
         }
+	}
+
+	/**
+	 * Halts the program for .5 seconds.
+	 * Used in printing statements.
+	 */
+	public static void pause(){		
+			try {
+			Thread.sleep(500); // Delay for 0.5 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
