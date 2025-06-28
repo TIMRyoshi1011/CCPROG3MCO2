@@ -62,12 +62,37 @@ public class CoffeeTruck {
 		/*if (type.equals("P")){
 			this.truckType = 'P';
 			return true; }*/
-		if (type.equals("R")){
+		if (type.trim().equalsIgnoreCase("R")){
 			this.truckType = 'R';
 			return true;
 		}
 		return false;
 	}
+
+	/**
+	 * Returns the type of the truck 
+	 * @return Type of the truck.
+	 */
+	public char getType(){
+		return truckType;
+	}
+
+	/**
+	 * Get the total amount of money the truck has earned.
+	 * @return the total amount of earnings of the truck.
+	 */
+	public float getEarnings(){
+		return moneyEarned;
+	}
+
+	/**
+	 * Returns the ArrayList of transactions the truck has.
+	 * @return ArrayList of all transactions of the truck.
+	 */
+	public ArrayList<Transaction> getTransactions(){
+		return TRANSACTIONS;
+	}
+
 
 	/**
  	 * Sets the location of the truck.

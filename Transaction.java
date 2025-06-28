@@ -27,7 +27,7 @@ public class Transaction{
 		int sizeFl;
 
 		this.drinkType = type;
-        this.drinkSize = size.charAt(0);
+        this.drinkSize = size.toLowerCase().charAt(0);
         this.drinkCost = 0;
         this.ingredients = new ArrayList<Ingredient>();
 
@@ -84,10 +84,27 @@ public class Transaction{
 	}
 
 	/**
+	 * Returns the type of drink sold in the transaction.
+	 * @return Type of drink sold.
+	 */
+	public String getDrinkType(){
+		return drinkType;
+	}
+
+	/**
+	 * Returns the size of the drink sold in the transaction.
+	 * @return Size of drink sold.
+	 */
+	public char getDrinkSize(){
+		return drinkSize;
+	}
+
+	/**
  	 * Prints all transaction info.
    	 */
 	public void printTransaction(){
 		System.out.println("Drink: " + drinkType + ", Size: " + drinkSize + ", Cost: " + drinkCost + "\n");
+		System.out.printf("Drink: %s, Size: %c, Cost %.2f", drinkType.substring(0, 1).toUpperCase() + drinkType.substring(1), Character.toUpperCase(drinkSize), drinkCost);
 	}
 
 	/**
@@ -115,7 +132,7 @@ public class Transaction{
 		switch (drinkType.toLowerCase()){
 			case "cafe americano": 
 				/* 1/3rds espresso, 2/3rds water. */
-				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl/(1.0/3.0)));
+				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl*(1.0/3.0)));
 				JavaJeep.pause();
 				System.out.printf("\t%.2f grams of coffee...\n", ingredients.get(1).getAmt());
 				JavaJeep.pause();
@@ -127,7 +144,7 @@ public class Transaction{
 
 			case "latte": 
 				/* 1/5ths espresso, 4/5ths milk. */
-				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl/(1.0/5.0)));
+				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl*(1.0/5.0)));
 				JavaJeep.pause();
 				System.out.printf("\t%.2f grams of coffee...\n", ingredients.get(1).getAmt());
 				JavaJeep.pause();
@@ -139,7 +156,7 @@ public class Transaction{
 
 			case "cappucino": 
 				/* 1/3rds espresso 2/3rds milk. */
-				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl/(1.0/3.0)));
+				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl*(1.0/3.0)));
 				JavaJeep.pause();
 				System.out.printf("\t%.2f grams of coffee...\n", ingredients.get(1).getAmt());
 				JavaJeep.pause();

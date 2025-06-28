@@ -13,8 +13,6 @@ public class JavaJeep{
 	private final ArrayList<CoffeeTruck> TRUCKS;
 	/** The number of trucks made. */
 	private int noOfTrucks;
-	/** static variable for the combined amount of sales. */
-	private static float combinedSales;
 
 	/**
  	 * Constructor for JavaJeep. Will only be called once, initializes all variables.
@@ -22,7 +20,6 @@ public class JavaJeep{
 	private JavaJeep(){
 		TRUCKS = new ArrayList<CoffeeTruck>();
 		noOfTrucks = 0;
-		combinedSales = 0;
 	}
 
 	/**
@@ -215,6 +212,7 @@ public class JavaJeep{
 		System.out.println();
 		tempTruck.printBinInfo();
 		this.TRUCKS.add(tempTruck);
+		noOfTrucks++;
 		System.out.print("\nPress Enter to continue . . .");
 		scan.nextLine();
 	}
@@ -316,6 +314,152 @@ public class JavaJeep{
 	}
 
 	/**
+	 * Provides a birds-eye view of all trucks.
+	 */
+	public void dashboard(){
+		float coffee = 0, milk = 0, water = 0, scup = 0, mcup = 0, lcup = 0;
+		int americano = 0, latte = 0, cappucino = 0, small = 0, medium = 0, large = 0, sales = 0;
+		float combinedSales = 0;
+		int numBins, i;
+		Ingredient tempIngr;
+		Scanner scan = new Scanner(System.in); String choice; int intChoice;
+		boolean exit = false;
+
+		do {
+			JavaJeep.clear();
+			System.out.println("ALL TRUCKS:");
+
+			/* Prints base information of all trucks and their types as well as collects their data. */
+			for (CoffeeTruck truck : TRUCKS){
+				truck.printBaseInfo();
+
+				if (truck.getType() == 'R') numBins = 8; else numBins = 12;
+
+				/* Gets the amount of ingredients truck contains. */
+				for (i = 0; i < numBins; i++){
+					tempIngr = truck.getStorageBin(i).getContents();
+					if (tempIngr != null){
+						switch(tempIngr.getType().toLowerCase()){
+							case "milk": milk += tempIngr.getAmt(); break;
+							case "water": water += tempIngr.getAmt(); break;
+							case "coffee": coffee += tempIngr.getAmt(); break;
+							case "scup": scup += tempIngr.getAmt(); break;
+							case "mcup": mcup += tempIngr.getAmt(); break;
+							case "lcup": lcup += tempIngr.getAmt(); break;
+						}
+					}
+				}
+
+				/* Gets total sales */
+				combinedSales += truck.getEarnings();
+
+				/* Gets transaction details. */
+				for (Transaction transaction : truck.getTransactions()){
+					sales++;
+
+					switch(transaction.getDrinkType().toLowerCase()){
+						case "cafe americano": americano ++; break;
+						case "latte": latte++; break;
+						case "cappucino": cappucino++; break;
+					}
+
+					switch(transaction.getDrinkSize()){
+						case 's': small++; break;
+						case 'm': medium++; break;
+						case 'l': large++; break;
+					}
+				}
+
+			}
+
+			/* Prints aggregate amount of ingredients all trucks have. */
+			System.out.println();
+			System.out.println();
+			System.out.println("Total amount of ingredients in all trucks:");
+
+			JavaJeep.pause();
+			System.out.printf("\tCoffee: %.2f grams", coffee);
+			JavaJeep.pause();
+			System.out.printf("\tWater: %.2f fl", water);
+			JavaJeep.pause();
+			System.out.printf("\tMilk: %.2f fl\n", milk);
+			JavaJeep.pause();
+			System.out.printf("\tSmall Cups: %.0f pcs", scup);
+			JavaJeep.pause();
+			System.out.printf("\tMedium Cups: %.0f pcs", mcup);
+			JavaJeep.pause();
+			System.out.printf("\tLarge Cups: %.0f pcs", lcup);
+
+			System.out.println();
+
+			/* Aggregate total. */
+			System.out.printf("\nTotal amount of earnings: %.2f", combinedSales);
+			System.out.println();
+
+
+			/* Amount of orders for specific types of drinks as well as sizes. */
+			System.out.printf("Total amount of orders: %d\n", sales);
+			System.out.println("\nOrder types:");
+
+			JavaJeep.pause();
+			System.out.printf("\tCafe Americano: %d", americano);
+			JavaJeep.pause();
+			System.out.printf("\tLatte: %d", latte);
+			JavaJeep.pause();
+			System.out.printf("\tCappucino: %d", cappucino);
+
+			System.out.println();
+			System.out.println("Order sizes:");
+
+			JavaJeep.pause();
+			System.out.printf("\tSmall: %d", small);
+			JavaJeep.pause();
+			System.out.printf("\tMedium: %d", medium);
+			JavaJeep.pause();
+			System.out.printf("\tLarge: %d", large);
+
+			System.out.println();
+
+			/* Option to view information of specific truck. */
+			System.out.println();
+			System.out.println("Is there a specific truck you'd like to see information about?");
+			System.out.println("Or, enter \"END\" to exit.");
+
+			for (i = 0; i < noOfTrucks; i++){
+				System.out.printf("#%d || ", i+1);
+				TRUCKS.get(i).printBaseInfo();
+			}
+
+			choice = scan.nextLine();
+
+			if (!choice.equalsIgnoreCase("end")){
+				try {
+					intChoice = Integer.parseInt(choice);
+
+					if (intChoice > 0 && intChoice <= noOfTrucks){
+						// print truck info
+					}
+
+					else {
+						System.out.println("That's an invalid input!");
+						scan.nextLine();
+					}
+				}
+
+				catch (Exception e){
+					System.out.println("That's an invalid input!");
+					scan.nextLine();
+				}
+			}
+
+			else {
+				exit = true;
+			}
+
+		} while (!exit);
+	}
+
+	/**
  	 * Main method for the full JavaJeep program.
    	 */
 	public static void main(String args[]){
@@ -352,7 +496,7 @@ public class JavaJeep{
 					break;   
 
 				case 3: 
-					System.out.println("Dashboard");
+					JavaJeep.getInstance().dashboard();
 					break;
 
 				case 4:
