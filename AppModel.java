@@ -121,4 +121,76 @@ public class AppModel {
 	public void addTruck(CoffeeTruck truck){
 		this.TRUCKS.add(truck);
 	}
+
+	/**
+	 * Returns the arraylist of trucks.
+	 * @return Arraylist of trucks
+	 */
+	public ArrayList<CoffeeTruck> getTrucks(){
+		return TRUCKS;
+	}
+
+	/**
+	 * Gets the total amount of each ingredient in the TRUCKS array.
+	 * @return array consisting of the amount of ingredients in each array. 
+	 * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee
+	 */
+	public float[] getTotalIngredients(){
+		float[] totalIngr = new float[6];
+
+		for (CoffeeTruck truck : TRUCKS){
+			tempIngr = truck.getStorageBin(i).getContents();
+			if (tempIngr != null){
+				switch(tempIngr.getType().toLowerCase()){
+					case "scup": totalIngr[0] += tempIngr.getAmt(); break;
+					case "mcup": totalIngr[1] += tempIngr.getAmt(); break;
+					case "lcup": totalIngr[2] += tempIngr.getAmt(); break;
+					case "milk": totalIngr[3] += tempIngr.getAmt(); break;
+					case "water": totalIngr[4] += tempIngr.getAmt(); break;
+					case "coffee": totalIngr[5] += tempIngr.getAmt(); break;
+				}
+			}
+		}
+
+		return totalIngr;
+	}
+
+	/**
+	 * Returns the total combined amount of sales from each truck.
+	 * @return Total combined sales
+	 */
+	public float getTotalEarnings(){
+		float combinedSales;
+		for (CoffeeTruck truck : TRUCKS) combinedSales += truck.getEarnings();
+		return combinedSales;
+	}
+
+	/**
+	 * Returns the total amount of sales for every item
+	 * @return int arraylist showing total amount of sales for every item
+	 * 0 = small, 1 = medium, 2 = large
+	 * 3 = cafe americano, 4 = latte, 5 = cappucino
+	 */
+	public int[] getTotalTransactionTypes(){
+		int[] totalTransaction = new int[6];
+
+		for (CoffeeTruck truck : TRUCKS){
+			for (Transaction transaction : truck.getTransactions()){
+				switch(transaction.getDrinkSize()){
+					case 's': totalTransaction[0]++; break;
+					case 'm': totalTransaction[1]++; break;
+					case 'l': totalTransaction[2]++; break;
+				}
+
+				switch(transaction.getDrinkType().toLowerCase()){
+					case "cafe americano": totalTransaction[3] ++; break;
+					case "latte": totalTransaction[4]++; break;
+					case "cappucino": totalTransaction[5]++; break;
+				}
+			}
+		}
+
+		return totalTransaction;
+	}
+
 }
