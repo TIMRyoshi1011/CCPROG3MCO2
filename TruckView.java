@@ -25,17 +25,6 @@ public class TruckView {
 	}
 
 	/**
-	 * Prints the screen when the type's location is being set.
-	 */
-	public void printSetLocation(){
-		AppView.clear();
-		System.out.println("What location do you want your truck to stay in?");
-		System.out.println("To keep business efficient, we're limiting it to one truck per city!");
-		System.out.println("");
-		System.out.print(">> ");
-	}
-
-	/**
 	 * Prints the screen when the user is looking at a trucks storage bin inventory,
 	 * with the intent of changing its contents. 
 	 * @param truck The truck which will have its storage bin altered.
@@ -148,5 +137,17 @@ public class TruckView {
 			System.out.println(item);
 		}
 		System.out.println();
+	}
+
+	/**
+	 * Prints the screen when the user decides on what to do during maintenance
+	 */
+	public void printMaintenanceSelect(){
+		AppView.clear();
+		System.out.println("What would you like to do?");
+		System.out.println("1 - Change location");
+		System.out.println("2 - Set prices");
+		System.out.println();
+		System.out.print(">> ");
 	}
 }

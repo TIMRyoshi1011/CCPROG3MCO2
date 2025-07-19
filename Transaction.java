@@ -133,37 +133,37 @@ public class Transaction{
 			case "cafe americano": 
 				/* 1/3rds espresso, 2/3rds water. */
 				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl*(1.0/3.0)));
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("\t%.2f grams of coffee...\n", ingredients.get(1).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("\t%.2f fl of water...\n", (sizeFl/((1.0/3.0)/(18.0/19.0))));
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("Adding %.2f fl of water...\n\n", (sizeFl/(2.0/3.0)));
-				JavaJeep.pause();
+				AppView.pause();
 				break;
 
 			case "latte": 
 				/* 1/5ths espresso, 4/5ths milk. */
 				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl*(1.0/5.0)));
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("\t%.2f grams of coffee...\n", ingredients.get(1).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("\t%.2f fl of water...\n", ingredients.get(2).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("Adding %.2f fl of milk...\n\n", ingredients.get(3).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				break;
 
 			case "cappucino": 
 				/* 1/3rds espresso 2/3rds milk. */
 				System.out.printf("Brewing %.2f fl espresso...\n", (sizeFl*(1.0/3.0)));
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("\t%.2f grams of coffee...\n", ingredients.get(1).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("\t%.2f fl of water...\n", ingredients.get(2).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				System.out.printf("Adding %.2f of milk...\n\n", ingredients.get(3).getAmt());
-				JavaJeep.pause();
+				AppView.pause();
 				break;
 		}
 

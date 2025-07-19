@@ -13,8 +13,8 @@ public class AppView {
 	/**
   	 * Prints the info of all trucks.
      */
-	public void printTrucksInfo(ArrayList<CoffeeTruck> trucks){
-		for (CoffeeTruck truck : trucks) {
+	public void printTrucksInfo(ArrayList<TruckController> trucks){
+		for (TruckController truck : trucks) {
 	            truck.printTruckInfo();
 	        }
 	}
@@ -124,17 +124,17 @@ public class AppView {
 		System.out.println();
 		System.out.println("Total amount of ingredients in all trucks:");
 
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tSmall Cups: %.0f pcs", totalIngr[0]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tMedium Cups: %.0f pcs", totalIngr[1]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tLarge Cups: %.0f pcs", totalIngr[2]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tCoffee: %.2f grams", totalIngr[3]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tWater: %.2f fl", totalIngr[4]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tMilk: %.2f fl\n", totalIngr[5]);
 
 		System.out.println();
@@ -149,21 +149,21 @@ public class AppView {
 		System.out.printf("Total amount of orders: %d\n", combinedSales);
 		System.out.println("\nOrder types:");
 
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tCafe Americano: %d", transacType[3]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tLatte: %d", transacType[4]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tCappucino: %d", transacType[5]);
 
 		System.out.println();
 		System.out.println("Order sizes:");
 
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tSmall: %d", transacType[0]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tMedium: %d", transacType[1]);
-		JavaJeep.pause();
+		pause();
 		System.out.printf("\tLarge: %d", transacType[2]);
 
 		System.out.println();

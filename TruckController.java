@@ -82,7 +82,7 @@ public class TruckController {
 	 * Given list of bins, choose a bin to set.
 	 */
 	public void setBins(){
-		boolean inptCheck, success;
+		boolean inptCheck, success = true;
 		String choice; int intChoice;
 
 		do {
