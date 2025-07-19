@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * A coffee trucks controller
@@ -30,6 +31,30 @@ public class TruckController {
 	}
 
 	/**
+	 * Get the storage bins of a truck
+	 * @return arraylist of storagebins
+	 */
+	public ArrayList<StorageBin> getBins(){
+		return model.getBins();
+	}
+
+	/**
+	 * Get the total earnings of the truck
+	 * @return total earnings
+	 */
+	public float getEarnings(){
+		return model.getEarnings();
+	}
+
+	/**
+	 * Get the arraylist of transactions of the truck
+	 * @return Arraylist transactions of truck
+	 */
+	public ArrayList<Transaction> getTransactions(){
+		return model.getTransactions();
+	}
+
+	/**
 	 * Sets the type of the truck
 	 */
 	public void setType(){
@@ -58,22 +83,23 @@ public class TruckController {
 	 */
 	public void setBins(){
 		boolean inptCheck, success;
+		String choice; int intChoice;
 
 		do {
-			view.printSetStorageBins(tempTruck);
+			view.printSetStorageBins(model.getBins());
 			choice = scan.nextLine();
-			intChoice = model.toInt(choice);
+			intChoice = AppModel.toInt(choice);
 
 			if (intChoice < 1 || intChoice > model.getNumBins()) inptCheck = false;
 			else inptCheck = true;
 
-			if (inptCheck) editStorageBin(tempTruck.getStorageBin(intChoice - 1));
+			if (inptCheck) editStorageBin(model.getBin(intChoice));
 			else if (choice.toUpperCase().equals("END")) success = false;
 			else {view.printFeedback("Please check your input..."); scan.nextLine();}
 		} while (!success);
 	}
 
-		/**
+	/**
 	 * Controls the app when a storage bin is being edited.
 	 * @param bin The storage bin being edited.
 	 */
@@ -84,7 +110,7 @@ public class TruckController {
 		while (!exit){
 			view.printEditBin(bin, bin.getContents() == null);
 			choice = scan.nextLine();
-			intChoice = model.toInt(choice);
+			intChoice = AppModel.toInt(choice);
 
 			switch(intChoice){
 				case 1:
@@ -94,7 +120,7 @@ public class TruckController {
 					choice = scan.nextLine();
 					view.printFeedback("Amount:");
 					choice2 = scan.nextLine();
-					floatChoice = model.toFloat(choice2);
+					floatChoice = AppModel.toFloat(choice2);
 
 					if (floatChoice != -1){
 						success = model.setBin(bin, choice, floatChoice);
@@ -109,7 +135,7 @@ public class TruckController {
 					// replenish
 					view.printFeedback("What is the new quantity of the item?");
 					choice = scan.nextLine();
-					floatChoice = model.toFloat(choice);
+					floatChoice = AppModel.toFloat(choice);
 
 					if (floatChoice >= 0){
 						success = model.replenishBin(bin, floatChoice);
@@ -136,6 +162,39 @@ public class TruckController {
 					view.printFeedback("Invalid input!");
 					scan.nextLine();
 			}
+		}
+	}
+
+	/**
+	 * Prints the base info (location, type) of a truck.
+	 * @param truck The truck whos info is gonna be printed.
+	 */
+	public void truckBaseInfo(){
+		view.printTruckBaseInfo(model.getType(), model.getLocation());
+	}
+
+	/**
+	 * Prints the bin info of a truck
+	 * @param truck The truck whos bin info is gonna be printed.
+	 */
+	public void truckBinInfo(){
+		view.printTruckBinInfo(model.getBins());
+	}
+
+	/**
+	 * Prints the full info of a truck. Transaction, type, location, menu, and bins
+	 * @param truck The truck whos information is gonna be printed
+	 */
+	public void truckFullInfo(){
+		view.printTruckBaseInfo(model.getType(), model.getLocation());
+		view.printTruckBinInfo(model.getBins());
+
+		System.out.println("\nMenu: ");
+		view.printMenu(model.returnMenu());
+		
+		System.out.println("\nTransactions: ");
+		for (Transaction transaction : model.getTransactions()){
+			transaction.printTransaction();
 		}
 	}
 }

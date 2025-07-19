@@ -4,7 +4,7 @@ import java.util.ArrayList;
  */
 public class AppModel {
 	/** ArrayList containing all trucks. */
-	private final ArrayList<CoffeeTruck> TRUCKS;
+	private final ArrayList<TruckController> TRUCKS;
 	/** The number of trucks made. */
 	private int noOfTrucks;
 
@@ -12,7 +12,7 @@ public class AppModel {
  	 * Constructor for AppModel. Initializes all variables.
    	 */
 	public AppModel(){
-		this.TRUCKS = new ArrayList<CoffeeTruck>();
+		this.TRUCKS = new ArrayList<TruckController>();
 		this.noOfTrucks = 0;
 	}
 
@@ -21,7 +21,7 @@ public class AppModel {
 	 * @param strInput The string to be parsed.
 	 * @return If successful, the int that the string was parsed into. If unsuccessful, -1
 	 */
-	public int toInt(String strInput){
+	public static int toInt(String strInput){
 		int result;
 
 		try {
@@ -36,7 +36,7 @@ public class AppModel {
 	 * @param strInput The string to be parsed.
 	 * @return If successful, the float that the string was parsed into. If unsuccessful, -1
 	 */
-	public float toFloat(String strInput){
+	public static float toFloat(String strInput){
 		float result;
 
 		try {
@@ -61,42 +61,9 @@ public class AppModel {
 		}
 
 		if (avail){
-			truck.setLocation = locInpt;}
+			truck.setLocation(locInpt);}
 			
 		return avail;
-	}
-
-	/**
-	 * Empties a storage bin
-	 * @param bin The bin to be emptied.
-	 */
-	public void emptyBin(StorageBin bin){
-		bin.emptyBin();
-	}
-
-	/**
-	 * Replenishes a storage bin
-	 * @param bin The bin to be replenished
-	 * @param amt The amt that will be added to the bin.
-	 * @return true if successful, false otherwise. 
-	 */
-	public boolean replenishBin(StorageBin bin, float amt){
-		boolean result;
-		result = bin.replenishBin(amt);
-		return result;
-	}
-
-	/**
-	 * Sets the contents of a storage bin.
-	 * @param bin The bin with contents to be changed
-	 * @param type The type of the new content
-	 * @param amt The amount of the new content
-	 * @return true if successful, false otherwise.
-	 */
-	public boolean setBin(StorageBin bin, String type, float amt){
-		boolean result;
-		result = bin.setBin(type, amt);
-		return result;
 	}
 
 	/** 
@@ -115,7 +82,7 @@ public class AppModel {
 	 * Adds a truck to the trucks arraylist.
 	 * @param truck The truck to be added.
 	 */
-	public void addTruck(CoffeeTruck truck){
+	public void addTruck(TruckController truck){
 		this.TRUCKS.add(truck);
 	}
 
@@ -123,7 +90,7 @@ public class AppModel {
 	 * Returns the arraylist of trucks.
 	 * @return Arraylist of trucks
 	 */
-	public ArrayList<CoffeeTruck> getTrucks(){
+	public ArrayList<TruckController> getTrucks(){
 		return TRUCKS;
 	}
 
@@ -136,8 +103,8 @@ public class AppModel {
 		float[] totalIngr = new float[6];
 		Ingredient tempIngr;
 
-		for (CoffeeTruck truck : TRUCKS){
-			for (StorageBin bin : truck.getStorageBins()){
+		for (TruckController truck : TRUCKS){
+			for (StorageBin bin : truck.getBins()){
 				tempIngr = bin.getContents();
 				if (tempIngr != null){
 					switch(tempIngr.getType().toLowerCase()){
@@ -161,7 +128,7 @@ public class AppModel {
 	 */
 	public float getTotalEarnings(){
 		float combinedSales = 0;
-		for (CoffeeTruck truck : TRUCKS) combinedSales += truck.getEarnings();
+		for (TruckController truck : TRUCKS) combinedSales += truck.getEarnings();
 		return combinedSales;
 	}
 
@@ -174,7 +141,7 @@ public class AppModel {
 	public int[] getTotalTransactionTypes(){
 		int[] totalTransaction = new int[6];
 
-		for (CoffeeTruck truck : TRUCKS){
+		for (TruckController truck : TRUCKS){
 			for (Transaction transaction : truck.getTransactions()){
 				switch(transaction.getDrinkSize()){
 					case 's': totalTransaction[0]++; break;
@@ -206,7 +173,7 @@ public class AppModel {
 	 * @param truckIndx the index of the truck to be returned
 	 * @return the truck at index truckindx
 	 */
-	public CoffeeTruck getTruck(int truckIndx){
+	public TruckController getTruck(int truckIndx){
 		return TRUCKS.get(truckIndx);
 	}
 }

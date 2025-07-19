@@ -88,8 +88,8 @@ public class AppController {
 		/* Complete */
 		view.clear();
 		view.printFeedback("Truck successfully created!");
-		view.printTruckBaseInfo(tempTruck);
-		view.printTruckBinInfo(tempTruck);
+		tempTruck.truckBaseInfo();
+		tempTruck.truckBinInfo();
 		model.addTruck(tempTruck);
 		scan.nextLine();
 	}
@@ -169,7 +169,7 @@ public class AppController {
 					truckIndx = model.toInt(choice);
 
 					if (truckIndx >= 0 && truckIndx < model.getNumTrucks())
-						view.printTruckFullInfo(model.getTruck(truckIndx));
+						model.getTruck(truckIndx).truckFullInfo();
 					else view.printFeedback("Truck index is not valid.");
 					
 				case 'n': end = true; break;
