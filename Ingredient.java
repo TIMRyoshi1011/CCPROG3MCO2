@@ -40,9 +40,11 @@ public class Ingredient{
 	/** 
  	 * Sets the price of the ingredient. Price is static and affects all Ingredient instances. 
    	 * @param type The ingredient type that will have a new price.
-     	 * @param price The new price
+     * @param price The new price
+     * @return true if successful, false otherwise
 	 */
-	public static void setPrice(String type, float price){
+	public static boolean setPrice(String type, float price){
+		boolean result = true;
 		switch (type.toLowerCase()) {
 		    case "scup": 
 			smallCupPrice = price; 
@@ -67,7 +69,13 @@ public class Ingredient{
 		    case "water": 
 			waterPrice = price; 
 			break;
+
+			default:
+				result = false;
+				break;
 		}
+
+		return result;
 	}
 		
 	/** 

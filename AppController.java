@@ -94,9 +94,22 @@ public class AppController {
 			else inptCheck = true;
 
 			if (inptCheck) this.editStorageBin(tempTruck.getStorageBin(intChoice - 1));
-			else if (choice.equals("END")) success = false;
+			else if (choice.toUpperCase().equals("END")) success = false;
 			else {view.printFeedback("Please check your input..."); scan.nextLine();}
 		} while (!success);
+
+		/* Set prices */
+		do {
+			this.editPrices();
+		}
+
+		/* Complete */
+		view.clear();
+		view.printFeedback("Truck successfully created!");
+		view.printTruckBaseInfo(tempTruck);
+		view.printTruckBinInfo(tempTruck);
+		model.addTruck(tempTruck);
+		scan.nextLine();
 	}
 
 	/**
@@ -163,5 +176,30 @@ public class AppController {
 					scan.nextLine();
 			}
 		}
+	}
+
+	/**
+	 * Controls the app when the prices are being edited.
+	 */
+	public void editPrices(){
+		String choice, choice2;
+		float floatChoice;
+		boolean success, end = false;
+
+		while (!end){
+			view.printSetPrices();
+			choice = scan.nextLine();
+
+			if (choice.toUpperCase().equals("END")) end = true;
+			else{
+				view.printFeedback("Enter the new price: (THIS IS EFFECTIVE FOR ALL TRUCKS)");
+				choice2 = scan.nextLine();
+				floatChoice = toFloat(choice2);
+				success = model.setPrice(choice, floatChoice);
+
+				if (success) view.printFeedback("Price successfully changed!");
+				else view.printFeedback("Please check your input...");
+			}
+		}	
 	}
 }

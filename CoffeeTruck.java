@@ -76,6 +76,14 @@ public class CoffeeTruck {
 	}
 
 	/**
+	 * Returns the location of the truck 
+	 * @return Location of the truck.
+	 */
+	public char getLocation(){
+		return truckLocation;
+	}
+
+	/**
 	 * Returns the number of bins the truck has.
 	 * @return Number of bins the truck has.
 	 */
@@ -367,14 +375,6 @@ public class CoffeeTruck {
 		while (it.hasNext()) {
 			it.next().printTransaction();
 		}		
-	}
-
-	/**
- 	 * Prints the base information of a truck, aka its location and type.
-   	 */
-	public void printBaseInfo() {
-		Iterator<StorageBin> it = STORAGEBINS.iterator();
-		System.out.printf("Type: %s || Location: %s\n", truckType, truckLocation);
 	}
 
 	/**

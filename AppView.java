@@ -106,7 +106,7 @@ public class AppView {
 	 * @param bin The bin being edited.
 	 * @param isEmpty Boolean checking if a bin is empty
 	 */
-	public printEditBin(StorageBin bin, boolean isEmpty){
+	public void printEditBin(StorageBin bin, boolean isEmpty){
 		bin.printBinInfo();
 		System.out.println();
 		System.out.println("1 - Set bin contents");
@@ -115,6 +115,50 @@ public class AppView {
 			System.out.println("3 - Empty bin contents");
 		}
 		System.out.println("0 - Exit");
+	}
+
+	/**
+	 * Prints the screen when the user is setting the prices.
+	 */
+	public void printSetPrice(){
+		System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.\n");
+		System.out.println("Below are the current prices for each ingredient:");
+		System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
+		System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
+		System.out.printf("1fl of water: %.2f\n", Ingredient.getPrice("water"));
+		System.out.printf("Small cup base price: %.2f\n", Ingredient.getPrice("scup"));
+		System.out.printf("Medium cup base price: %.2f\n", Ingredient.getPrice("mcup"));
+		System.out.printf("Large cup base price: %.2f\n", Ingredient.getPrice("lcup"));
+		System.out.println();
+
+		System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','coffee','scup','mcup','lcup']. If you'd like to exit, enter END.");
+		System.out.print(">> ");
+	}
+
+	/**
+	 * Prints the base info (location, type) of a truck.
+	 * @param truck The truck whos info is gonna be printed.
+	 */
+	public void printTruckBaseInfo(CoffeeTruck truck){
+		System.out.printf("Type: %s || Location: %s\n", truck.getType(), truck.getLocation());
+	}
+
+	/**
+	 * Prints the bin info of a truck
+	 * @param truck The truck whos bin info is gonna be printed.
+	 */
+	public void printTruckBinInfo(CoffeeTruck truck){
+		int counter = 1;
+		System.out.println("Storage bins contain...");
+
+		for (StorageBin bin : truck.getStorageBins()) {
+			System.out.printf("Storage bin #%d - ", (counter));
+			bin.printBinInfo();
+			System.out.println();
+			counter++;
+
+			pause();
+		}
 	}
 
 	/**
@@ -130,5 +174,17 @@ public class AppView {
         } catch (Exception e) {
             System.out.println("Error clearing console: " + e.getMessage());
         }
+	}
+
+	/**
+	 * Halts the program for .5 seconds.
+	 * Used in printing statements.
+	 */
+	public static void pause(){		
+			try {
+			Thread.sleep(500); // Delay for 0.5 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

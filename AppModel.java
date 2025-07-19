@@ -101,4 +101,24 @@ public class AppModel {
 		result = bin.setBin(type, amt);
 		return result;
 	}
+
+	/** 
+ 	 * Sets the price of the ingredient. Price is static and affects all Ingredient instances. 
+   	 * @param type The ingredient type that will have a new price.
+     * @param price The new price
+     * @return true if successful, false otherwise
+	 */
+	public boolean setPrice(String type, float price){
+		boolean result;
+		result = Ingredient.setPrice(type, price);
+		return result;
+	}
+
+	/**
+	 * Adds a truck to the trucks arraylist.
+	 * @param truck The truck to be added.
+	 */
+	public void addTruck(CoffeeTruck truck){
+		this.TRUCKS.add(truck);
+	}
 }
