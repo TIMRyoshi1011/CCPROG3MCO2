@@ -193,4 +193,20 @@ public class AppModel {
 		return totalTransaction;
 	}
 
+	/**
+	 * Returns the total number of trucks
+	 * @return Total number of trucks
+	 */
+	public int getNumTrucks(){
+		return noOfTrucks;
+	}
+
+	/**
+	 * Returns a truck given an index
+	 * @param truckIndx the index of the truck to be returned
+	 * @return the truck at index truckindx
+	 */
+	public CoffeeTruck getTruck(int truckIndx){
+		return TRUCKS.get(truckIndx);
+	}
 }

@@ -166,6 +166,38 @@ public class AppController {
 	}
 
 	/**
+	 * Provides a birds-eye view of all trucks.
+	 */
+	public void dashboard(){
+		boolean end;
+		String choice;
+		int truckIndx, i;
+
+		do {
+			view.printDashboard(model.getTrucks(), model.getTotalIngredients(), 
+				model.getTotalEarnings(), model.getTotalTransactionTypes());
+
+			view.printFeedback("Is there a specific truck you'd like to see? (y/n)");
+			choice = scan.nextLine();
+
+			switch(choice.toLowerCase().charAt(0)){
+				case 'y': 
+					view.printTruckOptions();
+					choice = scan.nextLine();
+					truckIndx = model.toInt(choice);
+
+					if (truckIndx >= 0 && truckIndx < model.getNumTrucks())
+						view.printTruckFullInfo(model.getTruck(truckIndx));
+					else view.printFeedback("Truck index is not valid.");
+					
+				case 'n': end = true; break;
+				default: {view.printFeedback("Please check your input"); scan.nextLine(); break;}
+			}
+		} while (!end)
+
+	}
+
+	/**
 	 * Controls the app when a storage bin is being edited.
 	 * @param bin The storage bin being edited.
 	 */

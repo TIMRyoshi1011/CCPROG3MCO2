@@ -189,7 +189,7 @@ public class AppView {
 	}
 
 	/**
-	 * Prints the screen allowing the user to pick a truck to simulate
+	 * Prints the screen allowing the user to pick a truck
 	 * @param trucks Arraylist of trucks to print
 	 */
 	public void printTruckOptions(ArrayList<CoffeeTruck> trucks){
@@ -197,7 +197,7 @@ public class AppView {
 
 		clear();
 
-		System.out.println("Choose a truck to simulate!"); 
+		System.out.println("Choose a truck!"); 
 		while (CoffeeTruck truck : trucks){
 			System.out.printf("#%d || ", count);
 			truck.printBaseInfo();
@@ -218,6 +218,72 @@ public class AppView {
 		System.out.println("3 - Manage bins");
 		System.out.println("4 - Maintenance");
 		System.out.println("5 - Exit");
+		System.out.println();
+	}
+
+	/**
+	 * Prints the dashboard
+	 * @param trucks The arraylist of trucks
+	 * @param totalIngr Array containing amount of all ingredients
+	 * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee
+	 * @param combinedSales Total earnings of all trucks
+	 * @param transacType Total amount of all types of drinks made
+	 */
+	public void printDashboard(ArrayList<CoffeeTruck> trucks, float[] totalIngr, float combinedSales, int[] transacType){
+		clear();
+		System.out.println("ALL TRUCKS:");
+
+		/* Prints all trucks' base info */
+		for (CoffeeTruck truck : trucks) truck.printBaseInfo();
+
+		/* Prints aggregate amount of ingredients all trucks have. 
+		 * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee */
+		System.out.println();
+		System.out.println();
+		System.out.println("Total amount of ingredients in all trucks:");
+
+		JavaJeep.pause();
+		System.out.printf("\tSmall Cups: %.0f pcs", totalIngr[0]);
+		JavaJeep.pause();
+		System.out.printf("\tMedium Cups: %.0f pcs", totalIngr[1]);
+		JavaJeep.pause();
+		System.out.printf("\tLarge Cups: %.0f pcs", totalIngr[2]);
+		JavaJeep.pause();
+		System.out.printf("\tCoffee: %.2f grams", totalIngr[3]);
+		JavaJeep.pause();
+		System.out.printf("\tWater: %.2f fl", totalIngr[4);
+		JavaJeep.pause();
+		System.out.printf("\tMilk: %.2f fl\n", totalIngr[5]);
+
+		System.out.println();
+
+		/* Aggregate total. */
+		System.out.printf("\nTotal amount of earnings: %.2f", combinedSales);
+		System.out.println();
+
+
+		/* Amount of orders for specific types of drinks as well as sizes.
+		 * 0 = small, 1 = medium, 2 = large, 3 = cafe americano, 4 = latte, 5 = cappucino */
+		System.out.printf("Total amount of orders: %d\n", sales);
+		System.out.println("\nOrder types:");
+
+		JavaJeep.pause();
+		System.out.printf("\tCafe Americano: %d", transacType[3]);
+		JavaJeep.pause();
+		System.out.printf("\tLatte: %d", transacType[4]);
+		JavaJeep.pause();
+		System.out.printf("\tCappucino: %d", transacType[5]);
+
+		System.out.println();
+		System.out.println("Order sizes:");
+
+		JavaJeep.pause();
+		System.out.printf("\tSmall: %d", transacType[0]);
+		JavaJeep.pause();
+		System.out.printf("\tMedium: %d", transacType[1]);
+		JavaJeep.pause();
+		System.out.printf("\tLarge: %d", transacType[2]);
+
 		System.out.println();
 	}
 }
