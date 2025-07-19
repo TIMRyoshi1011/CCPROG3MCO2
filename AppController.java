@@ -113,6 +113,59 @@ public class AppController {
 	}
 
 	/**
+	 * Simulates a truck. When choosing to simulate a truck, the user can: 
+	 * - Simulate a sale
+	 * - View truck informaiton
+	 * - Restock bins and perform maintenance.
+	 */
+	public void simulateTruck(){
+		String choice;
+		boolean end = false, exitTruck = true;
+		int truckIndx, intChoice;
+
+		do{
+			/* Selecting a truck to simulate */
+			view.printTruckOptions(model.getTrucks());
+			choice = scan.nextLine();
+			truckIndx = model.toInt(choice) - 1;
+
+			if (choice.equalsIgnoreCase("END")) end = true;
+			else if (truckIndx < 0): view.printFeedback("Please check your input!");
+			else exitTruck = false;
+
+			while (!exitTruck){
+
+				/* Selecting what to do with chosen truck. */
+				view.printSimulateOptions();
+				choice = scan.nextLine();
+				intChoice = model.toInt(choice);
+
+				switch(intChoice){
+					case 1:
+						// simulate sale
+						break;
+					case 2:
+						// print info
+						break;
+					case 3:
+						// restock storage bins
+						break;
+					case 4:
+						// set maintenance
+						break;
+					case 5:
+						// exit
+						exitTruck = true;
+						break;
+					default:
+						view.printFeedback("Please check your input!");
+				}
+
+			}
+		} while(!end);
+	}
+
+	/**
 	 * Controls the app when a storage bin is being edited.
 	 * @param bin The storage bin being edited.
 	 */

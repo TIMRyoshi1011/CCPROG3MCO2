@@ -187,4 +187,37 @@ public class AppView {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Prints the screen allowing the user to pick a truck to simulate
+	 * @param trucks Arraylist of trucks to print
+	 */
+	public void printTruckOptions(ArrayList<CoffeeTruck> trucks){
+		int count = 1;
+
+		clear();
+
+		System.out.println("Choose a truck to simulate!"); 
+		while (CoffeeTruck truck : trucks){
+			System.out.printf("#%d || ", count);
+			truck.printBaseInfo();
+			count++;
+		}
+		System.out.println("Enter \"END\" to exit.");
+	}
+
+	/**
+	 * Prints the options the user can pick from when simulating a truck.
+	 */
+	public void printSimulateOptions(){
+		clear();
+
+		System.out.println("What would you like to do?");
+		System.out.println("1 - Simulate sale");
+		System.out.println("2 - View truck information");
+		System.out.println("3 - Manage bins");
+		System.out.println("4 - Maintenance");
+		System.out.println("5 - Exit");
+		System.out.println();
+	}
 }
