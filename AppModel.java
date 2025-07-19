@@ -25,7 +25,7 @@ public class AppModel {
 		int result;
 
 		try {
-			result = strInput.parseInt(strInput);
+			result = Integer.parseInt(strInput);
 		} catch(NumberFormatException e) {result = -1;}
 
 		return result;
@@ -40,7 +40,7 @@ public class AppModel {
 		float result;
 
 		try {
-			result = strInput.parseFloat(strInput);
+			result = Float.parseFloat(strInput);
 		} catch(NumberFormatException e) {result = -1;}
 
 		return result;
@@ -138,17 +138,20 @@ public class AppModel {
 	 */
 	public float[] getTotalIngredients(){
 		float[] totalIngr = new float[6];
+		Ingredient tempIngr;
 
 		for (CoffeeTruck truck : TRUCKS){
-			tempIngr = truck.getStorageBin(i).getContents();
-			if (tempIngr != null){
-				switch(tempIngr.getType().toLowerCase()){
-					case "scup": totalIngr[0] += tempIngr.getAmt(); break;
-					case "mcup": totalIngr[1] += tempIngr.getAmt(); break;
-					case "lcup": totalIngr[2] += tempIngr.getAmt(); break;
-					case "milk": totalIngr[3] += tempIngr.getAmt(); break;
-					case "water": totalIngr[4] += tempIngr.getAmt(); break;
-					case "coffee": totalIngr[5] += tempIngr.getAmt(); break;
+			for (StorageBin bin : truck.getStorageBins()){
+				tempIngr = bin.getContents();
+				if (tempIngr != null){
+					switch(tempIngr.getType().toLowerCase()){
+						case "scup": totalIngr[0] += tempIngr.getAmt(); break;
+						case "mcup": totalIngr[1] += tempIngr.getAmt(); break;
+						case "lcup": totalIngr[2] += tempIngr.getAmt(); break;
+						case "milk": totalIngr[3] += tempIngr.getAmt(); break;
+						case "water": totalIngr[4] += tempIngr.getAmt(); break;
+						case "coffee": totalIngr[5] += tempIngr.getAmt(); break;
+					}
 				}
 			}
 		}
@@ -161,7 +164,7 @@ public class AppModel {
 	 * @return Total combined sales
 	 */
 	public float getTotalEarnings(){
-		float combinedSales;
+		float combinedSales = 0;
 		for (CoffeeTruck truck : TRUCKS) combinedSales += truck.getEarnings();
 		return combinedSales;
 	}

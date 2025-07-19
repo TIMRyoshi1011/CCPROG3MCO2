@@ -53,7 +53,6 @@ public class AppView {
 		System.out.println("R - JavaJeep Regular");
 		System.out.println("");
 		System.out.print(">> ");
-		choice = scan.nextLine();
 	}
 
 	/**
@@ -174,10 +173,9 @@ public class AppView {
 		truck.printMenu();
 		
 		System.out.println("\nTransactions: ");
-		Iterator<Transaction> it = TRANSACTIONS.iterator();
-		while (it.hasNext()) {
-			it.next().printTransaction();
-		}	
+		for (Transaction transaction : truck.getTransactions()){
+			transaction.printTransaction();
+		}
 	}
 
 	/**
@@ -219,7 +217,7 @@ public class AppView {
 		System.out.println("Choose a truck!"); 
 		for (CoffeeTruck truck : trucks){
 			System.out.printf("#%d || ", count);
-			truck.printBaseInfo();
+			printTruckBaseInfo(truck);
 			count++;
 		}
 		System.out.println("Enter \"END\" to exit.");
@@ -253,7 +251,7 @@ public class AppView {
 		System.out.println("ALL TRUCKS:");
 
 		/* Prints all trucks' base info */
-		for (CoffeeTruck truck : trucks) truck.printBaseInfo();
+		for (CoffeeTruck truck : trucks) printTruckBaseInfo(truck);
 
 		/* Prints aggregate amount of ingredients all trucks have. 
 		 * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee */
@@ -283,7 +281,7 @@ public class AppView {
 
 		/* Amount of orders for specific types of drinks as well as sizes.
 		 * 0 = small, 1 = medium, 2 = large, 3 = cafe americano, 4 = latte, 5 = cappucino */
-		System.out.printf("Total amount of orders: %d\n", sales);
+		System.out.printf("Total amount of orders: %d\n", combinedSales);
 		System.out.println("\nOrder types:");
 
 		JavaJeep.pause();
