@@ -90,7 +90,7 @@ public class AppController {
 			choice = scan.nextLine();
 			intChoice = model.toInt(choice);
 
-			if (intChoice < 1 || intChoice > truck.getNumBins()) inptCheck = false;
+			if (intChoice < 1 || intChoice > tempTruck.getNumBins()) inptCheck = false;
 			else inptCheck = true;
 
 			if (inptCheck) this.editStorageBin(tempTruck.getStorageBin(intChoice - 1));
@@ -167,7 +167,7 @@ public class AppController {
 	 * Provides a birds-eye view of all trucks.
 	 */
 	public void dashboard(){
-		boolean end;
+		boolean end = false;
 		String choice;
 		int truckIndx, i;
 
@@ -180,7 +180,7 @@ public class AppController {
 
 			switch(choice.toLowerCase().charAt(0)){
 				case 'y': 
-					view.printTruckOptions();
+					view.printTruckOptions(model.getTrucks());
 					choice = scan.nextLine();
 					truckIndx = model.toInt(choice);
 
@@ -244,7 +244,7 @@ public class AppController {
 
 				case 3:
 					// empty
-					emptyBin(bin);
+					model.emptyBin(bin);
 					view.printFeedback("Bin has been emptied!");
 					scan.nextLine();
 					break;
@@ -270,14 +270,14 @@ public class AppController {
 		boolean success, end = false;
 
 		while (!end){
-			view.printSetPrices();
+			view.printSetPrice();
 			choice = scan.nextLine();
 
 			if (choice.toUpperCase().equals("END")) end = true;
 			else{
 				view.printFeedback("Enter the new price: (THIS IS EFFECTIVE FOR ALL TRUCKS)");
 				choice2 = scan.nextLine();
-				floatChoice = toFloat(choice2);
+				floatChoice = model.toFloat(choice2);
 				success = model.setPrice(choice, floatChoice);
 
 				if (success) view.printFeedback("Price successfully changed!");

@@ -163,6 +163,24 @@ public class AppView {
 	}
 
 	/**
+	 * Prints the full info of a truck. Transaction, type, location, menu, and bins
+	 * @param truck The truck whos information is gonna be printed
+	 */
+	public void printTruckFullInfo(CoffeeTruck truck){
+		printTruckBaseInfo(truck);
+		printTruckBinInfo(truck);
+
+		System.out.println("\nMenu: ");
+		truck.printMenu();
+		
+		System.out.println("\nTransactions: ");
+		Iterator<Transaction> it = TRANSACTIONS.iterator();
+		while (it.hasNext()) {
+			it.next().printTransaction();
+		}	
+	}
+
+	/**
 	 * Clears the console, for clarity purposes.
 	 */
 	public static void clear(){

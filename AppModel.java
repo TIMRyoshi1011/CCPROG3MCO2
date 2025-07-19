@@ -64,7 +64,7 @@ public class AppModel {
 	 * @param locInpt The location inputted.
 	 * @return true if it was successful, false if not.
 	 */
-	public void setLocation(CoffeeTruck truck, String locInpt){
+	public boolean setLocation(CoffeeTruck truck, String locInpt){
 		boolean result;
 		result = truck.setLocation(locInpt, TRUCKS);
 		return result;
@@ -74,7 +74,7 @@ public class AppModel {
 	 * Empties a storage bin
 	 * @param bin The bin to be emptied.
 	 */
-	public void emptyBin(){
+	public void emptyBin(StorageBin bin){
 		bin.emptyBin();
 	}
 
