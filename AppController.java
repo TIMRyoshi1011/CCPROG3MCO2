@@ -65,16 +65,11 @@ public class AppController {
 	 */
 	public void createTruck(){
 		String choice; int intChoice;
-		CoffeeTruck tempTruck = new CoffeeTruck();
+		TruckController tempTruck = new TruckController();
 		boolean success, inptCheck, end;
 
 		/* Set truck type */
-		do {
-			view.printSetType();
-			choice = scan.nextLine();
-			success = model.setType(tempTruck, choice);
-			if (!success) {view.printFeedback("Invalid input! Press Enter to continue . . .");}
-		} while (!success);
+		tempTruck.setType();
 
 		/* Set truck location */
 		do {
@@ -85,21 +80,10 @@ public class AppController {
 		} while (!success);
 
 		/* Set truck storage bins */
-		do {
-			view.printSetStorageBins(tempTruck);
-			choice = scan.nextLine();
-			intChoice = model.toInt(choice);
-
-			if (intChoice < 1 || intChoice > tempTruck.getNumBins()) inptCheck = false;
-			else inptCheck = true;
-
-			if (inptCheck) this.editStorageBin(tempTruck.getStorageBin(intChoice - 1));
-			else if (choice.toUpperCase().equals("END")) success = false;
-			else {view.printFeedback("Please check your input..."); scan.nextLine();}
-		} while (!success);
+		tempTruck.setBins();
 
 		/* Set prices */
-		this.editPrices();
+		editPrices();
 
 		/* Complete */
 		view.clear();
@@ -193,72 +177,6 @@ public class AppController {
 			}
 		} while (!end);
 
-	}
-
-	/**
-	 * Controls the app when a storage bin is being edited.
-	 * @param bin The storage bin being edited.
-	 */
-	public void editStorageBin(StorageBin bin){
-		String choice, choice2; int intChoice; float floatChoice;
-		boolean exit = false, success;
-
-		while (!exit){
-			view.printEditBin(bin, bin.getContents() == null);
-			choice = scan.nextLine();
-			intChoice = model.toInt(choice);
-
-			switch(intChoice){
-				case 1:
-					// setbin
-					view.printMaxQuantity();
-					view.printFeedback("Type:");
-					choice = scan.nextLine();
-					view.printFeedback("Amount:");
-					choice2 = scan.nextLine();
-					floatChoice = model.toFloat(choice2);
-
-					if (floatChoice != -1){
-						success = model.setBin(bin, choice, floatChoice);
-						if (!success) view.printFeedback("Please check input...");
-						else view.printFeedback("Success! Press enter to continue.");
-					}
-					else view.printFeedback("Please check input...");
-					scan.nextLine();
-					break;
-
-				case 2:
-					// replenish
-					view.printFeedback("What is the new quantity of the item?");
-					choice = scan.nextLine();
-					floatChoice = model.toFloat(choice);
-
-					if (floatChoice >= 0){
-						success = model.replenishBin(bin, floatChoice);
-						if (!success) view.printFeedback("Can not fit in bin!");
-						else view.printFeedback("Successfully replenished!");
-					}
-					else view.printFeedback("Error in input!");
-					scan.nextLine();
-					break;
-
-				case 3:
-					// empty
-					model.emptyBin(bin);
-					view.printFeedback("Bin has been emptied!");
-					scan.nextLine();
-					break;
-
-				case 0:
-					// exit
-					exit = true;
-					break;
-
-				default:
-					view.printFeedback("Invalid input!");
-					scan.nextLine();
-			}
-		}
 	}
 
 	/**

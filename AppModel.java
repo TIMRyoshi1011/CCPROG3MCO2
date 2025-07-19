@@ -47,27 +47,23 @@ public class AppModel {
 	}
 
 	/**
-	 * Set the type of the truck.
-	 * @param truck The truck to have its type be changed.
-	 * @param typeInpt The user's input.
-	 * @return true if it was successful, false if not.
-	 */
-	public boolean setType(CoffeeTruck truck, String typeInpt){
-		boolean result;
-		result = truck.setType(typeInpt.toUpperCase());
-		return result;
-	}
-
-	/**
 	 * Sets the location of the truck.
 	 * @param truck The truck that will have its type be changed.
 	 * @param locInpt The location inputted.
 	 * @return true if it was successful, false if not.
 	 */
-	public boolean setLocation(CoffeeTruck truck, String locInpt){
-		boolean result;
-		result = truck.setLocation(locInpt, TRUCKS);
-		return result;
+	public boolean setLocation(TruckController truck, String locInpt){
+		boolean avail = true; // true = location is available
+
+		for (TruckController iTruck : TRUCKS){
+			if (iTruck.getLocation().equals(locInpt))
+				avail = false; // false = location is not available
+		}
+
+		if (avail){
+			truck.setLocation = locInpt;}
+			
+		return avail;
 	}
 
 	/**
