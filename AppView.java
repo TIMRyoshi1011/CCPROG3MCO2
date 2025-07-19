@@ -11,15 +11,6 @@ public class AppView {
 				   stage. */
 
 	/**
-  	 * Prints the info of all trucks.
-     */
-	public void printTrucksInfo(ArrayList<TruckController> trucks){
-		for (TruckController truck : trucks) {
-	            truck.printTruckInfo();
-	        }
-	}
-
-	/**
 	 * Prints the main menu of the app.
 	 */
 	public void printMain(){
@@ -56,6 +47,7 @@ public class AppView {
 	 * Prints the screen when the user is setting the prices.
 	 */
 	public void printSetPrice(){
+		clear();
 		System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.\n");
 		System.out.println("Below are the current prices for each ingredient:");
 		System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
@@ -146,7 +138,7 @@ public class AppView {
 
 		/* Amount of orders for specific types of drinks as well as sizes.
 		 * 0 = small, 1 = medium, 2 = large, 3 = cafe americano, 4 = latte, 5 = cappucino */
-		System.out.printf("Total amount of orders: %d\n", combinedSales);
+		System.out.printf("Total amount of sales: %f\n", combinedSales);
 		System.out.println("\nOrder types:");
 
 		pause();
@@ -167,6 +159,19 @@ public class AppView {
 		System.out.printf("\tLarge: %d", transacType[2]);
 
 		System.out.println();
+	}
+
+	/**
+	 * Prints the screen when the user decides on what to do during maintenance
+	 */
+	public void printMaintenanceSelect(){
+		AppView.clear();
+		System.out.println("What would you like to do?");
+		System.out.println("1 - Change location");
+		System.out.println("2 - Set prices");
+		System.out.println("3 - Exit");
+		System.out.println();
+		System.out.print(">> ");
 	}
 
 	/**

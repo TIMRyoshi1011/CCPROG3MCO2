@@ -138,16 +138,4 @@ public class TruckView {
 		}
 		System.out.println();
 	}
-
-	/**
-	 * Prints the screen when the user decides on what to do during maintenance
-	 */
-	public void printMaintenanceSelect(){
-		AppView.clear();
-		System.out.println("What would you like to do?");
-		System.out.println("1 - Change location");
-		System.out.println("2 - Set prices");
-		System.out.println();
-		System.out.print(">> ");
-	}
 }

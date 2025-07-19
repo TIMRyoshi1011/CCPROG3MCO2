@@ -95,11 +95,13 @@ public class TruckModel {
 			this.truckType = 'P';
 
 			if (numBins == 8) {
+				numBins = 10;
 				for (int i = 0; i < 2; i++) {
 	            STORAGEBINS.add(new StorageBin());
 				}
 			}
 			else if (numBins == 0){
+				numBins = 10;
 				for (int i = 0; i < 10; i++) {
 	            STORAGEBINS.add(new StorageBin());
 				}
@@ -111,11 +113,13 @@ public class TruckModel {
 			this.truckType = 'R';
 
 			if (numBins == 10) {
+				numBins = 8;
 				for (int i = 8; i < 10; i++) {
 	            STORAGEBINS.remove(i);
 				}
 			}
 			else if (numBins == 0){
+				numBins = 8;
 				for (int i = 0; i < 8; i++) {
 	            STORAGEBINS.add(new StorageBin());
 				}
@@ -263,5 +267,34 @@ public class TruckModel {
 		if (!tempStr.equals("Cappucino [")) {tempStr += " ]"; menu.add(tempStr);}
 
 		return menu;
+	}
+
+	/**
+	 * Using the menu array from returnMenu(), check if a drink is available.
+	 * @param drink The name of the drink (i.e., "Latte")
+	 * @param size 1 character string depicting size of drink (i.e., "S", "L")
+	 * @return true if drink is available, false otherwise.
+	 */
+	public boolean isDrinkAvailable(String inptDrink, String inptSize){
+		int openBracket, closeBracket;
+		String sizes;
+		String[] availableSizes;
+
+		for (String item : this.returnMenu()) {
+			if (item.toLowerCase().startsWith(inptDrink.toLowerCase())) {
+				openBracket = item.indexOf('[');
+				closeBracket = item.indexOf(']');
+
+				sizes = item.substring(openBracket + 1, closeBracket).trim();
+
+				availableSizes = sizes.trim().split("\\s+");
+				for (String size : availableSizes) {
+					if (size.trim().equalsIgnoreCase(inptSize.trim())) {
+						return true;}
+				}
+			}
+		}
+
+		return false;
 	}
 }

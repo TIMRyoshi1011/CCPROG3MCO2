@@ -38,12 +38,15 @@ public class AppController {
 			switch(choice){
 			case 1:
 				// create truck
+				createTruck();
 				break;
 			case 2:
 				// simulate truck
+				simulateTruck();
 				break;
 			case 3:
 				// dashboard
+				dashboard();
 				break;
 			case 4:
 				// exit
@@ -72,12 +75,7 @@ public class AppController {
 		tempTruck.setType();
 
 		/* Set truck location */
-		do {
-			view.printSetLocation();
-			choice = scan.nextLine();
-			success = model.setLocation(tempTruck, choice);
-			if (!success) {view.printFeedback("There's already a truck here! Pick somewhere else!");}
-		} while (!success);
+		setTruckLocation(tempTruck);
 
 		/* Set truck storage bins */
 		tempTruck.setBins();
@@ -128,12 +126,16 @@ public class AppController {
 						break;
 					case 2:
 						// print info
+						model.getTruck(truckIndx).truckFullInfo();
+						scan.nextLine();
 						break;
 					case 3:
 						// restock storage bins
+						model.getTruck(truckIndx).setBins();
 						break;
 					case 4:
 						// set maintenance
+						truckMaintenance(model.getTruck(truckIndx));
 						break;
 					case 5:
 						// exit
@@ -180,6 +182,21 @@ public class AppController {
 	}
 
 	/**
+	 * Sets the location of a truck
+	 * @param truck truck being edited
+	 */
+	public void setTruckLocation(TruckController truck){
+		String choice;
+		boolean success = true;
+		do {
+			view.printSetLocation();
+			choice = scan.nextLine();
+			success = model.setLocation(truck, choice);
+			if (!success) {view.printFeedback("There's already a truck here! Pick somewhere else!");}
+		} while (!success);
+	}
+
+	/**
 	 * Controls the app when the prices are being edited.
 	 */
 	public void editPrices(){
@@ -200,7 +217,29 @@ public class AppController {
 
 				if (success) view.printFeedback("Price successfully changed!");
 				else view.printFeedback("Please check your input...");
+
+				scan.nextLine();
 			}
 		}	
+	}
+
+	/**
+	 * Maintain the truck. Change it's location or prices.
+	 * @param truck truck being maintained
+	 */
+	public void truckMaintenance(TruckController truck){
+		boolean end = false;
+		String choice; int intChoice;
+
+		while (!end){
+			view.printMaintenanceSelect();
+			choice = scan.nextLine();
+
+			intChoice = AppModel.toInt(choice);
+			if (intChoice == 1) setTruckLocation(truck);
+			else if (intChoice == 2) editPrices();
+			else if (intChoice == 3) end = true;
+			else view.printFeedback("Please check your input.");
+		}
 	}
 }

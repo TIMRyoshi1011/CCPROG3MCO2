@@ -90,11 +90,12 @@ public class TruckController {
 			choice = scan.nextLine();
 			intChoice = AppModel.toInt(choice);
 
+			System.out.println(model.getNumBins());
 			if (intChoice < 1 || intChoice > model.getNumBins()) inptCheck = false;
 			else inptCheck = true;
 
-			if (inptCheck) editStorageBin(model.getBin(intChoice));
-			else if (choice.toUpperCase().equals("END")) success = false;
+			if (choice.toUpperCase().equals("END")) success = false;
+			else if (inptCheck) editStorageBin(model.getBin(intChoice));
 			else {view.printFeedback("Please check your input..."); scan.nextLine();}
 		} while (!success);
 	}
