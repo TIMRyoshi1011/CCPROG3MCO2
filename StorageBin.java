@@ -61,12 +61,24 @@ public class StorageBin{
      	 * @return True if successfully replenished, false otherwise. Fails either because bin is empty or the max capacity is reached.
        	 */
 	public boolean replenishBin(float amt){
-		if (contents != null) {
+		boolean wontOverfill = true;
+		float newAmt = contents.getAmt() + amt;
+
+		switch(contents.getType()){
+			case "water": if(amt > 640) wontOverfill = false; break;
+			case "milk": if (amt > 640) wontOverfill = false; break;
+			case "coffee": if (amt > 1008) wontOverfill = false; break;
+			case "scup": if (amt > 80) wontOverfill = false; break;
+			case "mcup": if (amt > 64) wontOverfill = false; break;
+			case "lcup": if (amt > 40) wontOverfill = false; break;
+		}
+
+		if (contents != null && wontOverfill) {
 	            contents = new Ingredient(contents.getType(), contents.getAmt() + amt);
 	            return true;
 	        }
 		
-	        return false;
+	    return false;
 	}
 
 	/**

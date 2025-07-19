@@ -17,6 +17,8 @@ public class CoffeeTruck {
 	private ArrayList<Transaction> TRANSACTIONS;
 	/** ArrayList containing all storage bins of the truck. For a regular truck, only 8 bins. */
 	private ArrayList<StorageBin> STORAGEBINS;
+	/** Number of bins */
+	private int numBins;
 
 	/**
  	 * Constructor for a CoffeeTruck. 
@@ -33,24 +35,20 @@ public class CoffeeTruck {
 	}
 
 	/**
- 	 * Fills a storage bin with new items. 
-   	 * @param storageBinIndx The index of the storage bin to be changed in the storageBins array. 0 if bin #1, and so on.
-     	 */
-	public boolean fillStorageBin(int storageBinIndx, String type, float amt){
-		if (storageBinIndx >= 0 && storageBinIndx < STORAGEBINS.size()) {
-	            return STORAGEBINS.get(storageBinIndx).setBin(type, amt);
-	        }
-	
-	        return false;
-	}
-
-	/**
 	 * Returns a storage bin given its index.
 	 * @param binIndex The index of the storage bin.
 	 * @return The storage bin under the given index.
 	 */
 	public StorageBin getStorageBin(int binIndex){
 		return STORAGEBINS.get(binIndex);
+	}
+
+	/**
+	 * Returns the storage bin array.
+	 * @return The storage bin array.
+	 */
+	public ArrayList<StorageBin> getStorageBins(){
+		return STORAGEBINS;
 	}
 
 	/**
@@ -75,6 +73,14 @@ public class CoffeeTruck {
 	 */
 	public char getType(){
 		return truckType;
+	}
+
+	/**
+	 * Returns the number of bins the truck has.
+	 * @return Number of bins the truck has.
+	 */
+	public int getNumBins(){
+		return numBins;
 	}
 
 	/**
