@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Model for the main app interface
  */
@@ -51,7 +52,7 @@ public class AppModel {
 	 * @param typeInpt The user's input.
 	 * @return true if it was successful, false if not.
 	 */
-	public void setType(CoffeeTruck truck, String typeInpt){
+	public boolean setType(CoffeeTruck truck, String typeInpt){
 		boolean result;
 		result = truck.setType(typeInpt.toUpperCase());
 		return result;

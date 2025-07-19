@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * View for the main app interface
  */
@@ -11,9 +12,9 @@ public class AppView {
 
 	/**
   	 * Prints the info of all trucks.
-    	 */
-	public void printTrucksInfo(ArrayList<CoffeeTruck> TRUCKS TRUCKS){
-		for (CoffeeTruck truck : TRUCKS) {
+     */
+	public void printTrucksInfo(ArrayList<CoffeeTruck> trucks){
+		for (CoffeeTruck truck : trucks) {
 	            truck.printTruckInfo();
 	        }
 	}
@@ -72,7 +73,7 @@ public class AppView {
 	 * @param truck The truck which will have its storage bin altered.
 	 */
 	public void printSetStorageBins(CoffeeTruck truck){
-		int counter = 1
+		int counter = 1;
 		System.out.println("Here are the current contents of your storage bins:");
 
 		for (StorageBin bin : truck.getStorageBins()){
@@ -198,7 +199,7 @@ public class AppView {
 		clear();
 
 		System.out.println("Choose a truck!"); 
-		while (CoffeeTruck truck : trucks){
+		for (CoffeeTruck truck : trucks){
 			System.out.printf("#%d || ", count);
 			truck.printBaseInfo();
 			count++;
@@ -251,7 +252,7 @@ public class AppView {
 		JavaJeep.pause();
 		System.out.printf("\tCoffee: %.2f grams", totalIngr[3]);
 		JavaJeep.pause();
-		System.out.printf("\tWater: %.2f fl", totalIngr[4);
+		System.out.printf("\tWater: %.2f fl", totalIngr[4]);
 		JavaJeep.pause();
 		System.out.printf("\tMilk: %.2f fl\n", totalIngr[5]);
 

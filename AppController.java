@@ -99,9 +99,7 @@ public class AppController {
 		} while (!success);
 
 		/* Set prices */
-		do {
-			this.editPrices();
-		}
+		this.editPrices();
 
 		/* Complete */
 		view.clear();
@@ -130,7 +128,7 @@ public class AppController {
 			truckIndx = model.toInt(choice) - 1;
 
 			if (choice.equalsIgnoreCase("END")) end = true;
-			else if (truckIndx < 0): view.printFeedback("Please check your input!");
+			else if (truckIndx < 0) view.printFeedback("Please check your input!");
 			else exitTruck = false;
 
 			while (!exitTruck){
@@ -193,7 +191,7 @@ public class AppController {
 				case 'n': end = true; break;
 				default: {view.printFeedback("Please check your input"); scan.nextLine(); break;}
 			}
-		} while (!end)
+		} while (!end);
 
 	}
 
@@ -225,7 +223,7 @@ public class AppController {
 						if (!success) view.printFeedback("Please check input...");
 						else view.printFeedback("Success! Press enter to continue.");
 					}
-					else view.private ("Please check input...");
+					else view.printFeedback("Please check input...");
 					scan.nextLine();
 					break;
 
