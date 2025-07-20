@@ -152,6 +152,46 @@ public class TruckModel {
 	}
 
 	/**
+	 * Processes a new transaction and edits the necessary variables of the truck
+	 * following a transaction. This means reducing the contents of its bins according 
+	 * to the drink, increasing its money, and adding it to the trucks list of 
+	 * transactions.
+	 * @param newT The new transaction.
+	 */
+	public void processTransaction(Transaction newT){
+		moneyEarned += newT.getPrice();
+		reduceBins(newT.getIngredients());
+		TRANSACTIONS.add(newT);
+	}
+
+	/**
+	 * Given the details of a drink made using its transaction info,
+	 * the storage bin will be edited to deduce the ingredients used to make the drink.
+	 * @param ingredientsUsed Arraylist containing the ingredients used in making the drink
+	 */
+	public void reduceBins(ArrayList<Ingredient> ingredientsUsed){
+		float amtLeft;
+
+		for (Ingredient ingr : ingredientsUsed){
+			amtLeft = ingr.getAmt();
+			for (StorageBin bin : STORAGEBINS){ 
+				if (amtLeft > 0 && bin.getContents().getType().equals(ingr.getType())){
+
+					if (bin.getContents().getAmt() < amtLeft){
+						bin.lessenContents(bin.getContents().getAmt());
+						amtLeft -= bin.getContents().getAmt();
+					}
+
+					else{
+						bin.lessenContents(amtLeft);
+						amtLeft = 0;
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Replenishes a storage bin
 	 * @param bin The bin to be replenished
 	 * @param amt The amt that will be added to the bin.

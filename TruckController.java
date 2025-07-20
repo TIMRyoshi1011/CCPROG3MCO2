@@ -216,7 +216,7 @@ public class TruckController {
 			menu = model.returnMenu();
 
 			if (menu.size() == 0){
-				view.clear();
+				AppView.clear();
 				view.printFeedback("NO AVAILABLE ITEMS");
 				scan.nextLine();
 				end = true;
@@ -241,10 +241,10 @@ public class TruckController {
 					view.printFeedback("What size would you like?");
 					choice2 = scan.nextLine();
 
-					drinkIsAvail = model.isDrinkAvailable(drinkType, drinkSize);
+					drinkIsAvail = model.isDrinkAvailable(choice, choice2);
 
 					if (drinkIsAvail){
-						Transaction newT = new Transaction(drinkType, drinkSize);
+						Transaction newT = new Transaction(choice, choice2);
 
 						AppView.pause();
 
