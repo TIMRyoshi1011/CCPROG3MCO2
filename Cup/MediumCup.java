@@ -5,12 +5,13 @@ package Cup;
  */
 public class MediumCup extends Cup{
 	/** Price for the cup */
-	private static float price = 60;
+	private static float price = 60f;
 
 	/**
 	 * Constructor for MediumCup
+	 * @param amt The amount of cups in a given drink or bin
 	 */
-	public MediumCup(){
-		super("Medium", 12, 'M');
+	public MediumCup(float amt){
+		super("Medium", 12f, 'M', amt);
 	}
 }

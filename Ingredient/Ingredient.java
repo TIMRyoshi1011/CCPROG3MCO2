@@ -4,7 +4,7 @@ package Ingredient;
  * Abstract class for ingredients that are not espressos or cups.
  * This includes water, milk, and any special toppings or syrups the user adds.
  */
-public abstract class Ingredient{
+public class Ingredient{
 	/** The type of ingredient it is (milk, water, etc) */
 	private String type;
 	/** The amount of the ingredient in use. Used when instantiated in a bin or drink. */
@@ -34,6 +34,14 @@ public abstract class Ingredient{
 	 */
 	public float getAmt(){
 		return amt;
+	}
+
+	/**
+	 * Reduces the amount of the ingredient
+	 * @param amt Amount to be reduced
+	 */
+	public void reduceAmt(float amt){
+		this.amt -= amt;
 	}
 
 	/**

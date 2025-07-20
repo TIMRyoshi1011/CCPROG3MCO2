@@ -18,19 +18,16 @@ public class TransactionController{
        	 * @param size The size of the drink. 
 	 */
 	public TransactionController(String type, String size){
-		model = new TransactionModel();
+		char shorthand = size.toUpperCase().charAt(0);
 		view = new TransactionView();
 
-		model.setType(type);
-		model.setSize(size.toLowerCase().charAt(0));
-
 		switch(type.toLowerCase()){
-			case "cafe americano": model.makeAmericano(); break;
-			case "latte": model.makeLatte(); break;
-			case "cappucino": model.makeCappucino(); break;
+			case "cafe americano":
+			case "americano":
+				model = new CafeAmericanoModel(shorthand); break;
+			case "latte": model = new Latte(shorthand); break;
+			case "cappucino": model = new Cappucino(shorthand); break;
 		}
-
-		model.calculateCost();
 	}
 
 	/**

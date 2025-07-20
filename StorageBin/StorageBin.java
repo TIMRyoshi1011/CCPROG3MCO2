@@ -31,32 +31,26 @@ public class StorageBin{
 	/**
  	 * This completely changes, or sets (if it is empty) a storage bin's contents with a new item.
    	 * @param type The type of item the storage bin will hold.
-     	 * @param amt The amount of the item the storage bin will hold.
-       	 * @return true if bin's contents was successfully set. False otherwise.
+ 	 * @param amt The amount of the item the storage bin will hold.
+   	 * @return true if bin's contents was successfully set. False otherwise.
 	 */
 	public boolean setBin(String type, float amt){
 		boolean validAmt = true;
+		type = type.toLowerCase();
+
 		if (amt < 0) return false;
 
-		if (type.equals("water") || type.equals("milk") || type.equals("coffee") ||
-		    type.equals("scup") || type.equals("mcup") || type.equals("lcup")) {
-			
-			switch(type){
-				case "water": if(amt > 640) validAmt = false; break;
-				case "milk": if (amt > 640) validAmt = false; break;
-				case "coffee": if (amt > 1008) validAmt = false; break;
-				case "scup": if (amt > 80) validAmt = false; break;
-				case "mcup": if (amt > 64) validAmt = false; break;
-				case "lcup": if (amt > 40) validAmt = false; break;
-			}
+		else if (type.equals("water") && amt < 640f) contents = new Water(amt);
+		else if (type.equals("milk") && amt < 640f) contents = new Milk(amt);
+		else if (type.equals("coffee") && amt < 1008f) contents = new Coffee(amt);
+		else if (type.equals("scup") && amt < 80f) contents = new SmallCup(amt);
+		else if (type.equals("mcup") && amt < 64f) contents = new MediumCup(amt);
+		else if (type.equals("lcup") && amt < 40f) contents = new LargeCup(amt);
+        else if (amt < 640) contents = new ExtraIngr(type, amt);
 
-			if (validAmt) {
-				contents = new Ingredient(type, amt);
-				return true;
-			}
-		}
-			
-        	return false;
+        else return false;
+
+        return true;
 	}
 
 	/**
@@ -69,18 +63,17 @@ public class StorageBin{
 		float newAmt = contents.getAmt() + amt;
 
 		switch(contents.getType()){
-			case "water": if(amt > 640) wontOverfill = false; break;
-			case "milk": if (amt > 640) wontOverfill = false; break;
-			case "coffee": if (amt > 1008) wontOverfill = false; break;
-			case "scup": if (amt > 80) wontOverfill = false; break;
-			case "mcup": if (amt > 64) wontOverfill = false; break;
-			case "lcup": if (amt > 40) wontOverfill = false; break;
+			case "Coffee": if (newAmt > 1008) wontOverfill = false; break;
+			case "Small": if (newAmt > 80) wontOverfill = false; break;
+			case "Medium": if (newAmt > 64) wontOverfill = false; break;
+			case "Large": if (newAmt > 40) wontOverfill = false; break;
+			default: if (newAmt > 640) wontOverfill = false; break; // water, milk, and extraIngr
 		}
 
-		if (contents != null && wontOverfill) {
-	            contents = new Ingredient(contents.getType(), contents.getAmt() + amt);
-	            return true;
-	        }
+		if (wontOverfill) {
+            contents.reduceAmt(amt);
+            return true;
+        }
 		
 	    return false;
 	}
@@ -99,12 +92,11 @@ public class StorageBin{
        	 * @param amt The amount to be decreased from the bin.
 	 */
 	public boolean lessenContents(float amount){
-		if (contents != null && contents.getAmt() >= amount) {
-	            contents = new Ingredient(contents.getType(), contents.getAmt() - amount);
-	            return true;
-	        }
-		
-	        return false;
+		if (contents.getAmt() >= amount && contents.getAmt + amount >= 0) {
+            contents.reduceAmt(amount);
+            return true;
+        }
+		return false;
 	}
 
 	/**
@@ -114,8 +106,8 @@ public class StorageBin{
 	public void printBinInfo(){
 		if (contents != null) {
 	            System.out.print("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
-		    if (contents.getType().equals("coffee")) System.out.print("grams");
-		    else if (contents.getType().equals("scup") || contents.getType().equals("mcup") || contents.getType().equals("lcup")) System.out.print("pcs");
+		    if (contents.getType().equals("Coffee")) System.out.print("grams");
+		    else if (contents instanceof Cup) System.out.print("pcs");
 		    else System.out.print("fl");
 	        } 
 		

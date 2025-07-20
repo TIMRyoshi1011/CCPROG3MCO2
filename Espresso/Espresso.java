@@ -5,7 +5,7 @@ package Espresso;
  */
 public abstract class Espresso{
 	/** Ratio of water to 1 part coffee */
-	private float waterRatio;
+	private int waterRatio;
 	/** Name of espresso brew */
 	private String name;
 	/** Price of a single espresso shot. Consistent throughout all espresso brews. */
@@ -24,7 +24,7 @@ public abstract class Espresso{
 	 * Constructor for espresso.
 	 * Sets the base information of the brew (ratio and name).
 	 */
-	public Espresso(float ratio, String name){
+	public Espresso(int ratio, String name){
 		this.waterRatio = ratio;
 		this.name = name;
 	}

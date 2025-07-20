@@ -1,11 +1,10 @@
 package Cup;
 
+import Ingredient.*;
 /**
  * Abstract class for cups.
  */
-public abstract class Cup{
-	/** Name of the cup */
-	private String name;
+public abstract class Cup extends Ingredient{
 	/** Amount of fl the cup can hold. */
 	private float fl;
 	/** A shorthand character for the cup, used in view */
@@ -19,19 +18,12 @@ public abstract class Cup{
 	 * @param fl THe amount of fl the cup can hold
 	 * @param shorthand The shorthand of the cup
 	 * @param price The price of the cup
+	 * @param amt The amount of cups in a given storage bin, or drink
 	 */
-	public Cup(String name, float fl, char shorthand){
-		this.name = name;
+	public Cup(String name, float fl, char shorthand, float amt){
+		super(name, amt)
 		this.fl = fl;
 		this.shorthand = shorthand;
-	}
-
-	/**
-	 * Returns the name of the cup.
-	 * @return name of the cup.
-	 */
-	public String getName(){
-		return name;
 	}
 
 	/**
