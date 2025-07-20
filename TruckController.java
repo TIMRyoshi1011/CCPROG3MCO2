@@ -82,7 +82,7 @@ public class TruckController {
 	 * Given list of bins, choose a bin to set.
 	 */
 	public void setBins(){
-		boolean inptCheck, success = true;
+		boolean inptCheck, success = false;
 		String choice; int intChoice;
 
 		do {
@@ -94,7 +94,7 @@ public class TruckController {
 			if (intChoice < 1 || intChoice > model.getNumBins()) inptCheck = false;
 			else inptCheck = true;
 
-			if (choice.toUpperCase().equals("END")) success = false;
+			if (choice.toUpperCase().equals("END")) success = true;
 			else if (inptCheck) editStorageBin(model.getBin(intChoice));
 			else {view.printFeedback("Please check your input..."); scan.nextLine();}
 		} while (!success);
@@ -196,6 +196,67 @@ public class TruckController {
 		System.out.println("\nTransactions: ");
 		for (Transaction transaction : model.getTransactions()){
 			transaction.printTransaction();
+		}
+	}
+
+	/**
+ 	 * Simulates a sale. In simulating, it performs:
+   	 * 1. Customer ordering a drink. Display menu.
+     	 * 2. Calculate the amount of ingredients for the drink
+       	 * 3. Deduce that amount from the respective storage bins.
+	 * 4. Create a new transaction variable containing all information, add it to transactions list.
+  	 * 5. Print all information.
+	 */
+	public void simulateSale(){
+		boolean end = false, drinkIsAvail;
+		ArrayList<String> menu;
+		String choice, choice2;
+
+		while (!end){
+			menu = model.returnMenu();
+
+			if (menu.size() == 0){
+				view.clear();
+				view.printFeedback("NO AVAILABLE ITEMS");
+				scan.nextLine();
+				end = true;
+			}
+
+			else{
+				view.printMenu(menu);
+
+				view.printFeedback("Would you like to make an order? (y/n)");
+				choice = scan.nextLine().trim();
+
+				if (choice.toLowerCase().charAt(0) == 'n'){
+					view.printFeedback("Come back again!");
+					end = true;
+					scan.nextLine();
+				}
+
+				else if (choice.toLowerCase().charAt(0) == 'y'){
+					/* Start simulating drink */
+					view.printFeedback("What drink would you like?");
+					choice = scan.nextLine();
+					view.printFeedback("What size would you like?");
+					choice2 = scan.nextLine();
+
+					drinkIsAvail = model.isDrinkAvailable(drinkType, drinkSize);
+
+					if (drinkIsAvail){
+						Transaction newT = new Transaction(drinkType, drinkSize);
+
+						AppView.pause();
+
+						model.processTransaction(newT);
+
+						newT.printBrew();
+						newT.printTransaction();
+					}
+				}
+
+				else { view.printFeedback("Please check your input."); scan.nextLine();}
+			}
 		}
 	}
 }

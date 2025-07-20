@@ -192,7 +192,7 @@ public class AppController {
 			view.printSetLocation();
 			choice = scan.nextLine();
 			success = model.setLocation(truck, choice);
-			if (!success) {view.printFeedback("There's already a truck here! Pick somewhere else!");}
+			if (!success) {view.printFeedback("There's already a truck here! Pick somewhere else!"); scan.nextLine();}
 		} while (!success);
 	}
 
