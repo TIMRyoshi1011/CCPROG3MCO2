@@ -1,3 +1,7 @@
+package Transaction;
+
+import App.*;
+
 /**
  * View of a transaction.
  */

@@ -1,4 +1,11 @@
+package App;
+
 import java.util.ArrayList;
+import Truck.*;
+import Transaction.*;
+import StorageBin.*;
+import Ingredient.*;
+
 /**
  * Model for the main app interface
  */

@@ -1,4 +1,10 @@
+package Truck;
+
 import java.util.ArrayList;
+import StorageBin.*;
+import Ingredient.*;
+import Transaction.*;
+
 /**
  * A coffee truck's model
  */

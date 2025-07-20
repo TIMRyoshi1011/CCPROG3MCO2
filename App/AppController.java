@@ -1,5 +1,8 @@
+package App;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import Truck.*;
 
 /**
  * Controller for the main app interface.

@@ -1,5 +1,10 @@
+package Truck;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+import StorageBin.*;
+import Transaction.*;
+import App.*;
 
 /**
  * A coffee trucks controller

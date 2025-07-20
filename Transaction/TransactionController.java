@@ -1,4 +1,7 @@
+package Transaction;
+
 import java.util.ArrayList;
+import Ingredient.*;
 /**
  * Controller of a transaction.
  */

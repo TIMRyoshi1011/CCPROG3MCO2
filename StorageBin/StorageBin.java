@@ -1,3 +1,7 @@
+package StorageBin;
+
+import Ingredient.*;
+
 /**
  * Represents a storage bin.
  * 8 of these are intialized in a standard coffee truck.

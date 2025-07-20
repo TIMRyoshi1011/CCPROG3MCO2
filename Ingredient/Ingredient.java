@@ -1,3 +1,7 @@
+package Ingredient;
+
+
+
 /**
  * Repressents the ingredient.
  * A variable in the StorageBin and Transaction class.

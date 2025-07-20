@@ -1,4 +1,9 @@
+package Truck;
+
 import java.util.ArrayList;
+import Transaction.*;
+import App.*;
+import StorageBin.*;
 /**
  * A coffee truck's view
  */

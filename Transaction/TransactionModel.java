@@ -1,4 +1,7 @@
+package Transaction;
+
 import java.util.ArrayList;
+import Ingredient.*;
 /**
  * Model of a transaction.
  */

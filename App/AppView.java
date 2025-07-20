@@ -1,4 +1,9 @@
+package App;
+
 import java.util.ArrayList;
+import Truck.*;
+import Ingredient.*;
+
 /**
  * View for the main app interface
  */

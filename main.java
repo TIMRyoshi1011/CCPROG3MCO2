@@ -1,3 +1,5 @@
+import App.*;
+
 /**
  * The main java file. This is the file to run when running the program.
  * No real functions happen, this is mostly just so the AppController, model, and view can be initialized.
