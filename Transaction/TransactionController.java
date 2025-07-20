@@ -73,32 +73,7 @@ public class TransactionController{
 	 * Prints the transaction brewing simulation
 	 */
 	public void printBrew(){
-		String size;
-		float sizeFl = model.getFl();
-
-		switch(model.getDrinkSize()){
-			case 'S': size = "Small"; break;
-			case 'M': size = "Medium"; break;
-			case 'L': size = "Large"; break;
-			default: size = ""; break;
-		}
-
-		switch(model.getDrinkType().toLowerCase()){
-			case "cafe americano": 
-				view.brewAmericano(size, (float)(sizeFl*(1.0/3.0)), 
-				model.getIngredients().get(1).getAmt(), (float)(sizeFl/((1.0/3.0)/(18.0/19.0))),
-				(float)(sizeFl/(2.0/3.0))); 
-				break;
-
-			case "latte":
-				view.brewLatte(size, (float)(sizeFl*(1.0/5.0)), model.getIngredients().get(1).getAmt(),
-				model.getIngredients().get(2).getAmt(), model.getIngredients().get(3).getAmt());
-				break;
-
-			case "cappucino":
-				view.brewCappucino(size, (float)(sizeFl*(1.0/3.0)), model.getIngredients().get(1).getAmt(),
-					model.getIngredients().get(2).getAmt(), model.getIngredients().get(3).getAmt());
-				break;
-		}
+		view.brewDrink(model.getStringSize(), model.getDrinkType(), model.getEspresso().getEspressio(),
+			model.getEspresso().getCoffee(), model.getEspresso().getWater(), model.getIngredients());
 	}
 }

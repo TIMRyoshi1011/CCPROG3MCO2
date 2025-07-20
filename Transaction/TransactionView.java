@@ -1,5 +1,6 @@
 package Transaction;
 
+import java.util.ArrayList;
 import App.*;
 
 /**
@@ -19,66 +20,27 @@ public class TransactionView{
 	/**
 	 * Prints transaction brewing simulation for americanos.
 	 * @param size Size of the drink
+	 * @param type The type of drink
 	 * @param espresso Amt of espresso
 	 * @param coffee Amt of coffee
-	 * @param esWater Amt of water in espresso brew
-	 * @param water Amt of water outside of espresso brew
+	 * @param water Amt of water in espresso brew
+	 * @param ingredients Ingredients other than espresso.
 	 */
-	public void brewAmericano(String size, float espresso, float coffee, float esWater, float water){
-		/* 1/3rds espresso, 2/3rds water. */
+	public void brewDrink(String size, String type, float espresso, float coffee, 
+		float water, ArrayList<Ingredient> ingredients){
+
 		System.out.printf("Brewing %.2f fl espresso...\n", espresso);
 		AppView.pause();
 		System.out.printf("\t%.2f grams of coffee...\n", coffee);
 		AppView.pause();
 		System.out.printf("\t%.2f fl of water...\n", esWater);
 		AppView.pause();
-		System.out.printf("Adding %.2f fl of water...\n\n", water);
-		AppView.pause();
 
-		System.out.printf("%s cafe americano successfully brewed!\n", size);
-	}
+		for (Ingredient ingr : ingredients){
+			System.out.printf("Adding %.2f fl of %s...\n\n", ingr.getAmt(), ingr.getType().toLowerCase());
+			AppView.pause();
+		}
 
-	/**
-	 * Prints transaction brewing simulation for lattes.
-	 * @param size Size of the drink
-	 * @param espresso Amt of espresso
-	 * @param coffee Amt of coffee
-	 * @param water Amt of water
-	 * @param milk Amt of milk
-	 */
-	public void brewLatte(String size, float espresso, float coffee, float water, float milk){
-		/* 1/5ths espresso, 4/5ths milk. */
-		System.out.printf("Brewing %.2f fl espresso...\n", espresso);
-		AppView.pause();
-		System.out.printf("\t%.2f grams of coffee...\n", coffee);
-		AppView.pause();
-		System.out.printf("\t%.2f fl of water...\n", water);
-		AppView.pause();
-		System.out.printf("Adding %.2f fl of milk...\n\n", milk);
-		AppView.pause();
-
-		System.out.printf("%s latte successfully brewed!\n", size);
-	}
-
-	/**
-	 * Prints transaction brewing simulation for cappucino.
-	 * @param size Size of the drink
-	 * @param espresso Amt of espresso
-	 * @param coffee Amt of coffee
-	 * @param water Amt of water
-	 * @param milk Amt of milk
-	 */
-	public void brewCappucino(String size, float espresso, float coffee, float water, float milk){
-		/* 1/3rds espresso 2/3rds milk. */
-		System.out.printf("Brewing %.2f fl espresso...\n", espresso);
-		AppView.pause();
-		System.out.printf("\t%.2f grams of coffee...\n", coffee);
-		AppView.pause();
-		System.out.printf("\t%.2f fl of water...\n", water);
-		AppView.pause();
-		System.out.printf("Adding %.2f fl of milk...\n\n", milk);
-		AppView.pause();
-
-		System.out.printf("%s cappucino successfully brewed!\n", size);
+		System.out.printf("%s %s successfully brewed!\n", size, type);
 	}
 }

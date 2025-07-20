@@ -22,8 +22,23 @@ public class TruckController {
 	 * Collects user information to add the details for the truck.
 	 */
 	public TruckController(){
-		this.model = new TruckModel();
 		this.view = new TruckView();
+
+		String choice;
+		boolean success;
+
+		do {
+			view.printSetType();
+			choice = scan.nextLine();
+			switch(choice.toUpperCase().charAt(0)){
+				case 'P':
+					model = new PlusModel(); break;
+				case 'R':
+					model = new RegularModel(); break;
+				default:
+					view.printFeedback("Invalid input! Press Enter to continue . . ."); break;
+			}
+		} while (model == null);
 	}
 
 	/**
@@ -57,21 +72,6 @@ public class TruckController {
 	 */
 	public ArrayList<TransactionController> getTransactions(){
 		return model.getTransactions();
-	}
-
-	/**
-	 * Sets the type of the truck
-	 */
-	public void setType(){
-		String choice;
-		boolean success;
-
-		do {
-			view.printSetType();
-			choice = scan.nextLine();
-			success = model.setType(choice);
-			if (!success) {view.printFeedback("Invalid input! Press Enter to continue . . .");}
-		} while (!success);
 	}
 
 	/**

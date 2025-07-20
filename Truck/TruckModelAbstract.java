@@ -6,11 +6,11 @@ import Ingredient.*;
 import Transaction.*;
 
 /**
- * A coffee truck's model
+ * A coffee truck's model abstract
  */
-public class TruckModel {
+public abstract class TruckModelAbstract {
 	/** Indicates the type of the truck. 'S' for special, 'R' for regular. */
-	private char truckType;
+	private final char TRUCK_TYPE;
 	/** Represents the location of the truck. */
 	private String truckLocation;
 	/** The amount of money the truck earned from transactions. */
@@ -27,11 +27,31 @@ public class TruckModel {
 	 * It is assumed that when a truck is created all of its information is not initialized yet.
 	 * In the creation process, the truck's information is added gradually.
 	 */
-	public TruckModel(){
+	public TruckModel(char type){
 		this.truckLocation = "";
 		this.numBins = 0;
 		this.STORAGEBINS = new ArrayList<StorageBin>();
         this.TRANSACTIONS = new ArrayList<TransactionController>();
+        this.TRUCK_TYPE = type;
+
+		if (type.equals("P")){
+			this.TRUCK_TYPE = 'P';
+
+			if (numBins == 8) {
+				numBins = 10;
+				for (int i = 0; i < 2; i++) {
+	            STORAGEBINS.add(new StorageBin());
+				}
+			}
+			else if (numBins == 0){
+				numBins = 10;
+				for (int i = 0; i < 10; i++) {
+	            STORAGEBINS.add(new StorageBin());
+				}
+			}
+
+			return true; }
+		return false;
 	}
 
 	/**
@@ -55,7 +75,7 @@ public class TruckModel {
 	 * @return Truck type
 	 */
 	public char getType(){
-		return truckType;
+		return TRUCK_TYPE;
 	}
 
 	/**
@@ -89,51 +109,6 @@ public class TruckModel {
 	 */
 	public ArrayList<TransactionController> getTransactions(){
 		return TRANSACTIONS;
-	}
-
-	/**
-	 * Set the type of the truck and initializes or removes storage bins as needed.
-	 * @param type The user's input.
-	 * @return true if it was successful, false if not.
-	 */
-	public boolean setType(String type){
-		if (type.equals("P")){
-			this.truckType = 'P';
-
-			if (numBins == 8) {
-				numBins = 10;
-				for (int i = 0; i < 2; i++) {
-	            STORAGEBINS.add(new StorageBin());
-				}
-			}
-			else if (numBins == 0){
-				numBins = 10;
-				for (int i = 0; i < 10; i++) {
-	            STORAGEBINS.add(new StorageBin());
-				}
-			}
-
-			return true; }
-
-		if (type.trim().equalsIgnoreCase("R")){
-			this.truckType = 'R';
-
-			if (numBins == 10) {
-				numBins = 8;
-				for (int i = 8; i < 10; i++) {
-	            STORAGEBINS.remove(i);
-				}
-			}
-			else if (numBins == 0){
-				numBins = 8;
-				for (int i = 0; i < 8; i++) {
-	            STORAGEBINS.add(new StorageBin());
-				}
-			}
-
-			return true;
-		}
-		return false;
 	}
 
 	/**

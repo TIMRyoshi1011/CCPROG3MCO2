@@ -74,6 +74,14 @@ public class AbstractTransactionModel{
 	}
 
 	/**
+	 * Returns the size of the drink in string format
+	 * @return Size of drink in string format
+	 */
+	public String getStringSize(){
+		return cup.getType();
+	}
+
+	/**
 	 * Returns the list of ingredients used in the transaction.
 	 * @return The list of ingredients used in the transaction.
 	 */
