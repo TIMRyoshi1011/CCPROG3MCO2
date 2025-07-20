@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Controller of a transaction.
  */
@@ -64,7 +65,7 @@ public class TransactionController{
 	/**
  	 * Prints all transaction info.
    	 */
-	public void printTransaction(String drinkType, char drinkSize, float drinkCost){
+	public void printTransaction(){
 		view.printTransaction(model.getDrinkType(), model.getDrinkSize(), model.getPrice());
 	}
 
@@ -73,28 +74,30 @@ public class TransactionController{
 	 */
 	public void printBrew(){
 		String size;
-		float sizeFl;
+		float sizeFl = model.getFl();
 
 		switch(model.getDrinkSize()){
-			case 'S': size = "Small"; sizeFl = 8; break;
-			case 'M': size = "Medium"; sizeFl = 12; break;
-			case 'L': size = "Large"; sizeFl = 16; break;
+			case 'S': size = "Small"; break;
+			case 'M': size = "Medium"; break;
+			case 'L': size = "Large"; break;
+			default: size = ""; break;
 		}
 
 		switch(model.getDrinkType().toLowerCase()){
 			case "cafe americano": 
-				brewAmericano(size, (sizeFl*(1.0/3.0)), 
-				model.getIngredients().get(1).getAmt(), (sizeFl/((1.0/3.0)/(18.0/19.0))),
-				(sizeFl/(2.0/3.0))); 
+				view.brewAmericano(size, (float)(sizeFl*(1.0/3.0)), 
+				model.getIngredients().get(1).getAmt(), (float)(sizeFl/((1.0/3.0)/(18.0/19.0))),
+				(float)(sizeFl/(2.0/3.0))); 
 				break;
 
 			case "latte":
-				brewLatte(size, (sizeFl*(1.0/5.0)), model.getIngredients().get(1).getAmt(),
+				view.brewLatte(size, (float)(sizeFl*(1.0/5.0)), model.getIngredients().get(1).getAmt(),
 				model.getIngredients().get(2).getAmt(), model.getIngredients().get(3).getAmt());
 				break;
+
 			case "cappucino":
-				brewCappucino(size, (sizeFl*(1.0/3.0)), ingredients.get(1).getAmt(), ingredients.get(2).getAmt(),
-				ingredients.get(3).getAmt());
+				view.brewCappucino(size, (float)(sizeFl*(1.0/3.0)), model.getIngredients().get(1).getAmt(),
+					model.getIngredients().get(2).getAmt(), model.getIngredients().get(3).getAmt());
 				break;
 		}
 	}

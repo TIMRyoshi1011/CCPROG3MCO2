@@ -50,7 +50,7 @@ public class TruckController {
 	 * Get the arraylist of transactions of the truck
 	 * @return Arraylist transactions of truck
 	 */
-	public ArrayList<Transaction> getTransactions(){
+	public ArrayList<TransactionController> getTransactions(){
 		return model.getTransactions();
 	}
 
@@ -194,7 +194,7 @@ public class TruckController {
 		view.printMenu(model.returnMenu());
 		
 		System.out.println("\nTransactions: ");
-		for (Transaction transaction : model.getTransactions()){
+		for (TransactionController transaction : model.getTransactions()){
 			transaction.printTransaction();
 		}
 	}
@@ -244,7 +244,7 @@ public class TruckController {
 					drinkIsAvail = model.isDrinkAvailable(choice, choice2);
 
 					if (drinkIsAvail){
-						Transaction newT = new Transaction(choice, choice2);
+						TransactionController newT = new TransactionController(choice, choice2);
 
 						AppView.pause();
 

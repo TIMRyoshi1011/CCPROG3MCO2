@@ -10,7 +10,7 @@ public class TruckModel {
 	/** The amount of money the truck earned from transactions. */
 	private float moneyEarned = 0;
 	/** ArrayList containing all transactions of the truck. */
-	private ArrayList<Transaction> TRANSACTIONS;
+	private ArrayList<TransactionController> TRANSACTIONS;
 	/** ArrayList containing all storage bins of the truck. For a regular truck, only 8 bins. */
 	private ArrayList<StorageBin> STORAGEBINS;
 	/** Number of bins */
@@ -25,7 +25,7 @@ public class TruckModel {
 		this.truckLocation = "";
 		this.numBins = 0;
 		this.STORAGEBINS = new ArrayList<StorageBin>();
-        this.TRANSACTIONS = new ArrayList<Transaction>();
+        this.TRANSACTIONS = new ArrayList<TransactionController>();
 	}
 
 	/**
@@ -81,7 +81,7 @@ public class TruckModel {
 	 * Get the arraylist of transactions of the truck
 	 * @return Arraylist transactions of truck
 	 */
-	public ArrayList<Transaction> getTransactions(){
+	public ArrayList<TransactionController> getTransactions(){
 		return TRANSACTIONS;
 	}
 
@@ -158,7 +158,7 @@ public class TruckModel {
 	 * transactions.
 	 * @param newT The new transaction.
 	 */
-	public void processTransaction(Transaction newT){
+	public void processTransaction(TransactionController newT){
 		moneyEarned += newT.getPrice();
 		reduceBins(newT.getIngredients());
 		TRANSACTIONS.add(newT);

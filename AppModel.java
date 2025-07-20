@@ -142,7 +142,7 @@ public class AppModel {
 		int[] totalTransaction = new int[6];
 
 		for (TruckController truck : TRUCKS){
-			for (Transaction transaction : truck.getTransactions()){
+			for (TransactionController transaction : truck.getTransactions()){
 				switch(transaction.getDrinkSize()){
 					case 's': totalTransaction[0]++; break;
 					case 'm': totalTransaction[1]++; break;

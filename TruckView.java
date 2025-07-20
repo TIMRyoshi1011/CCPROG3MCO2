@@ -113,7 +113,8 @@ public class TruckView {
 	 * @param menu The menu of the truck
 	 */
 	public void printTruckFullInfo(char type, String location, ArrayList<StorageBin> bins,
-			ArrayList<Transaction> transacs, ArrayList<String> menu){
+		ArrayList<TransactionController> transacs, ArrayList<String> menu){
+		
 		printTruckBaseInfo(type, location);
 		printTruckBinInfo(bins);
 
@@ -121,7 +122,7 @@ public class TruckView {
 		printMenu(menu);
 		
 		System.out.println("\nTransactions: ");
-		for (Transaction transaction : transacs){
+		for (TransactionController transaction : transacs){
 			transaction.printTransaction();
 		}
 	}

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /**
  * Model of a transaction.
  */
@@ -11,7 +12,7 @@ public class TransactionModel{
 	/** ArrayList of all ingredients used in the transaction. */
 	private ArrayList<Ingredient> ingredients;
 	/** Amount of fl in a cup, ignores extra custom ingredients. */
-	private float flSize;
+	private float sizeFl;
 
 	/**
 	 * Constructor for transaction model. Initalizes ingredients arraylist.
@@ -36,12 +37,20 @@ public class TransactionModel{
 	public void setSize(char size){
 		this.drinkSize = size;
 
-		switch(size.toLowerCase()){
-        	case "s": sizeFl = 8; ingredients.add(new Ingredient("scup", 1)); break;
-        	case "m": sizeFl = 12; ingredients.add(new Ingredient("mcup", 1)); break;
-        	case "l": sizeFl = 16; ingredients.add(new Ingredient("lcup", 1)); break;
+		switch(size){
+        	case 's': sizeFl = 8; ingredients.add(new Ingredient("scup", 1)); break;
+        	case 'm': sizeFl = 12; ingredients.add(new Ingredient("mcup", 1)); break;
+        	case 'l': sizeFl = 16; ingredients.add(new Ingredient("lcup", 1)); break;
         	default: sizeFl = 0; break;
         }
+	}
+
+	/**
+	 * Returns the amount of fl in the cup.
+	 * @return amount of fl in the cup.
+	 */
+	public float getFl(){
+		return sizeFl;
 	}
 
 	/**
