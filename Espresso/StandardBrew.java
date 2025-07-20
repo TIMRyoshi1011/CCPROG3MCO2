@@ -1,4 +1,4 @@
-pacakge Espresso;
+package Espresso;
 
 /**
  * Class for a standard brew (1/18 ratio of coffee and water)

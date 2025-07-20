@@ -12,7 +12,7 @@ public class Water extends Ingredient{
 	 * Constructor for water
 	 * @param amt The amount of water in the bin or drink
 	 */
-	public void Water (float amt){
+	public Water (float amt){
 		super("Water", amt);
 	}
 
@@ -20,7 +20,7 @@ public class Water extends Ingredient{
 	 * Get the price of water
 	 * @return The price of water
 	 */
-	public abstract float getPrice(){
+	public static float getPrice(){
 		return price;
 	}
 
@@ -28,7 +28,7 @@ public class Water extends Ingredient{
 	 * Set the price of water
 	 * @param price The new price
 	 */
-	public abstract void setPrice(float price){
-		this.price = price;
+	public static void setPrice(float p){
+		price = p;
 	}
 }

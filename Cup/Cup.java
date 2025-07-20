@@ -21,7 +21,7 @@ public abstract class Cup extends Ingredient{
 	 * @param amt The amount of cups in a given storage bin, or drink
 	 */
 	public Cup(String name, float fl, char shorthand, float amt){
-		super(name, amt)
+		super(name, amt);
 		this.fl = fl;
 		this.shorthand = shorthand;
 	}
@@ -54,7 +54,7 @@ public abstract class Cup extends Ingredient{
 	 * Sets the price of the cup.
 	 * @param price The new price of the cup
 	 */
-	public static setPrice(float price){
-		this.price = price;
+	public static void setPrice(float p){
+		price = p;
 	}
 }

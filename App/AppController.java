@@ -71,11 +71,22 @@ public class AppController {
 	 */
 	public void createTruck(){
 		String choice; int intChoice;
-		TruckController tempTruck = new TruckController();
-		boolean success, inptCheck, end;
+		boolean success = false, inptCheck, end;
+		TruckController tempTruck = new TruckController('R');
 
 		/* Set truck type */
-		tempTruck.setType();
+		do {
+			view.printSetType();
+			choice = scan.nextLine();
+			switch(choice.toUpperCase().charAt(0)){
+				case 'P':
+					tempTruck = new TruckController('P'); success = true; break;
+				case 'R':
+					tempTruck = new TruckController('R'); success = true; break;
+				default:
+					view.printFeedback("Invalid input! Press Enter to continue . . ."); success = false; break;
+			}
+		} while (!success);
 
 		/* Set truck location */
 		setTruckLocation(tempTruck);
@@ -125,7 +136,7 @@ public class AppController {
 
 				switch(intChoice){
 					case 1:
-						// simulate sale
+						model.getTruck(truckIndx).simulateSale();
 						break;
 					case 2:
 						// print info
@@ -173,8 +184,9 @@ public class AppController {
 					choice = scan.nextLine();
 					truckIndx = model.toInt(choice);
 
-					if (truckIndx >= 0 && truckIndx < model.getNumTrucks())
-						model.getTruck(truckIndx).truckFullInfo();
+					if (truckIndx >= 0 && truckIndx < model.getNumTrucks()){
+						model.getTruck(truckIndx).truckFullInfo(); scan.nextLine();
+					}
 					else view.printFeedback("Truck index is not valid.");
 					
 				case 'n': end = true; break;

@@ -3,6 +3,8 @@ package App;
 import java.util.ArrayList;
 import Truck.*;
 import Ingredient.*;
+import Cup.*;
+import Espresso.*;
 
 /**
  * View for the main app interface
@@ -38,6 +40,20 @@ public class AppView {
 	}
 
 	/**
+	 * Prints the screen when the truck's type is being set.
+	 */
+	public void printSetType(){
+		AppView.clear();
+		System.out.println("Create a brand new coffee truck!");
+		System.out.println("What kind of coffee truck would you like to make?");
+		System.out.println("");
+		System.out.println("P - JavaJeep+ (Not available yet!!!!)");
+		System.out.println("R - JavaJeep Regular");
+		System.out.println("");
+		System.out.print(">> ");
+	}
+
+	/**
 	 * Prints the screen when the type's location is being set.
 	 */
 	public void printSetLocation(){
@@ -55,15 +71,16 @@ public class AppView {
 		clear();
 		System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.\n");
 		System.out.println("Below are the current prices for each ingredient:");
-		System.out.printf("1 gram coffee bean: %.2f\n", Ingredient.getPrice("coffee"));
-		System.out.printf("1fl of milk: %.2f\n", Ingredient.getPrice("milk"));
-		System.out.printf("1fl of water: %.2f\n", Ingredient.getPrice("water"));
-		System.out.printf("Small cup base price: %.2f\n", Ingredient.getPrice("scup"));
-		System.out.printf("Medium cup base price: %.2f\n", Ingredient.getPrice("mcup"));
-		System.out.printf("Large cup base price: %.2f\n", Ingredient.getPrice("lcup"));
+		System.out.printf("1 shot espresso: %.2f\n", Espresso.getPrice());
+		System.out.printf("1fl of milk: %.2f\n", Milk.getPrice());
+		System.out.printf("1fl of water: %.2f\n", Water.getPrice());
+		System.out.printf("Small cup base price: %.2f\n", SmallCup.getPrice());
+		System.out.printf("Medium cup base price: %.2f\n", MediumCup.getPrice());
+		System.out.printf("Large cup base price: %.2f\n", LargeCup.getPrice());
+		System.out.printf("Additional syrups or toppings: %.2f\n", ExtraIngr.getPrice());
 		System.out.println();
 
-		System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','coffee','scup','mcup','lcup']. If you'd like to exit, enter END.");
+		System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','espresso','scup','mcup','lcup','extra']. If you'd like to exit, enter END.");
 		System.out.print(">> ");
 	}
 

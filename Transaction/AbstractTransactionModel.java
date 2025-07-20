@@ -3,6 +3,7 @@ package Transaction;
 import java.util.ArrayList;
 import Ingredient.*;
 import Cup.*;
+import Espresso.*;
 /**
  * Abstract for a transaction model.
  * There are different models for different kinds of drinks
@@ -13,14 +14,14 @@ public class AbstractTransactionModel{
 	/** String representation of drink type. */
 	private String drinkType;
 	/** The total cost of the drink. */
-	private float drinkCost;
+	protected float drinkCost;
 
 	/** The cup used in the drink */
-	private Cup cup;
+	protected Cup cup;
 	/** The espresso used in the drink */
-	private Espresso espresso;
+	protected Espresso espresso;
 	/** Arraylist of the additional ingredients used */
-	private ArrayList<Ingredient> ingredients;
+	protected ArrayList<Ingredient> ingredients;
 
 	/**
 	 * Constructor for transaction model. Initalizes ingredients arraylist.

@@ -9,20 +9,6 @@ import StorageBin.*;
  */
 public class TruckView {
 	/**
-	 * Prints the screen when the truck's type is being set.
-	 */
-	public void printSetType(){
-		AppView.clear();
-		System.out.println("Create a brand new coffee truck!");
-		System.out.println("What kind of coffee truck would you like to make?");
-		System.out.println("");
-		System.out.println("P - JavaJeep+ (Not available yet!!!!)");
-		System.out.println("R - JavaJeep Regular");
-		System.out.println("");
-		System.out.print(">> ");
-	}
-
-	/**
 	 * Prints a feedback label
 	 */
 	public void printFeedback(String feedback){

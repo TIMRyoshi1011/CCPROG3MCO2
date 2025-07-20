@@ -1,6 +1,7 @@
 package StorageBin;
 
 import Ingredient.*;
+import Cup.*;
 
 /**
  * Represents a storage bin.
@@ -92,7 +93,7 @@ public class StorageBin{
        	 * @param amt The amount to be decreased from the bin.
 	 */
 	public boolean lessenContents(float amount){
-		if (contents.getAmt() >= amount && contents.getAmt + amount >= 0) {
+		if (contents.getAmt() >= amount && contents.getAmt() + amount >= 0) {
             contents.reduceAmt(amount);
             return true;
         }

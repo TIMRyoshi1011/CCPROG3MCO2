@@ -13,7 +13,7 @@ public class ExtraIngr extends Ingredient{
 	 * @param name The name of the new ingredient
 	 * @param amt The amount of water in the bin or drink
 	 */
-	public void ExtraIngr (String name, float amt){
+	public ExtraIngr (String name, float amt){
 		super(name, amt);
 	}
 
@@ -21,7 +21,7 @@ public class ExtraIngr extends Ingredient{
 	 * Get the price of the extra ingredient
 	 * @return The price of the extra ingredient
 	 */
-	public abstract float getPrice(){
+	public static float getPrice(){
 		return price;
 	}
 
@@ -29,7 +29,7 @@ public class ExtraIngr extends Ingredient{
 	 * Set the price of the extra ingredient
 	 * @param price The new price
 	 */
-	public abstract void setPrice(float price){
-		this.price = price;
+	public static void setPrice(float p){
+		price = p;
 	}
 }

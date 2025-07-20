@@ -16,23 +16,7 @@ public class Coffee extends Ingredient{
 	 * Constructor for water
 	 * @param amt The amount of water in the bin or drink
 	 */
-	public void Coffee (float amt){
+	public Coffee (float amt){
 		super("Coffee", amt);
-	}
-
-	/**
-	 * Get the price of water
-	 * @return The price of water
-	 */
-	public abstract float getPrice(){
-		return price;
-	}
-
-	/**
-	 * Set the price of water
-	 * @param price The new price
-	 */
-	public abstract void setPrice(float price){
-		this.price = price;
 	}
 }

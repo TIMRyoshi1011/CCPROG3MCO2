@@ -5,6 +5,8 @@ import Truck.*;
 import Transaction.*;
 import StorageBin.*;
 import Ingredient.*;
+import Espresso.*;
+import Cup.*;
 
 /**
  * Model for the main app interface
@@ -80,8 +82,17 @@ public class AppModel {
      * @return true if successful, false otherwise
 	 */
 	public boolean setPrice(String type, float price){
-		boolean result;
-		result = Ingredient.setPrice(type, price);
+		boolean result = true;
+		switch (type){
+			case "espresso": Espresso.setPrice(price); break;
+			case "water": Water.setPrice(price); break;
+			case "milk": Milk.setPrice(price); break;
+			case "extra": ExtraIngr.setPrice(price); break;
+			case "scup": SmallCup.setPrice(price); break;
+			case "mcup": MediumCup.setPrice(price); break;
+			case "lcup": LargeCup.setPrice(price); break;
+			default: result = false; break;
+		}
 		return result;
 	}
 

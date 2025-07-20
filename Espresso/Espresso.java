@@ -9,7 +9,7 @@ public abstract class Espresso{
 	/** Name of espresso brew */
 	private String name;
 	/** Price of a single espresso shot. Consistent throughout all espresso brews. */
-	private static float price = 1.5;
+	private static float price = 1.5f;
 
 	/** Total fl of espresso (in given drink) */
 	private float espresso;
@@ -35,17 +35,17 @@ public abstract class Espresso{
 	 * @param extraShots Number of extra shots
 	 * @param cupFl The amount of fl of espresso the drink should have (ignoring extra shots)
 	 */
-	public brewEspresso(int extraShots, float cupFl){
+	public void brewEspresso(int extraShots, float cupFl){
 		int i;
 		espresso = cupFl;
-		coffee = cupFl * (1/(waterRatio + 1)) * 28.34952;
-		water = cupFl * (waterRatio/(waterRatio + 1));
+		coffee = cupFl * (1.0f/((float)waterRatio + 1.0f)) * 28.34952f;
+		water = cupFl * ((float)waterRatio/((float)waterRatio + 1.0f));
 
 		this.extraShots = extraShots;
 		for (i = 0; i < extraShots; i++){
-			coffee += (1/(waterRatio + 1)) * 28.34952;
-			water += (waterRatio/(waterRatio + 1));
-			espresso += 1;
+			coffee += (1.0f/((float)waterRatio + 1.0f)) * 28.34952f;
+			water += ((float)waterRatio/((float)waterRatio + 1.0f));
+			espresso += 1.0f;
 		}
 	}
 
@@ -53,7 +53,7 @@ public abstract class Espresso{
 	 * Returns the amount of espresso total
 	 * @return The amount of espresso
 	 */
-	public getEspresso(){
+	public float getEspresso(){
 		return espresso;
 	}
 
@@ -61,7 +61,7 @@ public abstract class Espresso{
 	 * Returns the amount of coffee total
 	 * @return The amount of coffee
 	 */
-	public getCoffee(){
+	public float getCoffee(){
 		return coffee;
 	}
 
@@ -69,7 +69,7 @@ public abstract class Espresso{
 	 * Returns the amount of water total
 	 * @return The amount of water
 	 */
-	public getWater(){
+	public float getWater(){
 		return water;
 	}
 
@@ -77,7 +77,7 @@ public abstract class Espresso{
 	 * Returns the amount of extra shots total
 	 * @return The amount of extra shots
 	 */
-	public getExtraShots(){
+	public int getExtraShots(){
 		return extraShots;
 	}
 
@@ -93,7 +93,7 @@ public abstract class Espresso{
 	 * Sets the price of a single shot of an espresso
 	 * @param price The new espresso price
 	 */
-	public static void setPrice(float price){
-		this.price = price;
+	public static void setPrice(float p){
+		price = p;
 	}
 }

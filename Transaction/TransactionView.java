@@ -2,6 +2,7 @@ package Transaction;
 
 import java.util.ArrayList;
 import App.*;
+import Ingredient.*;
 
 /**
  * View of a transaction.
@@ -33,7 +34,7 @@ public class TransactionView{
 		AppView.pause();
 		System.out.printf("\t%.2f grams of coffee...\n", coffee);
 		AppView.pause();
-		System.out.printf("\t%.2f fl of water...\n", esWater);
+		System.out.printf("\t%.2f fl of water...\n", water);
 		AppView.pause();
 
 		for (Ingredient ingr : ingredients){

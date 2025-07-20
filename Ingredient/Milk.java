@@ -12,7 +12,7 @@ public class Milk extends Ingredient{
 	 * Constructor for milk
 	 * @param amt The amount of milk in the bin or drink
 	 */
-	public void Milk (float amt){
+	public Milk (float amt){
 		super("Milk", amt);
 	}
 
@@ -20,7 +20,7 @@ public class Milk extends Ingredient{
 	 * Get the price of milk
 	 * @return The price of milk
 	 */
-	public abstract float getPrice(){
+	public static float getPrice(){
 		return price;
 	}
 
@@ -28,7 +28,7 @@ public class Milk extends Ingredient{
 	 * Set the price of milk
 	 * @param price The new price
 	 */
-	public abstract void setPrice(float price){
-		this.price = price;
+	public static void setPrice(float p){
+		price = p;
 	}
 }

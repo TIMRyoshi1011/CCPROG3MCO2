@@ -1,4 +1,10 @@
 import App.*;
+import Truck.*;
+import Transaction.*;
+import StorageBin.*;
+import Ingredient.*;
+import Espresso.*;
+import Cup.*;
 
 /**
  * The main java file. This is the file to run when running the program.

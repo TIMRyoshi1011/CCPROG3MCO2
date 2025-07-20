@@ -3,6 +3,7 @@ package Transaction;
 import java.util.ArrayList;
 import Ingredient.*;
 import Cup.*;
+import Espresso.*;
 
 /**
  * Model for a transaction thats a cafe americano
@@ -21,7 +22,7 @@ public class CafeAmericanoModel extends AbstractTransactionModel {
 		drinkCost += espresso.getEspresso() * espresso.getPrice();
 
 		Water water = new Water(cup.getFl()*(2.0f/3.0f));
-		drinkCost += water.getPrice * water.getAmt();
+		drinkCost += water.getPrice() * water.getAmt();
 		ingredients.add(water);
 	}
 }

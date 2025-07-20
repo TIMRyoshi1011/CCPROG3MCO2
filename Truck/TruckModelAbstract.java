@@ -18,40 +18,21 @@ public abstract class TruckModelAbstract {
 	/** ArrayList containing all transactions of the truck. */
 	private ArrayList<TransactionController> TRANSACTIONS;
 	/** ArrayList containing all storage bins of the truck. For a regular truck, only 8 bins. */
-	private ArrayList<StorageBin> STORAGEBINS;
+	protected ArrayList<StorageBin> STORAGEBINS;
 	/** Number of bins */
-	private int numBins;
+	protected int numBins;
 
 	/**
 	 * Constructor for the truck model. Initializes some variables.
 	 * It is assumed that when a truck is created all of its information is not initialized yet.
 	 * In the creation process, the truck's information is added gradually.
 	 */
-	public TruckModel(char type){
+	public TruckModelAbstract(char type){
 		this.truckLocation = "";
 		this.numBins = 0;
 		this.STORAGEBINS = new ArrayList<StorageBin>();
         this.TRANSACTIONS = new ArrayList<TransactionController>();
         this.TRUCK_TYPE = type;
-
-		if (type.equals("P")){
-			this.TRUCK_TYPE = 'P';
-
-			if (numBins == 8) {
-				numBins = 10;
-				for (int i = 0; i < 2; i++) {
-	            STORAGEBINS.add(new StorageBin());
-				}
-			}
-			else if (numBins == 0){
-				numBins = 10;
-				for (int i = 0; i < 10; i++) {
-	            STORAGEBINS.add(new StorageBin());
-				}
-			}
-
-			return true; }
-		return false;
 	}
 
 	/**

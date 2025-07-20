@@ -11,7 +11,7 @@ import App.*;
  */
 public class TruckController {
 	/** The truck controller's model */
-	private TruckModel model;
+	private TruckModelAbstract model;
 	/** The truck controller's view */
 	private TruckView view;
 	/** Scanner for the whole file */
@@ -20,25 +20,16 @@ public class TruckController {
 	/**
 	 * Initializes the model and view of the truck.
 	 * Collects user information to add the details for the truck.
+	 * @param type The type of the truck
 	 */
-	public TruckController(){
+	public TruckController(char type){
 		this.view = new TruckView();
-
-		String choice;
-		boolean success;
-
-		do {
-			view.printSetType();
-			choice = scan.nextLine();
-			switch(choice.toUpperCase().charAt(0)){
-				case 'P':
-					model = new PlusModel(); break;
-				case 'R':
-					model = new RegularModel(); break;
-				default:
-					view.printFeedback("Invalid input! Press Enter to continue . . ."); break;
-			}
-		} while (model == null);
+		switch(type){
+			case 'P':
+				model = new PlusModel(); break;
+			case 'R':
+				model = new RegularModel(); break;
+		}
 	}
 
 	/**
@@ -100,7 +91,7 @@ public class TruckController {
 			else inptCheck = true;
 
 			if (choice.toUpperCase().equals("END")) success = true;
-			else if (inptCheck) editStorageBin(model.getBin(intChoice));
+			else if (inptCheck) editStorageBin(model.getBin(intChoice-1));
 			else {view.printFeedback("Please check your input..."); scan.nextLine();}
 		} while (!success);
 	}

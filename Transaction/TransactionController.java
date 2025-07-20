@@ -7,7 +7,7 @@ import Ingredient.*;
  */
 public class TransactionController{
 	/** Model of the transaction */
-	TransactionModel model;
+	AbstractTransactionModel model;
 	/** View of the transaction */
 	TransactionView view;
 
@@ -25,8 +25,8 @@ public class TransactionController{
 			case "cafe americano":
 			case "americano":
 				model = new CafeAmericanoModel(shorthand); break;
-			case "latte": model = new Latte(shorthand); break;
-			case "cappucino": model = new Cappucino(shorthand); break;
+			case "latte": model = new LatteModel(shorthand); break;
+			case "cappucino": model = new CappucinoModel(shorthand); break;
 		}
 	}
 
@@ -73,7 +73,7 @@ public class TransactionController{
 	 * Prints the transaction brewing simulation
 	 */
 	public void printBrew(){
-		view.brewDrink(model.getStringSize(), model.getDrinkType(), model.getEspresso().getEspressio(),
+		view.brewDrink(model.getStringSize(), model.getDrinkType(), model.getEspresso().getEspresso(),
 			model.getEspresso().getCoffee(), model.getEspresso().getWater(), model.getIngredients());
 	}
 }
