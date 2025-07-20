@@ -10,9 +10,15 @@ public abstract class Cup{
 	private float fl;
 	/** A shorthand character for the cup, used in view */
 	private char shorthand;
+	/** Price for the cup */
+	private static float price;
 
 	/**
 	 * Constructor for the class.
+	 * @param name The name of the cup
+	 * @param fl THe amount of fl the cup can hold
+	 * @param shorthand The shorthand of the cup
+	 * @param price The price of the cup
 	 */
 	public Cup(String name, float fl, char shorthand){
 		this.name = name;
@@ -42,5 +48,21 @@ public abstract class Cup{
 	 */
 	public char getShorthand(){
 		return shorthand;
+	}
+
+	/**
+	 * Returns the price of the base price of the cup.
+	 * @return The price of the cup
+	 */
+	public static float getPrice(){
+		return price;
+	}
+
+	/**
+	 * Sets the price of the cup.
+	 * @param price The new price of the cup
+	 */
+	public static setPrice(float price){
+		this.price = price;
 	}
 }
