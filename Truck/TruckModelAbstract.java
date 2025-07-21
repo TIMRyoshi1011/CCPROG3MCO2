@@ -122,32 +122,48 @@ public abstract class TruckModelAbstract {
 	 */
 	public void processTransaction(TransactionController newT){
 		moneyEarned += newT.getPrice();
-		reduceBins(newT.getIngredients());
+		reduceBins(newT);
 		TRANSACTIONS.add(newT);
 	}
 
 	/**
 	 * Given the details of a drink made using its transaction info,
 	 * the storage bin will be edited to deduce the ingredients used to make the drink.
-	 * @param ingredientsUsed Arraylist containing the ingredients used in making the drink
+	 * @param t The drink details
 	 */
-	public void reduceBins(ArrayList<Ingredient> ingredientsUsed){
-		float amtLeft;
+	public void reduceBins(TransactionController t){
+		reduce("Coffee", t.getEspresso().getCoffee());
+		reduce("Water", t.getEspresso().getWater());
 
-		for (Ingredient ingr : ingredientsUsed){
-			amtLeft = ingr.getAmt();
-			for (StorageBin bin : STORAGEBINS){ 
-				if (amtLeft > 0 && bin.getContents().getType().equals(ingr.getType())){
+		for (Ingredient ingr : t.getIngredients()){
+			reduce(ingr.getType(), ingr.getAmt());
+		}
 
-					if (bin.getContents().getAmt() < amtLeft){
-						bin.lessenContents(bin.getContents().getAmt());
-						amtLeft -= bin.getContents().getAmt();
-					}
+		switch (t.getDrinkSize()){
+			case 'S': reduce("Small", 1); break;
+			case 'M': reduce("Medium", 1); break;
+			case 'L': reduce("Large", 1); break;
+		}
+	}
 
-					else{
-						bin.lessenContents(amtLeft);
-						amtLeft = 0;
-					}
+	/**
+	 * Helper function for reduceBins, given an ingredient and the amount of it to be 
+	 * reduced, looks through all storage bins and reduces as needed.
+	 * @param type The type of the ingredient
+	 * @param amt The amount of the ingredient to be extracted.
+	 */
+	public void reduce(String type, float amt){
+		for (StorageBin bin : STORAGEBINS){ 
+			if (amt > 0 && bin.getContents().getType().equals(type)){
+
+				if (bin.getContents().getAmt() < amt){
+					bin.lessenContents(bin.getContents().getAmt());
+					amt -= bin.getContents().getAmt();
+				}
+
+				else{
+					bin.lessenContents(amt);
+					amt = 0;
 				}
 			}
 		}
@@ -182,91 +198,100 @@ public abstract class TruckModelAbstract {
   	 * @return a String array of all possible drinks the truck can make given inventory.
     	 */
 	public ArrayList<String> returnMenu() {
-
-		/* Not very happy with the efficiency of the code here lols... 
-		if u find a better way logic-wise to write this just go ahead */
-
 		ArrayList<String> menu = new ArrayList<String>();
 		double milk = 0, coffee = 0, water = 0, scup = 0, mcup = 0, lcup = 0;
-		double ratio1, ratio2, ratio3;
+		AbstractTransactionModel tempDrink;
+		boolean isAvail, cupCheck;
 		Ingredient tempIngr; String tempStr;
+
+		char[] cupShorthands = {'S', 'M', 'L'};
+
 
 		for (StorageBin bin : STORAGEBINS){
 			tempIngr = bin.getContents();
 
 			if (tempIngr != null){	
 				switch(tempIngr.getType()){
-					case "milk": milk += tempIngr.getAmt(); break;
-					case "water": water += tempIngr.getAmt(); break;
-					case "coffee": coffee += tempIngr.getAmt(); break;
-					case "scup": scup += tempIngr.getAmt(); break;
-					case "mcup": mcup += tempIngr.getAmt(); break;
-					case "lcup": lcup += tempIngr.getAmt(); break;
+					case "Milk": milk += tempIngr.getAmt(); break;
+					case "Water": water += tempIngr.getAmt(); break;
+					case "Coffee": coffee += tempIngr.getAmt(); break;
+					case "Small": scup += tempIngr.getAmt(); break;
+					case "Medium": mcup += tempIngr.getAmt(); break;
+					case "Large": lcup += tempIngr.getAmt(); break;
 				}
 			}
 		}
-		coffee = coffee / 28.34952; /* Converting from grams to fl */
-
-
-		/* small = 8fl, med = 12fl, large = 16fl */
 
 		/* cafe americano: 1/3 espresso, 2/3 water. */
+		isAvail = false;
 		tempStr = "Cafe Americano [";
-		ratio1 = (1.0/3.0)/(1.0/19.0); // Ratio of coffee
-		ratio2 = (1.0/3.0)/(18.0/19.0); // Ratio of water in espresso
-		ratio3 = 2.0/3.0; // Ratio of water
 
-		if (coffee >= 8/ratio1 && water >= ((8/ratio2) + (8/ratio3))){
-			if (scup > 0) tempStr += " S";
-
-			if (coffee > 12/ratio1 && water >= ((12/ratio2) + (12/ratio3))){
-				if (mcup > 0) tempStr += " M";
-
-				if (coffee > 16/ratio1 && water >= ((16/ratio2) + (16/ratio3))){
-					if (lcup > 0) tempStr += " L";}
+		for (char ch : cupShorthands){
+			tempDrink = new CafeAmericanoModel(ch);
+			if (coffee >= tempDrink.getEspresso().getCoffee() &&
+				water >= tempDrink.getEspresso().getWater() + tempDrink.getIngredients().get(0).getAmt()){
+				
+				cupCheck = false;
+				switch (ch){
+					case 'S': if (scup > 0) cupCheck = true; break;
+					case 'M': if (mcup > 0) cupCheck = true; break;
+					case 'L': if (lcup > 0) cupCheck = true; break;
+				}
+				
+				
+				if (cupCheck) {tempStr += String.format(" %s", ch); isAvail = true;}
 			}
-
 		}
 
-		if (!tempStr.equals("Cafe Americano [")) {tempStr += " ]"; menu.add(tempStr);}
+		if (isAvail) {tempStr += " ]"; menu.add(tempStr);}
 
 		/* latte: 1/5 espresso, 4/5 milk */
+		isAvail = false;
 		tempStr = "Latte [";
-		ratio1 = (1.0/5.0)/(1.0/19.0); // ratio for coffee
-		ratio2 = (1.0/5.0)/(18.0/19.0); // ratio for water
-		ratio3 = (4.0/5.0); // ratio for milk
 
-		if (coffee >= 8/ratio1 && water >= 8/ratio2 && milk >= 8/ratio3){
-			if (scup > 0) tempStr += " S";
-
-			if (coffee >= 12/ratio1 && water >= 12/ratio2 && milk >= 12/ratio3){
-				if (mcup > 0) tempStr += " M";
-
-				if (coffee >= 16/ratio1 && water >= 16/ratio2 && milk >= 16/ratio3){
-					if (lcup > 0) tempStr += " L";}
+		for (char ch : cupShorthands){
+			tempDrink = new CafeAmericanoModel(ch);
+			if (coffee >= tempDrink.getEspresso().getCoffee() &&
+				water >= tempDrink.getEspresso().getWater() &&
+				milk >= tempDrink.getIngredients().get(0).getAmt()){
+				
+				cupCheck = false;
+				switch (ch){
+					case 'S': if (scup > 0) cupCheck = true; break;
+					case 'M': if (mcup > 0) cupCheck = true; break;
+					case 'L': if (lcup > 0) cupCheck = true; break;
+				}
+				
+				
+				if (cupCheck) {tempStr += String.format(" %s", ch); isAvail = true;}
 			}
 		}
 
-		if (!tempStr.equals("Latte [")) {tempStr += " ]"; menu.add(tempStr);}
+		if (isAvail) {tempStr += " ]"; menu.add(tempStr);}
 
 		/* cappucino: 1/3 espresso, 2/3 milk */
-		tempStr = "Cappucino [";
-		ratio1 = (1.0/3.0)/(1.0/19.0); // ratio for coffee
-		ratio2 = (1.0/3.0)/(18.0/19.0); // ratio for water
-		ratio3 = (2.0/3.0); // ratio for milk
+		isAvail = false;
+		tempStr = "Latte [";
 
-		if (coffee >= 8/ratio1 && water >= 8/ratio2 && milk >= 8/ratio3){
-			if (scup > 0) tempStr += " S";
-
-			if (coffee >= 12/ratio1 && water >= 12/ratio2 && milk >= 12/ratio3){
-				if (mcup > 0) tempStr += " M";
-
-				if (coffee >= 16/ratio1 && water >= 16/ratio2 && milk >= 16/ratio3){
-					if (lcup > 0) tempStr += " L";}
+		for (char ch : cupShorthands){
+			tempDrink = new CafeAmericanoModel(ch);
+			if (coffee >= tempDrink.getEspresso().getCoffee() &&
+				water >= tempDrink.getEspresso().getWater() &&
+				milk >= tempDrink.getIngredients().get(0).getAmt()){
+				
+				cupCheck = false;
+				switch (ch){
+					case 'S': if (scup > 0) cupCheck = true; break;
+					case 'M': if (mcup > 0) cupCheck = true; break;
+					case 'L': if (lcup > 0) cupCheck = true; break;
+				}
+				
+				
+				if (cupCheck) {tempStr += String.format(" %s", ch); isAvail = true;}
 			}
 		}
 
-		if (!tempStr.equals("Cappucino [")) {tempStr += " ]"; menu.add(tempStr);}
+		if (isAvail) {tempStr += " ]"; menu.add(tempStr);}
 
 		return menu;
 	}

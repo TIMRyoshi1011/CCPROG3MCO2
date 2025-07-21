@@ -2,6 +2,7 @@ package Transaction;
 
 import java.util.ArrayList;
 import Ingredient.*;
+import Espresso.*;
 /**
  * Controller of a transaction.
  */
@@ -44,6 +45,14 @@ public class TransactionController{
 	 */
 	public ArrayList<Ingredient> getIngredients(){
 		return model.getIngredients();
+	}
+
+	/**
+	 * Returns the espresso brew used in the transaction.
+	 * @return The espresso brew used in the transaction.
+	 */
+	public Espresso getEspresso(){
+		return model.getEspresso();
 	}
 
 	/**

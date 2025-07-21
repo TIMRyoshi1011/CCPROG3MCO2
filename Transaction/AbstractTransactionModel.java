@@ -40,6 +40,7 @@ public class AbstractTransactionModel{
 		}
 
 		drinkCost = cup.getPrice();
+		ingredients = new ArrayList<Ingredient>();
 	}
 
 	/**
