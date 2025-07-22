@@ -1,6 +1,8 @@
 package Truck;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.StringBuilder;
 import StorageBin.*;
 import Ingredient.*;
 import Transaction.*;
@@ -199,101 +201,115 @@ public abstract class TruckModelAbstract {
     	 */
 	public ArrayList<String> returnMenu() {
 		ArrayList<String> menu = new ArrayList<String>();
-		double milk = 0, coffee = 0, water = 0, scup = 0, mcup = 0, lcup = 0;
+		HashMap<String, Float> inventory = getIngrdientAmount();
 		AbstractTransactionModel tempDrink;
-		boolean isAvail, cupCheck;
-		Ingredient tempIngr; String tempStr;
+		boolean isAvail;
+		StringBuilder strTemp;
 
 		char[] cupShorthands = {'S', 'M', 'L'};
+		String[] drinks = {"Cafe Americano", "Latte", "Cappucino"};
+		Class<? extends AbstractTransactionModel>[] drinkTypes = new Class[] {
+			CafeAmericanoModel.class,
+			LatteModel.class,
+			CappuccinoModel.class
+		};
 
+		for (int i = 0; i < drinks.length; i++){
+			strTemp = new StringBuilder(drink + " [");
+			isAvail = false;
 
-		for (StorageBin bin : STORAGEBINS){
-			tempIngr = bin.getContents();
+			for (char size : cupShorthands){
+				tempDrink = drinkTypes[i].getConstructor(char.class).newInstance(size);
 
-			if (tempIngr != null){	
-				switch(tempIngr.getType()){
-					case "Milk": milk += tempIngr.getAmt(); break;
-					case "Water": water += tempIngr.getAmt(); break;
-					case "Coffee": coffee += tempIngr.getAmt(); break;
-					case "Small": scup += tempIngr.getAmt(); break;
-					case "Medium": mcup += tempIngr.getAmt(); break;
-					case "Large": lcup += tempIngr.getAmt(); break;
+				if (hasCup(size, inventory) && areIngredientsAvailable(tempDrink, inventory)){
+					strTemp.append(" ").append(size);
+					isAvail = true;
 				}
 			}
-		}
 
-		/* cafe americano: 1/3 espresso, 2/3 water. */
-		isAvail = false;
-		tempStr = "Cafe Americano [";
-
-		for (char ch : cupShorthands){
-			tempDrink = new CafeAmericanoModel(ch);
-			if (coffee >= tempDrink.getEspresso().getCoffee() &&
-				water >= tempDrink.getEspresso().getWater() + tempDrink.getIngredients().get(0).getAmt()){
-				
-				cupCheck = false;
-				switch (ch){
-					case 'S': if (scup > 0) cupCheck = true; break;
-					case 'M': if (mcup > 0) cupCheck = true; break;
-					case 'L': if (lcup > 0) cupCheck = true; break;
-				}
-				
-				
-				if (cupCheck) {tempStr += String.format(" %s", ch); isAvail = true;}
+			if (isAvail){
+				strTemp.append(" ]");
+				menu.add(strTemp.toString());
 			}
 		}
-
-		if (isAvail) {tempStr += " ]"; menu.add(tempStr);}
-
-		/* latte: 1/5 espresso, 4/5 milk */
-		isAvail = false;
-		tempStr = "Latte [";
-
-		for (char ch : cupShorthands){
-			tempDrink = new CafeAmericanoModel(ch);
-			if (coffee >= tempDrink.getEspresso().getCoffee() &&
-				water >= tempDrink.getEspresso().getWater() &&
-				milk >= tempDrink.getIngredients().get(0).getAmt()){
-				
-				cupCheck = false;
-				switch (ch){
-					case 'S': if (scup > 0) cupCheck = true; break;
-					case 'M': if (mcup > 0) cupCheck = true; break;
-					case 'L': if (lcup > 0) cupCheck = true; break;
-				}
-				
-				
-				if (cupCheck) {tempStr += String.format(" %s", ch); isAvail = true;}
-			}
-		}
-
-		if (isAvail) {tempStr += " ]"; menu.add(tempStr);}
-
-		/* cappucino: 1/3 espresso, 2/3 milk */
-		isAvail = false;
-		tempStr = "Latte [";
-
-		for (char ch : cupShorthands){
-			tempDrink = new CafeAmericanoModel(ch);
-			if (coffee >= tempDrink.getEspresso().getCoffee() &&
-				water >= tempDrink.getEspresso().getWater() &&
-				milk >= tempDrink.getIngredients().get(0).getAmt()){
-				
-				cupCheck = false;
-				switch (ch){
-					case 'S': if (scup > 0) cupCheck = true; break;
-					case 'M': if (mcup > 0) cupCheck = true; break;
-					case 'L': if (lcup > 0) cupCheck = true; break;
-				}
-				
-				
-				if (cupCheck) {tempStr += String.format(" %s", ch); isAvail = true;}
-			}
-		}
-
-		if (isAvail) {tempStr += " ]"; menu.add(tempStr);}
 
 		return menu;
+	}
+
+	/**
+	 * Given an espresso shot, checks if there is enough for it.
+	 * @param espressoType The class of the espresso to be made
+	 * @param flAmt The amount of fl the espresso will be
+	 * @param waterAmt The amount of water the drink already has that is unrelated to the espresso, if any
+	 * @param inventory The amount of each ingredient the truck has
+	 * @return true if there is enough, false if not.
+	 */
+	public boolean isEspressoAvail(Class<? extends Espresso> espressoType, float flAmt, HashMap<String, Flaot> inventory){
+		Espresso shot = espressoType.getConstructor().newInstance();
+
+		if (inventory.getOrDefault("Coffee", 0.0f) < shot.getCoffee() ||
+			inventory.getOrDefault("Water", 0.0f) < shot.getWater() + waterAmt){
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Given a drink, checks if the inventory is enough for it.
+	 * @param drink The drink object to be checked
+	 * @param inventory The hashmap of the inventory
+	 * @return true if enough ingredients, false otherwise.
+	 */
+	public boolean areIngredientsAvailable(AbstractTransactionModel drink, HashMap<String, Float> inventory){
+		float amtAvail;
+
+		for (Ingredient ingr : drink.getIngredients()){
+			amtAvail = inventory.getOrDefault(ingr.getType(), 0.0f);
+			if (amtAvail < ingr.getAmt()) return false;
+		}
+
+		if (isEspressoAvail(StandardBrew.class, drink.getEspresso(), inventory)){
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if a cup is available
+	 * @param size The char shorthand of the size
+	 * @param inventory The inventory of the truck
+	 * @return true if it is available, false if not.
+	 */
+	public boolean hasCup(char size, Map<String, Float> inventory){
+		switch(size){
+			case 'S': return inventory.getOrDefault("Small", 0.0f) > 0; 
+			case 'M': return inventory.getOrDefault("Medium", 0.0f) > 0; 
+			case 'L': return inventory.getOrDefault("Large", 0.0f) > 0; 
+			default: return false;
+		}
+	}
+
+	/**
+	 * Returns a hashmap showing the amount of each ingredient in the truck.
+	 * The hashmap has a String and a Float. String for the ingredient name and float
+	 * for the amount.
+	 * @return Hashmap showing the amount of ingredients on the truck.
+	 */
+	public HashMap<String, Float> getIngrdientAmount(){
+		HashMap<String, Float> inventory = new HashMap<String, Float>();
+		Ingredient ingr; String type;
+
+		for (StorageBin bin : STORAGEBINS){
+			ingr = bin.getContents();
+			if (ingr != null){
+				type = ingr.getType();
+				inventory.put(type, inventory.getOrDefault(type, 0.0f) + ingr.getAmt());
+			}
+		}
+
+		return inventory;
 	}
 
 	/**
