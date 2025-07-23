@@ -30,7 +30,7 @@ public class CafeAmericanoModel extends AbstractTransactionModel {
 	 * Constructor for returnMenu()
 	 * @param size The size of the cup
 	 */
-	public CafeAmericanoModel(char size) {
-	    this(size, new StandardBrew(), 0);  // default to standard, no extra shots
+	public CafeAmericanoModel(char size, char truckType) {
+		this(size, (truckType == 'P' ? new LightBrew() : new StandardBrew()), 0);
 	}
 }
