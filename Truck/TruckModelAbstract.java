@@ -158,16 +158,18 @@ public abstract class TruckModelAbstract {
 	 */
 	public void reduce(String type, float amt){
 		for (StorageBin bin : STORAGEBINS){ 
-			if (amt > 0 && bin.getContents().getType().equals(type)){
+			if (bin.getContents() != null){
+				if (amt > 0 && bin.getContents().getType().equals(type)){
 
-				if (bin.getContents().getAmt() < amt){
-					bin.lessenContents(bin.getContents().getAmt());
-					amt -= bin.getContents().getAmt();
-				}
+					if (bin.getContents().getAmt() < amt){
+						bin.lessenContents(bin.getContents().getAmt());
+						amt -= bin.getContents().getAmt();
+					}
 
-				else{
-					bin.lessenContents(amt);
-					amt = 0;
+					else{
+						bin.lessenContents(amt);
+						amt = 0;
+					}
 				}
 			}
 		}
@@ -243,18 +245,13 @@ public abstract class TruckModelAbstract {
 
 	/**
 	 * Given an espresso shot, checks if there is enough for it.
-	 * @param espressoType The class of the espresso to be made
+	 * @param shot The espresso in the drink brew
 	 * @param flAmt The amount of fl the espresso will be
 	 * @param waterAmt The amount of water the drink already has that is unrelated to the espresso, if any
 	 * @param inventory The amount of each ingredient the truck has
 	 * @return true if there is enough, false if not.
 	 */
-	public boolean isEspressoAvail(Class<? extends Espresso> espressoType, float flAmt, HashMap<String, Float> inventory){
-		Espresso shot;
-		try{shot = espressoType.getConstructor().newInstance();}
-		catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-			{System.out.println("error"); shot = null;};
-
+	public boolean isEspressoAvail(Espresso shot, float flAmt, HashMap<String, Float> inventory){
 		if (inventory.getOrDefault("Coffee", 0.0f) < shot.getCoffee() ||
 			inventory.getOrDefault("Water", 0.0f) < shot.getWater()){
 			return false;
@@ -278,7 +275,7 @@ public abstract class TruckModelAbstract {
 			if (amtAvail < ingr.getAmt()) return false;
 		}
 
-		if (isEspressoAvail(StandardBrew.class, drink.getEspresso().getEspresso(), inventory)){
+		if (isEspressoAvail(drink.getEspresso(), drink.getEspresso().getEspresso(), inventory)){
 			return true;
 		}
 

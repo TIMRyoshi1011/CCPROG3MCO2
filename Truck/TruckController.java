@@ -259,6 +259,7 @@ public class TruckController {
 											choice3 = scan.nextLine();
 											tempDrink = AppModel.toInt(choice3.trim());
 										} while (tempDrink < 0);
+
 										yield new CustomBrew(tempDrink);
 									}
 									default -> {
@@ -282,13 +283,19 @@ public class TruckController {
 						}
 
 						TransactionController newT = new TransactionController(choice, choice2, espresso, intChoice);
+						
+						if (!model.isEspressoAvail(newT.getEspresso(), newT.getEspresso().getEspresso(), model.getIngrdientAmount())) {
+							view.printFeedback("Not enough coffee or water for that brew.");
+						}
 
-						AppView.pause();
+						else{
+							AppView.pause();
 
-						model.processTransaction(newT);
+							model.processTransaction(newT);
 
-						newT.printBrew();
-						newT.printTransaction();
+							newT.printBrew();
+							newT.printTransaction();
+						}
 					}
 				}
 

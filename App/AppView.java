@@ -215,11 +215,12 @@ public class AppView {
 	 * Halts the program for .5 seconds.
 	 * Used in printing statements.
 	 */
-	public static void pause(){		
+	public static void pause(){	
+	/*	
 			try {
 			Thread.sleep(500); // Delay for 0.5 seconds
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 }
