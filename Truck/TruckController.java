@@ -240,6 +240,10 @@ public class TruckController {
 					drinkIsAvail = model.isDrinkAvailable(choice, choice2);
 
 					if (drinkIsAvail){
+						if(model.getType() == 'P'){
+							view.printFeedback("What kind of brew would you like?");
+							
+						}
 						TransactionController newT = new TransactionController(choice, choice2);
 
 						AppView.pause();

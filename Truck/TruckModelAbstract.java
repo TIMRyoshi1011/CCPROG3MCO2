@@ -2,10 +2,12 @@ package Truck;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringBuilder;
+import java.lang.StringBuilder;
+import java.lang.reflect.InvocationTargetException;
 import StorageBin.*;
 import Ingredient.*;
 import Transaction.*;
+import Espresso.*;
 
 /**
  * A coffee truck's model abstract
@@ -208,18 +210,21 @@ public abstract class TruckModelAbstract {
 
 		char[] cupShorthands = {'S', 'M', 'L'};
 		String[] drinks = {"Cafe Americano", "Latte", "Cappucino"};
-		Class<? extends AbstractTransactionModel>[] drinkTypes = new Class[] {
+		@SuppressWarnings("unchecked")
+		Class<? extends AbstractTransactionModel>[] drinkTypes = (Class<? extends AbstractTransactionModel>[]) new Class[] {
 			CafeAmericanoModel.class,
 			LatteModel.class,
-			CappuccinoModel.class
+			CappucinoModel.class
 		};
 
 		for (int i = 0; i < drinks.length; i++){
-			strTemp = new StringBuilder(drink + " [");
+			strTemp = new StringBuilder(drinks[i] + " [");
 			isAvail = false;
 
 			for (char size : cupShorthands){
-				tempDrink = drinkTypes[i].getConstructor(char.class).newInstance(size);
+				try{tempDrink = drinkTypes[i].getConstructor(char.class).newInstance(size);}
+				catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+					{System.out.println("error"); tempDrink = null;};
 
 				if (hasCup(size, inventory) && areIngredientsAvailable(tempDrink, inventory)){
 					strTemp.append(" ").append(size);
@@ -244,11 +249,14 @@ public abstract class TruckModelAbstract {
 	 * @param inventory The amount of each ingredient the truck has
 	 * @return true if there is enough, false if not.
 	 */
-	public boolean isEspressoAvail(Class<? extends Espresso> espressoType, float flAmt, HashMap<String, Flaot> inventory){
-		Espresso shot = espressoType.getConstructor().newInstance();
+	public boolean isEspressoAvail(Class<? extends Espresso> espressoType, float flAmt, HashMap<String, Float> inventory){
+		Espresso shot;
+		try{shot = espressoType.getConstructor().newInstance();}
+				catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+					{System.out.println("error"); shot = null;};
 
 		if (inventory.getOrDefault("Coffee", 0.0f) < shot.getCoffee() ||
-			inventory.getOrDefault("Water", 0.0f) < shot.getWater() + waterAmt){
+			inventory.getOrDefault("Water", 0.0f) < shot.getWater()){
 			return false;
 		}
 
@@ -269,7 +277,7 @@ public abstract class TruckModelAbstract {
 			if (amtAvail < ingr.getAmt()) return false;
 		}
 
-		if (isEspressoAvail(StandardBrew.class, drink.getEspresso(), inventory)){
+		if (isEspressoAvail(StandardBrew.class, drink.getEspresso().getEspresso(), inventory)){
 			return true;
 		}
 
@@ -282,7 +290,7 @@ public abstract class TruckModelAbstract {
 	 * @param inventory The inventory of the truck
 	 * @return true if it is available, false if not.
 	 */
-	public boolean hasCup(char size, Map<String, Float> inventory){
+	public boolean hasCup(char size, HashMap<String, Float> inventory){
 		switch(size){
 			case 'S': return inventory.getOrDefault("Small", 0.0f) > 0; 
 			case 'M': return inventory.getOrDefault("Medium", 0.0f) > 0; 
