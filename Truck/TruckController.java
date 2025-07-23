@@ -247,32 +247,33 @@ public class TruckController {
 							do{
 								view.printFeedback("What kind of brew would you like? [standard, strong, light, custom]");
 								
-								choice3 = scanner.nextLine();
+								choice3 = scan.nextLine();
 								espresso = switch (choice3.toLowerCase().trim()){
 									case "standard" -> new StandardBrew();
 									case "light" -> new LightBrew();
 									case "strong" -> new StrongBrew();
 									case "custom" -> {
+										int tempDrink = -1;
 										do{
 											view.printFeedback("Enter custom ratio. In 1 shot, 1 part coffee is to how many parts water?");
 											choice3 = scan.nextLine();
-											intChoice = AppModel.toInt(choice3.trim());
-											if (intChoice >= 0) yield new CustomBrew(intChoice);
-										} while (intChoice < 0);
+											tempDrink = AppModel.toInt(choice3.trim());
+										} while (tempDrink < 0);
+										yield new CustomBrew(tempDrink);
 									}
 									default -> {
 										view.printFeedback("Please check your input.");
 										scan.nextLine();
 										yield null;
 									}
-								}
+								};
 							} while (espresso == null);
 
 							do {
 								view.printFeedback("Please enter how many extra shots you'd like (0 if none):");
 								choice3 = scan.nextLine();
 								intChoice = AppModel.toInt(choice3);
-							} while (intChoice > 0);
+							} while (intChoice < 0);
 						}
 
 						else{

@@ -25,4 +25,12 @@ public class CafeAmericanoModel extends AbstractTransactionModel {
 		drinkCost += water.getPrice() * water.getAmt();
 		ingredients.add(water);
 	}
+
+	/**
+	 * Constructor for returnMenu()
+	 * @param size The size of the cup
+	 */
+	public CafeAmericanoModel(char size) {
+	    this(size, new StandardBrew(), 0);  // default to standard, no extra shots
+	}
 }

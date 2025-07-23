@@ -25,4 +25,12 @@ public class LatteModel extends AbstractTransactionModel {
 		drinkCost += milk.getPrice() * milk.getAmt();
 		ingredients.add(milk);
 	}
+
+	/**
+	 * Constructor for returnMenu()
+	 * @param size The size of the cup
+	 */
+	public LatteModel(char size) {
+	    this(size, new StandardBrew(), 0);  // default to standard, no extra shots
+	}
 }

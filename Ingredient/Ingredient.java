@@ -43,4 +43,12 @@ public abstract class Ingredient{
 	public void reduceAmt(float amt){
 		this.amt -= amt;
 	}
+
+	/**
+	 * Increases the amount of the ingredient
+	 * @param amt Amount to be increased
+	 */
+	public void increaseAmt(float amt){
+		this.amt += amt;
+	}
 }

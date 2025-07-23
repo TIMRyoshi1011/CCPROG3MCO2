@@ -226,7 +226,7 @@ public abstract class TruckModelAbstract {
 				catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
 					{System.out.println("error"); tempDrink = null;};
 
-				if (hasCup(size, inventory) && areIngredientsAvailable(tempDrink, inventory)){
+				if (tempDrink != null && hasCup(size, inventory) && areIngredientsAvailable(tempDrink, inventory)){
 					strTemp.append(" ").append(size);
 					isAvail = true;
 				}
@@ -272,6 +272,7 @@ public abstract class TruckModelAbstract {
 	public boolean areIngredientsAvailable(AbstractTransactionModel drink, HashMap<String, Float> inventory){
 		float amtAvail;
 
+		if (drink == null) return false;
 		for (Ingredient ingr : drink.getIngredients()){
 			amtAvail = inventory.getOrDefault(ingr.getType(), 0.0f);
 			if (amtAvail < ingr.getAmt()) return false;

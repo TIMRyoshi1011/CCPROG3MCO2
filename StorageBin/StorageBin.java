@@ -71,8 +71,8 @@ public class StorageBin{
 			default: if (newAmt > 640) wontOverfill = false; break; // water, milk, and extraIngr
 		}
 
-		if (wontOverfill) {
-            contents.reduceAmt(amt);
+		if (wontOverfill && amt >= 0) {
+            contents.increaseAmt(amt);
             return true;
         }
 		
