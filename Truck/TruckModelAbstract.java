@@ -252,8 +252,8 @@ public abstract class TruckModelAbstract {
 	public boolean isEspressoAvail(Class<? extends Espresso> espressoType, float flAmt, HashMap<String, Float> inventory){
 		Espresso shot;
 		try{shot = espressoType.getConstructor().newInstance();}
-				catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-					{System.out.println("error"); shot = null;};
+		catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
+			{System.out.println("error"); shot = null;};
 
 		if (inventory.getOrDefault("Coffee", 0.0f) < shot.getCoffee() ||
 			inventory.getOrDefault("Water", 0.0f) < shot.getWater()){

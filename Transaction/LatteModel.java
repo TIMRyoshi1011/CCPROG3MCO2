@@ -14,11 +14,11 @@ public class LatteModel extends AbstractTransactionModel {
 	 * Constructor for a latte
 	 * @param size The size of the drink
 	 */
-	public LatteModel(char size){
+	public LatteModel(char size, Espresso espresso, int extraShots){
 		super("latte", size);
 
-		espresso = new StandardBrew();
-		espresso.brewEspresso(0, cup.getFl()*(1.0f/5.0f));
+		this.espresso = espresso;
+		espresso.brewEspresso(extraShots, cup.getFl()*(1.0f/5.0f));
 		drinkCost += espresso.getEspresso() * espresso.getPrice();
 
 		Milk milk = new Milk(cup.getFl()*(4.0f/5.0f));

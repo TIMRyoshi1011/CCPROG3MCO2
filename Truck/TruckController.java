@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import StorageBin.*;
 import Transaction.*;
 import App.*;
+import Espresso.*;
 
 /**
  * A coffee trucks controller
@@ -206,7 +207,9 @@ public class TruckController {
 	public void simulateSale(){
 		boolean end = false, drinkIsAvail;
 		ArrayList<String> menu;
-		String choice, choice2;
+		String choice, choice2, choice3;
+		int intChoice;
+		Espresso espresso;
 
 		while (!end){
 			menu = model.returnMenu();
@@ -241,10 +244,43 @@ public class TruckController {
 
 					if (drinkIsAvail){
 						if(model.getType() == 'P'){
-							view.printFeedback("What kind of brew would you like?");
-							
+							do{
+								view.printFeedback("What kind of brew would you like? [standard, strong, light, custom]");
+								
+								choice3 = scanner.nextLine();
+								espresso = switch (choice3.toLowerCase().trim()){
+									case "standard" -> new StandardBrew();
+									case "light" -> new LightBrew();
+									case "strong" -> new StrongBrew();
+									case "custom" -> {
+										do{
+											view.printFeedback("Enter custom ratio. In 1 shot, 1 part coffee is to how many parts water?");
+											choice3 = scan.nextLine();
+											intChoice = AppModel.toInt(choice3.trim());
+											if (intChoice >= 0) yield new CustomBrew(intChoice);
+										} while (intChoice < 0);
+									}
+									default -> {
+										view.printFeedback("Please check your input.");
+										scan.nextLine();
+										yield null;
+									}
+								}
+							} while (espresso == null);
+
+							do {
+								view.printFeedback("Please enter how many extra shots you'd like (0 if none):");
+								choice3 = scan.nextLine();
+								intChoice = AppModel.toInt(choice3);
+							} while (intChoice > 0);
 						}
-						TransactionController newT = new TransactionController(choice, choice2);
+
+						else{
+							espresso = new StandardBrew();
+							intChoice = 0;
+						}
+
+						TransactionController newT = new TransactionController(choice, choice2, espresso, intChoice);
 
 						AppView.pause();
 

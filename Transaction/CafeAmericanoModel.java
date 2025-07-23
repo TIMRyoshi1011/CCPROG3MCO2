@@ -14,11 +14,11 @@ public class CafeAmericanoModel extends AbstractTransactionModel {
 	 * Constructor for a cafe americano
 	 * @param size The size of the drink
 	 */
-	public CafeAmericanoModel(char size){
+	public CafeAmericanoModel(char size, Espresso espresso, int extraShots){
 		super("cafe americano", size);
 
-		espresso = new StandardBrew();
-		espresso.brewEspresso(0, cup.getFl()*(1.0f/3.0f));
+		this.espresso = espresso;
+		espresso.brewEspresso(extraShots, cup.getFl()*(1.0f/3.0f));
 		drinkCost += espresso.getEspresso() * espresso.getPrice();
 
 		Water water = new Water(cup.getFl()*(2.0f/3.0f));

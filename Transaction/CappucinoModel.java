@@ -14,11 +14,11 @@ public class CappucinoModel extends AbstractTransactionModel {
 	 * Constructor for a cappucino
 	 * @param size The size of the drink
 	 */
-	public CappucinoModel(char size){
+	public CappucinoModel(char size, Espresso espresso, int extraShots){
 		super("cappucino", size);
 
-		espresso = new StandardBrew();
-		espresso.brewEspresso(0, cup.getFl()*(1.0f/3.0f));
+		this.espresso = espresso;
+		espresso.brewEspresso(extraShots, cup.getFl()*(1.0f/3.0f));
 		drinkCost += espresso.getEspresso() * espresso.getPrice();
 
 		Milk milk = new Milk(cup.getFl()*(2.0f/3.0f));
