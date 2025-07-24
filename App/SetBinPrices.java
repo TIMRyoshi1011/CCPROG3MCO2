@@ -9,6 +9,8 @@ import javax.swing.event.DocumentEvent;
 
 public class SetBinPrices extends JFrame implements ActionListener, DocumentListener {
 
+    private AppModel model;
+
     private JPanel mainPanel;
     private JPanel headerPanel;
 
