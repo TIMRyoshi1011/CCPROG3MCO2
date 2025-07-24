@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 
 public class ChooseOrder extends JFrame implements ActionListener{
 
+    private AppModel model;
+
     private JPanel mainPanel;
     private JPanel headerPanel;
 
