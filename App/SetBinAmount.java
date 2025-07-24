@@ -9,6 +9,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 
 public class SetBinAmount extends JFrame implements ActionListener, DocumentListener{
+    private AppModel model;
 
     private JPanel mainPanel;
     private JPanel headerPanel;
