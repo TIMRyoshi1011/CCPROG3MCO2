@@ -8,6 +8,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.DocumentEvent;
 
 public class CreateTruck extends JFrame implements ActionListener, DocumentListener {
+    private AppModel model;
+	
     private JButton javaJeepS;
     private JButton javaJeepR;
 
