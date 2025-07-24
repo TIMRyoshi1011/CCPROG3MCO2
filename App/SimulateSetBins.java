@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class SimulateSetBins extends JFrame implements ActionListener {
+	private AppModel model;
 
 	private StorageBin storageBin;
 	private SimulateSetBinAmount setAmount;
