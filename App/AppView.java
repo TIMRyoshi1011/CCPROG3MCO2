@@ -5,17 +5,122 @@ import Truck.*;
 import Ingredient.*;
 import Cup.*;
 import Espresso.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import javax.swing.event.DocumentListener;
 
 /**
  * View for the main app interface
  */
-public class AppView {
+public class AppView extends JFrame {
+	private JButton createBtn;
+	private JButton simulateBtn;
+	private JButton dashboardBtn;
+
+	private JPanel mainPanel;
+	private JPanel headerPanel;
+
+	//insert attributes for textfield
+	//private JTextField textField;
 
 	/* SUGGESTION: since lots of the programs parts concerns choosing an option from a set of lists, 
 				   there could be a general option that prints a list of choices given the number
 				   of choices and the labels of each choice. Unsure how to work around this with 
 				   button inputs though, but will think about it when we reach the GUI implementation
 				   stage. */
+
+	public AppView() {
+		super("JavaJeep");
+		setLayout(new BorderLayout());
+
+		setSize(400, 450);
+
+		homeScreen();
+
+		setVisible(true);
+		//setResizable(false);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	private void homeScreen() {
+
+		/* Block of code for the Header Text */
+
+		headerPanel = new JPanel();
+		headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+	    JLabel label1 = new JLabel("Welcome to JavaJeeps!");
+        label1.setFont(new Font("Arial", Font.BOLD, 30));
+        headerPanel.add(label1);
+
+		// JLabel label2 = new JLabel("Select an Option:");
+        // label2.setFont(new Font("Arial", Font.BOLD, 15));
+        // headerPanel.add(label2);
+
+		this.add(headerPanel, BorderLayout.NORTH);
+
+		/* ----------------------------------------------------------------------- */
+
+		/* Block of code for the Button Options */
+
+	    mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+		mainPanel.add(Box.createVerticalStrut(35));
+
+		createBtn = new JButton("Create Truck");
+		createBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(createBtn);
+		mainPanel.add(Box.createVerticalStrut(15));
+
+		simulateBtn = new JButton("Simulate Truck");
+		simulateBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(simulateBtn);
+		mainPanel.add(Box.createVerticalStrut(15));
+
+		dashboardBtn = new JButton("Dashboard");
+		dashboardBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(dashboardBtn);
+
+		this.add(mainPanel, BorderLayout.CENTER);
+
+		/* ----------------------------------------------------------------------- */
+	}
+
+	public void setActionListener(ActionListener listener) {
+		createBtn.addActionListener(listener);
+		simulateBtn.addActionListener(listener);
+		dashboardBtn.addActionListener(listener);
+	}
+
+	/**
+	 * Clears the console, for clarity purposes.
+	 */
+	public static void clear(){
+		try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.println("Error clearing console: " + e.getMessage());
+        }
+	}
+
+	/**
+	 * Halts the program for .5 seconds.
+	 * Used in printing statements.
+	 */
+	public static void pause(){		
+			try {
+			Thread.sleep(500); // Delay for 0.5 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Prints the main menu of the app.
@@ -194,33 +299,5 @@ public class AppView {
 		System.out.println("3 - Exit");
 		System.out.println();
 		System.out.print(">> ");
-	}
-
-	/**
-	 * Clears the console, for clarity purposes.
-	 */
-	public static void clear(){
-		try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (Exception e) {
-            System.out.println("Error clearing console: " + e.getMessage());
-        }
-	}
-
-	/**
-	 * Halts the program for .5 seconds.
-	 * Used in printing statements.
-	 */
-	public static void pause(){	
-	/*	
-			try {
-			Thread.sleep(500); // Delay for 0.5 seconds
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
 	}
 }
