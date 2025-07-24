@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Dashboard extends JFrame{
+    private AppModel model;
 
     private JPanel mainPanel;
 
