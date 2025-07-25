@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 import javax.swing.text.Document;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -14,7 +15,7 @@ import Truck.*;
 /**
  * Controller for the main app interface.
  */
-public class AppController implements ActionListener {
+public class AppController implements ActionListener, DocumentListener {
 	/** Model for main app interface. */
 	private AppModel model;
 	/** View for main app interface. */
@@ -32,28 +33,416 @@ public class AppController implements ActionListener {
 		this.view = view;
 
 		view.setActionListener(this);
+		view.setDocumentListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Create Truck")) {
-			CreateTruck createTruck = new CreateTruck(); // <---------------------- Opens CreateTruck.java
+			clearGUI();
+			view.createNewTruck();
 			//createTruck();
 		} 
 		
 		else if (e.getActionCommand().equals("Simulate Truck")) {
-			SimulateScreen simulate = new SimulateScreen(); // <---------------------- Opens SimulateScreen.java
+			clearGUI();
+			view.truckSimulate();
 			//simulateTruck();
 		} 
 		
 		else if (e.getActionCommand().equals("Dashboard")) {
-			Dashboard dashboard = new Dashboard(); // <---------------------- Opens Dashboard.java
-			//dashboard();
+			clearGUI();
+			view.dashboard();
+			//dashboardController();
 		} 
+
+		else if (e.getActionCommand().equals("JavaJeep")) {
+            System.out.println("R");  //placeholder for test/ to delete
+            // Pass R to the model
+        }
+
+        else if (e.getActionCommand().equals("JavaJeep+")) {
+            System.out.println("P"); //placeholder for test/ to delete
+            // Pass S to the model
+        }
+
+        else if (e.getActionCommand().equals("Proceed")) {
+			if (view.location.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a location.");
+                return; // Do not proceed if the text field is empty
+            }
+
+			else {
+				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
+				removeUpdate(null);
+				clearGUI();
+				view.setTruckBins();
+			}
+        }
+
+		else if (e.getActionCommand().equals("BIN #1")) {
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #2")) {  
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #3")) {
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #4")) {
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #5")) {
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #6")) { 
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #7")) {
+			clearGUI();
+			view.setAmounts(); 
+        }
+
+		else if (e.getActionCommand().equals("BIN #8")) {
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals(">")) { 
+			clearGUI();
+			view.setPrices();
+        }
+
+		else if (e.getActionCommand().equals("Small Cup")) {
+            System.out.println("Small Cup");  // Send Small Cup to the model - placeholder for test/ to delete
+        }
+
+        else if (e.getActionCommand().equals("Medium Cup")) {
+            System.out.println("Medium Cup");  // Send Medium Cup to the model - placeholder for test/ to delete
+        }
+
+        else if (e.getActionCommand().equals("Large Cup")) {
+            System.out.println("Large Cup");  // Send Large Cup to the model - placeholder for test/ to delete
+        }
+
+        else if (e.getActionCommand().equals("Coffee Beans")) {
+            System.out.println("Coffee Beans");  // Send Coffee Beans to the model - placeholder for test/ to delete
+        }
+
+        else if (e.getActionCommand().equals("Milk")) {
+            System.out.println("Milk");  // Send Milk to the model - placeholder for test/ to delete
+        }
+
+        else if (e.getActionCommand().equals("Water")) {
+            System.out.println("Water");  // Send Water to the model - placeholder for test/ to delete
+        }
+
+		else if (e.getActionCommand().equals("Enter")) {
+            if (view.amount.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter an amount.");
+                return; 
+            }
+
+            else {
+                System.out.println(view.getAmount());  // Send getAmount() to the model - placeholder for test/ to delete
+                removeUpdate(null); 
+				clearGUI();
+				view.setTruckBins();
+            }
+        }
+
+        else if (e.getActionCommand().equals("Save")) {
+            if (view.price.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a price.");
+                return; // Do not proceed if the text field is empty
+            }
+
+            else {
+                System.out.println(view.getPrice());  // Send getPrice() to the model - placeholder for test/ to delete
+				removeUpdate(null);
+                System.out.println("Saved");  //placeholder, to remove
+            }
+        }
+
+        else if (e.getActionCommand().equals("Confirm")) {
+            clearGUI();
+			view.truckInfo();
+        }
+
+		else if (e.getActionCommand().equals("Main Menu")) {
+			clearGUI();
+            view.homeScreen();
+        }
+
+		else if (e.getActionCommand().equals("Next")) {
+            if (view.toSimulate.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a Truck No.");
+                return; // Do not proceed if the text field is empty
+            }
+            else {
+                System.out.println(view.getSimulation()); // Pass getSimulation() to the model - placeholder for test/ to delete
+				removeUpdate(null);
+                clearGUI();
+				view.optionList();
+            } 
+        }
+
+		else if (e.getActionCommand().equals("Simulate Sale")) {
+            clearGUI();
+			view.choose();
+        }
+
+        else if (e.getActionCommand().equals("View Truck Information")) {
+            clearGUI();
+			view.simulateTruckInfo();
+        }
+
+        else if (e.getActionCommand().equals("Manage Bins")) {
+			clearGUI();
+            view.simulateTruckBins();
+        }
+
+        else if (e.getActionCommand().equals("Maintenance")) {
+			clearGUI();
+            view.maintainance();
+        }
+
+		else if (e.getActionCommand().equals("Back to Main Menu")) {
+			clearGUI();
+            view.homeScreen();
+		}
+
+		else if (e.getActionCommand().equals("Return")) {
+            clearGUI();
+			view.optionList();
+        }
+
+		else if (e.getActionCommand().equals("Yes")) {
+			clearGUI();
+            view.order();
+        }
+
+        else if (e.getActionCommand().equals("No")) {
+            clearGUI();
+			view.optionList();
+        }
+
+		else if (e.getActionCommand().equals("Small")) {
+            if (view.drink.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a drink.");
+                return; // Do not proceed if the text field is empty
+            }
+
+            else {
+                System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
+				removeUpdate(null);
+				clearGUI();
+                view.orderHere();
+            }
+        }
+
+        else if (e.getActionCommand().equals("Medium")) {
+            if (view.drink.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a drink.");
+                return; // Do not proceed if the text field is empty
+            }
+
+            else {
+                System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
+				removeUpdate(null);
+                clearGUI();
+                view.orderHere();
+            }
+        }
+
+        else if (e.getActionCommand().equals("Large")) {
+            if (view.drink.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a drink.");
+                return; // Do not proceed if the text field is empty
+            }
+
+            else {
+                System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
+				removeUpdate(null);
+                clearGUI();
+                view.orderHere();
+            }
+        }
+
+		else if (e.getActionCommand().equals("Back")) {
+            clearGUI();
+			view.optionList();
+        }
+
+		else if (e.getActionCommand().equals("<")) { 
+			clearGUI();
+			view.optionList();
+        }
+
+		else if (e.getActionCommand().equals("Continue")) {
+            if (view.mLocation.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a location.");
+                return; // Do not proceed if the text field is empty
+            }
+
+            else {
+                System.out.println(view.getMLoc()); // Pass getTextField() to the model - placeholder for test/ to delete
+                removeUpdate(null); // Clear the text field after proceeding
+				clearGUI();
+                view.mSetPrices();
+            }
+        }
+
+        else if (e.getActionCommand().equals("confirm")) {
+            clearGUI();
+			view.optionList();
+        }
+
+		else if (e.getActionCommand().equals("BIN 1")) {
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 2")) {  
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 3")) {
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 4")) {
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 5")) {
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 6")) { 
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 7")) {
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN 8")) {
+			clearGUI();
+			view.simulateAmounts();
+        }
+
+		else if (e.getActionCommand().equals("Previous")) {
+            if (view.amount.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter an amount.");
+                return; 
+            }
+
+            else {
+                System.out.println(view.getAmount());  // Send getAmount() to the model - placeholder for test/ to delete
+                removeUpdate(null); 
+                clearGUI();
+                view.simulateTruckBins();
+            }
+        }
+
+		else if (e.getActionCommand().equals("Home")) {
+            clearGUI();
+            view.homeScreen();
+        }
 		
 		else {
 			//view.printFeedback("Unknown action" );
 		}
+	}
+
+	@Override
+    public void insertUpdate(DocumentEvent e) {
+        // Handle text insertion
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent e) {
+        // Handle text removal
+		view.location.setText("");
+		view.price.setText("");
+		view.toSimulate.setText("");
+		view.drink.setText("");
+		view.amount.setText("");
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent e) {
+        // Handle text change
+    }
+
+	public void clearGUI() {
+		view.headerPanel.removeAll();
+			view.headerPanel.revalidate();
+			view.headerPanel.repaint();
+			view.mainPanel.removeAll();
+			view.mainPanel.revalidate();
+			view.mainPanel.repaint();
+	}
+
+	/**
+	 * The main menu of the whole app. It lets the user pick between the different app functions.
+	 */
+	public void mainMenu(){
+		String input;
+		int choice = 0;
+
+		while (choice != 4){
+			view.printMain();
+
+			input = scan.nextLine();
+			choice = model.toInt(input);
+
+			switch(choice){
+			case 1:
+				// create truck
+				createTruck();
+				break;
+			case 2:
+				// simulate truck
+				simulateTruck();
+				break;
+			case 3:
+				// dashboard
+				dashboardController();
+				break;
+			case 4:
+				// exit
+				view.printFeedback("Thank you for using JavaJeeps!");
+				break;
+			default:
+				// invalid input
+				view.printFeedback("Invalid option, please try again: ");
+				break;
+			}
+
+		}
+
+		scan.close();
+		System.exit(0); // Terminates the program
 	}
 
 	/**
@@ -156,7 +545,7 @@ public class AppController implements ActionListener {
 	/**
 	 * Provides a birds-eye view of all trucks.
 	 */
-	public void dashboard(){
+	public void dashboardController(){
 		boolean end = false;
 		String choice;
 		int truckIndx, i;
