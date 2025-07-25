@@ -94,7 +94,7 @@ public class SimulateScreen extends JFrame implements ActionListener, DocumentLi
                 return; // Do not proceed if the text field is empty
             }
             else {
-                System.out.println(getSimulation()); // Pass getSimulation() to the model
+                System.out.println(getSimulation()); // Pass getSimulation() to the model - placeholder for test/ to delete
                 removeUpdate(null); // Clear the text field after proceeding
                 SimulateOptions options = new SimulateOptions();
                 dispose(); //close this window
