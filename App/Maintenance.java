@@ -78,7 +78,7 @@ public class Maintenance extends JFrame implements ActionListener, DocumentListe
             }
 
             else {
-                System.out.println(getTextField()); // Pass getTextField() to the model
+                System.out.println(getTextField()); // Pass getTextField() to the model - placeholder for test/ to delete
                 removeUpdate(null); // Clear the text field after proceeding
                 MaintainBinPrices prices = new MaintainBinPrices();
                 dispose(); //close this window
