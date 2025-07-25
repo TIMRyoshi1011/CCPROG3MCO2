@@ -175,7 +175,7 @@ public class SetBinAmount extends JFrame implements ActionListener, DocumentList
             }
 
             else {
-                System.out.println(getAmount());  // Send getAmount() to the model
+                System.out.println(getAmount());  // Send getAmount() to the model - placeholder for test/ to delete
                 removeUpdate(null); 
                 setBins = new SettingStorageBins();
                 dispose(); //close this window
