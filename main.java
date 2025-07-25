@@ -20,6 +20,6 @@ public class main{
 		AppView appV = new AppView();
 		AppController appC = new AppController(appM, appV);
 
-		appC.mainMenu();
+		//appC.mainMenu();
 	}
 }
