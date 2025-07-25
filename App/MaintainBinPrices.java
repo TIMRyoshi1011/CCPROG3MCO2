@@ -206,9 +206,9 @@ public class MaintainBinPrices extends JFrame implements ActionListener, Documen
             }
 
             else {
-                System.out.println(getPrice());  // Send getPrice() to the model
+                System.out.println(getPrice());  // Send getPrice() to the model - placeholder for test/ to delete
                 removeUpdate(null);
-                System.out.println("Saved");  //placeholder, to remove
+                System.out.println("Saved");  //placeholder for test/ to delete
             }
         }
 
