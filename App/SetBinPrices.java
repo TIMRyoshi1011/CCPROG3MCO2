@@ -207,7 +207,7 @@ public class SetBinPrices extends JFrame implements ActionListener, DocumentList
             }
 
             else {
-                System.out.println(getPrice());  // Send getPrice() to the model
+                System.out.println(getPrice());  // Send getPrice() to the model - placeholder for test/ to delete
                 removeUpdate(null);
                 System.out.println("Saved");  //placeholder, to remove
             }
