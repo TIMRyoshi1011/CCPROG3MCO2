@@ -145,27 +145,27 @@ public class SetBinAmount extends JFrame implements ActionListener, DocumentList
     @Override
     public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Small Cup")) {
-            System.out.println("Small Cup");  //placeholder, to remove
+            System.out.println("Small Cup");  // Send Small Cup to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Medium Cup")) {
-            System.out.println("Medium Cup");  //placeholder, to remove
+            System.out.println("Medium Cup");  // Send Medium Cup to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Large Cup")) {
-            System.out.println("Large Cup");  //placeholder, to remove
+            System.out.println("Large Cup");  // Send Large Cup to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Coffee Beans")) {
-            System.out.println("Coffee Beans");  //placeholder, to remove
+            System.out.println("Coffee Beans");  // Send Coffee Beans to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Milk")) {
-            System.out.println("Milk");  //placeholder, to remove
+            System.out.println("Milk");  // Send Milk to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Water")) {
-            System.out.println("Water");  //placeholder, to remove
+            System.out.println("Water");  // Send Water to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Confirm")) {
