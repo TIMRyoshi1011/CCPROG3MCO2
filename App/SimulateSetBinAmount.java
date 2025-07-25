@@ -149,23 +149,23 @@ public class SimulateSetBinAmount extends JFrame implements ActionListener, Docu
         }
 
         else if (e.getActionCommand().equals("Medium Cup")) {
-            System.out.println("Medium Cup");  // Send Small Cup to the model - placeholder for test/ to delete
+            System.out.println("Medium Cup");  // Send Medium Cup to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Large Cup")) {
-            System.out.println("Large Cup");  // Send Small Cup to the model - placeholder for test/ to delete
+            System.out.println("Large Cup");  // Send Large Cup to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Coffee Beans")) {
-            System.out.println("Coffee Beans");  // Send Small Cup to the model - placeholder for test/ to delete
+            System.out.println("Coffee Beans");  // Send Coffee Beans to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Milk")) {
-            System.out.println("Milk");  // Send Small Cup to the model - placeholder for test/ to delete
+            System.out.println("Milk");  // Send Milk to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Water")) {
-            System.out.println("Water");  // Send Small Cup to the model - placeholder for test/ to delete
+            System.out.println("Water");  // Send Water to the model - placeholder for test/ to delete
         }
 
         else if (e.getActionCommand().equals("Confirm")) {
