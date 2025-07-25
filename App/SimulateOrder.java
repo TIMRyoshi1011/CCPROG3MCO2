@@ -105,7 +105,7 @@ public class SimulateOrder extends JFrame implements ActionListener, DocumentLis
             }
 
             else {
-                System.out.println(getDrink());  // Pass getDrink() to the model
+                System.out.println(getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
                 removeUpdate(null);
                 ViewOrder view = new ViewOrder();
                 dispose(); //close this window
@@ -119,7 +119,7 @@ public class SimulateOrder extends JFrame implements ActionListener, DocumentLis
             }
 
             else {
-                System.out.println(getDrink());  // Pass getDrink() to the model
+                System.out.println(getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
                 removeUpdate(null);
                 ViewOrder view = new ViewOrder();
                 dispose(); //close this window
@@ -133,7 +133,7 @@ public class SimulateOrder extends JFrame implements ActionListener, DocumentLis
             }
 
             else {
-                System.out.println(getDrink());  // Pass getDrink() to the model
+                System.out.println(getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
                 removeUpdate(null);
                 ViewOrder view = new ViewOrder();
                 dispose(); //close this window
