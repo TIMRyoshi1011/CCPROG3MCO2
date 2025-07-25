@@ -97,14 +97,12 @@ public class CreateTruck extends JFrame implements ActionListener, DocumentListe
     @Override
     public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("JavaJeep")) {
-            System.out.println("R");  
-
+            System.out.println("R");  //placeholder for test/ to delete
             // Pass R to the model
         }
 
         else if (e.getActionCommand().equals("JavaJeep+")) {
-            System.out.println("P"); 
-
+            System.out.println("P"); //placeholder for test/ to delete
             // Pass S to the model
         }
 
@@ -116,7 +114,7 @@ public class CreateTruck extends JFrame implements ActionListener, DocumentListe
             }
            
             else {
-                System.out.println(getLoc());  // Send getLoc() to the model
+                System.out.println(getLoc());  // Send getLoc() to the model - placeholder for test/ to delete
                 removeUpdate(null); 
                 SettingStorageBins setBins = new SettingStorageBins();
                 dispose(); //close this window
