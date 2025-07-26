@@ -1,11 +1,15 @@
 package App;
 
+
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.text.Document;
 import javax.swing.event.DocumentEvent;
@@ -42,7 +46,7 @@ public class AppController implements ActionListener, DocumentListener {
 		if (e.getActionCommand().equals("Create Truck")) {
 			clearGUI();
 			view.createNewTruck();
-			//createTruck();
+			// /createTruck();
 		} 
 		
 		else if (e.getActionCommand().equals("Simulate Truck")) {
@@ -60,11 +64,37 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("JavaJeep+")) {
             System.out.println("P"); //placeholder for test/ to delete
             // Pass S to the model
+			view.mainPanel.add(Box.createVerticalStrut(25));
+       		view.label2 = new JLabel("Enter Location: ");
+			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
+			view.mainPanel.add(view.label2);
+			view.label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+			view.mainPanel.add(view.location);
+			view.location.setAlignmentX(Component.CENTER_ALIGNMENT);
+			view.mainPanel.add(Box.createVerticalStrut(5));
+			view.mainPanel.add(view.sProceed);
+			view.sProceed.setAlignmentX(Component.CENTER_ALIGNMENT);
+			view.mainPanel.revalidate();
+			view.mainPanel.repaint();
         }
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
             System.out.println("R");  //placeholder for test/ to delete
             // Pass R to the model
+			view.mainPanel.add(Box.createVerticalStrut(25));
+       		view.label2 = new JLabel("Enter Location: ");
+			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
+			view.mainPanel.add(view.label2);
+			view.label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+			view.mainPanel.add(view.location);
+			view.location.setAlignmentX(Component.CENTER_ALIGNMENT);
+			view.mainPanel.add(Box.createVerticalStrut(5));
+			view.mainPanel.add(view.rProceed);
+			view.rProceed.setAlignmentX(Component.CENTER_ALIGNMENT);
+			view.mainPanel.revalidate();
+			view.mainPanel.repaint();
         }
 
         else if (e.getActionCommand().equals("Proceed")) {
@@ -77,7 +107,21 @@ public class AppController implements ActionListener, DocumentListener {
 				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
 				removeUpdate(null);
 				clearGUI();
-				view.setTruckBins();
+				view.rSetTruckBins();
+			}
+        }
+
+		else if (e.getActionCommand().equals("proceed")) {
+			if (view.location.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a location.");
+                return; // Do not proceed if the text field is empty
+            }
+
+			else {
+				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
+				removeUpdate(null);
+				clearGUI();
+				view.sSetTruckBins();
 			}
         }
 
@@ -116,7 +160,12 @@ public class AppController implements ActionListener, DocumentListener {
 			view.setAmounts(); 
         }
 
-		else if (e.getActionCommand().equals("BIN #8")) {
+		else if (e.getActionCommand().equals("BIN #9")) {
+			clearGUI();
+			view.setAmounts();
+        }
+
+		else if (e.getActionCommand().equals("BIN #10")) {
 			clearGUI();
 			view.setAmounts();
         }
@@ -150,6 +199,14 @@ public class AppController implements ActionListener, DocumentListener {
             System.out.println("Water");  // Send Water to the model - placeholder for test/ to delete
         }
 
+		else if (e.getActionCommand().equals("Espresso")) {
+            System.out.println("Espresso");  // Send Water to the model - placeholder for test/ to delete
+        }
+
+		else if (e.getActionCommand().equals("Extra")) {
+            System.out.println("Extra");  // Send Water to the model - placeholder for test/ to delete
+        }
+
 		else if (e.getActionCommand().equals("Enter")) {
             if (view.amount.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(view, "Please enter an amount.");
@@ -160,9 +217,14 @@ public class AppController implements ActionListener, DocumentListener {
                 System.out.println(view.getAmount());  // Send getAmount() to the model - placeholder for test/ to delete
                 removeUpdate(null); 
 				clearGUI();
-				view.setTruckBins();
+				view.rSetTruckBins(); // Buggy
             }
         }
+
+		else if (e.getActionCommand().equals("Exit")) {
+			clearGUI();
+			view.rSetTruckBins(); // Buggy
+		}
 
         else if (e.getActionCommand().equals("Save")) {
             if (view.price.getText().isEmpty()) {
@@ -243,6 +305,7 @@ public class AppController implements ActionListener, DocumentListener {
 
             else {
                 System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
+				System.out.println("Small"); //placeholder for test/ to delete
 				removeUpdate(null);
 				clearGUI();
                 view.orderHere();
@@ -257,6 +320,7 @@ public class AppController implements ActionListener, DocumentListener {
 
             else {
                 System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
+				System.out.println("Medium"); //placeholder for test/ to delete
 				removeUpdate(null);
                 clearGUI();
                 view.orderHere();
@@ -271,6 +335,7 @@ public class AppController implements ActionListener, DocumentListener {
 
             else {
                 System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
+				System.out.println("large"); //placeholder for test/ to delete
 				removeUpdate(null);
                 clearGUI();
                 view.orderHere();
@@ -356,23 +421,70 @@ public class AppController implements ActionListener, DocumentListener {
                 System.out.println(view.getMLoc()); // Pass getTextField() to the model - placeholder for test/ to delete
                 removeUpdate(null); // Clear the text field after proceeding
 				clearGUI();
-                view.mSetPrices();
+                view.maintainance();
             }
         }
 
         else if (e.getActionCommand().equals("confirm")) {
             clearGUI();
+			view.maintainance();
+        }
+
+		else if (e.getActionCommand().equals("Change Location")) {
+			clearGUI();
+            view.mSetLocation();
+        }
+
+		else if (e.getActionCommand().equals("Set Prices")) {
+			clearGUI();
+			view.mSetPrices();
+        }
+
+		else if (e.getActionCommand().equals("return")) {
+			clearGUI();
 			view.optionList();
         }
 
 		else if (e.getActionCommand().equals("yes")) {
-            //clearGUI();
-            System.out.println("yes");
+			clearGUI();
+			view.mainPanel.add(Box.createVerticalStrut(15));
+			view.label1 = new JLabel("Choose a truck to simulate:");
+			view.label1.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(view.label1);
+			view.mainPanel.add(Box.createVerticalStrut(15));
+
+			view.label2 = new JLabel("#1 || Type: _ || Location: ______           /* To add more */"); //<------------replace with values from CreateTruck
+			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
+			view.mainPanel.add(view.label2);
+
+			view.mainPanel.add(Box.createVerticalStrut(15));
+			JLabel choice = new JLabel("Enter Number: ");
+			choice.setFont(new Font("Arial", Font.BOLD, 13));
+			view.mainPanel.add(choice);
+
+			view.mainPanel.add(view.toSimulate);
+			view.mainPanel.add(Box.createVerticalStrut(5));
+			view.mainPanel.add(view.dnxt);
+			view.mainPanel.revalidate();
+			view.mainPanel.repaint();
         }
 
 		else if (e.getActionCommand().equals("no")) {
             clearGUI();
             view.homeScreen();
+        }
+
+		else if (e.getActionCommand().equals("next")) {
+			if (view.toSimulate.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a Truck No.");
+                return; // Do not proceed if the text field is empty
+            }
+            else {
+                System.out.println(view.getSimulation()); // Pass getSimulation() to the model - placeholder for test/ to delete
+				removeUpdate(null);
+                clearGUI();
+				view.homeScreen(); //<---------------------- not supposed to be this one
+            } 
         }
 		
 		else {

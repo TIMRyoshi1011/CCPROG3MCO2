@@ -16,8 +16,8 @@ import javax.swing.event.DocumentListener;
 public class AppView extends JFrame { 
 	protected JPanel mainPanel;			//panels must not be private to be accessed by the controller
 
-	private JLabel label1;
-	private JLabel label2;
+	protected JLabel label1;
+	protected JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
  
@@ -32,18 +32,23 @@ public class AppView extends JFrame {
 	private JButton javaJeepS = new JButton("JavaJeep+");
     private JButton javaJeepR = new JButton("JavaJeep");
     protected JTextField location = new JTextField(20);		// TextField must not be private to be accessed by the controller
-	private JButton proceed = new JButton("Proceed");
+	protected JButton rProceed = new JButton("Proceed");
+	protected JButton sProceed = new JButton("proceed");
 
 	// Components for Storage Bins in Create Truck
 	private JButton bin1 = new JButton("BIN #1");
-	private JButton bin2 = new JButton("BIN #2");;
-	private JButton bin3 = new JButton("BIN #3");;
-	private JButton bin4 = new JButton("BIN #4");;	
-	private JButton bin5 = new JButton("BIN #5");;
-	private JButton bin6 = new JButton("BIN #6");;
-	private JButton bin7 = new JButton("BIN #7");;
-	private JButton bin8 = new JButton("BIN #8");;
+	private JButton bin2 = new JButton("BIN #2");
+	private JButton bin3 = new JButton("BIN #3");
+	private JButton bin4 = new JButton("BIN #4");
+	private JButton bin5 = new JButton("BIN #5");
+	private JButton bin6 = new JButton("BIN #6");
+	private JButton bin7 = new JButton("BIN #7");
+	private JButton bin8 = new JButton("BIN #8");
 	private JButton nxt = new JButton(">");
+
+	//exclusive for special trucks
+	private JButton bin9 = new JButton("BIN #9");
+	private JButton bin10 = new JButton("BIN #10");
 
 	// Components for setting quantity and price of items in create truck and simulate sale
 	private JButton sCup = new JButton("Small Cup");
@@ -53,11 +58,16 @@ public class AppView extends JFrame {
     private JButton dMlk = new JButton("Milk");
     private JButton dWtr = new JButton("Water");
 
+	// exclusive buttons for setting PRICE of items
+	private JButton espr = new JButton("Espresso");
+	private JButton exta = new JButton("Extra");
+
 	//exclusive text field for entering AMOUNT of items in create truck and simulate sale
 	protected JTextField amount = new JTextField(20);
 
-	//Separate enter button exclusive for Create Truck->SetAmount ONLY
+	//Separate enter and exit buttons exclusive for Create Truck->SetAmount ONLY
 	private JButton enter = new JButton("Enter");
+	private JButton exit = new JButton("Exit");
 
 	//exclusive text field for entering PRICE of items and save button in create truck and simulate sale
     protected JTextField price = new JTextField(15);
@@ -123,11 +133,17 @@ public class AppView extends JFrame {
 	//Separate confirm button exclusive for Simulate Truck->SetPrices ONLY
 	private JButton sconfirm = new JButton("confirm");
 
+	//choices for maintenance option
+	private JButton mLoc = new JButton("Change Location");
+	private JButton mPrc = new JButton("Set Prices");
+	private JButton mRtn = new JButton("return");
+
 	/* ----------------GUI Components for Simulate Sale -------------------*/
 
 	// Buttons in dashboard
 	private JButton y = new JButton("yes");
 	private JButton n = new JButton("no");
+	protected JButton dnxt = new JButton("next");
 
 	/* SUGGESTION: since lots of the programs parts concerns choosing an option from a set of lists, 
 				   there could be a general option that prints a list of choices given the number
@@ -139,7 +155,7 @@ public class AppView extends JFrame {
 		super("JavaJeep");
 		setLayout(new FlowLayout());
 
-		setSize(850, 650);
+		setSize(900, 700);
 
 		homeScreen();
 
@@ -187,30 +203,57 @@ public class AppView extends JFrame {
 		mainPanel.add(javaJeepR);
 		javaJeepR.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		mainPanel.add(Box.createVerticalStrut(25));
-        label2 = new JLabel("Enter Location: ");
-        label2.setFont(new Font("Arial", Font.BOLD, 15));
-        mainPanel.add(label2);
-		label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		this.add(mainPanel, BorderLayout.CENTER);
+    }
 
-        mainPanel.add(location);
-		location.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(5));
-		mainPanel.add(proceed);
-		proceed.setAlignmentX(Component.CENTER_ALIGNMENT);
+	public void rSetTruckBins() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+		binList();
+
+		mainPanel.add(nxt);
 
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
-	public void setTruckBins() {
-        mainPanel = new JPanel();
+	public void sSetTruckBins() {
+		mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
+		binList();
+
+		mainPanel.add(bin9);
+		bin9.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		mainPanel.add(Box.createVerticalStrut(5));
+
+		JLabel bin9Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+        bin9Cnts.setFont(new Font("Arial", Font.BOLD, 15));
+        mainPanel.add(bin9Cnts);
+		bin9Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(Box.createVerticalStrut(10));
+
+		mainPanel.add(bin10);
+		bin10.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		mainPanel.add(Box.createVerticalStrut(5));
+
+		JLabel bin10Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+        bin10Cnts.setFont(new Font("Arial", Font.BOLD, 15));
+        mainPanel.add(bin10Cnts);
+		bin10Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
+		mainPanel.add(Box.createVerticalStrut(10));
+
+		mainPanel.add(nxt);
+
+		this.add(mainPanel, BorderLayout.CENTER);
+	}
+
+	public void binList() {
 		label1 = new JLabel("Storage Bin Contents: ");
         label1.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(label1);
 		label1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(20));
+		mainPanel.add(Box.createVerticalStrut(5));
 
 		mainPanel.add(bin1);
 		bin1.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -220,7 +263,7 @@ public class AppView extends JFrame {
         bin1Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin1Cnts);
 		bin1Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin2);
 		bin2.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -230,7 +273,7 @@ public class AppView extends JFrame {
         bin2Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin2Cnts);
 		bin2Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin3);
 		bin3.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -240,7 +283,7 @@ public class AppView extends JFrame {
         bin3Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin3Cnts);
 		bin3Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin4);
 		bin4.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -250,7 +293,7 @@ public class AppView extends JFrame {
         bin4Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin4Cnts);
 		bin4Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin5);
 		bin5.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -260,7 +303,7 @@ public class AppView extends JFrame {
         bin5Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin5Cnts);
 		bin5Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin6);
 		bin6.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -270,7 +313,7 @@ public class AppView extends JFrame {
         bin6Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin6Cnts);
 		bin6Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin7);
 		bin7.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -280,7 +323,7 @@ public class AppView extends JFrame {
         bin7Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin7Cnts);
 		bin7Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
+		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(bin8);
 		bin8.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -290,12 +333,8 @@ public class AppView extends JFrame {
         bin8Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin8Cnts);
 		bin8Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(15));
-
-		mainPanel.add(nxt);
-
-		this.add(mainPanel, BorderLayout.CENTER);
-    }
+		mainPanel.add(Box.createVerticalStrut(10));
+	}
 
 	public void setAmounts() {
 		mainPanel = new JPanel();
@@ -304,6 +343,7 @@ public class AppView extends JFrame {
        	amountList();
 		mainPanel.add(Box.createVerticalStrut(5));
 		mainPanel.add(enter);
+		mainPanel.add(exit);
 
 		this.add(mainPanel, BorderLayout.CENTER);
     }
@@ -374,31 +414,44 @@ public class AppView extends JFrame {
 
         mainPanel.add(Box.createVerticalStrut(20));
 
-        JLabel pCBns = new JLabel("1 gram coffee bean - 1.00");  //<------------------- change value from AppController -> editPrices()
+        JLabel pCBns = new JLabel("1 shot espresso: 1.50");  //<------------------- change value from AppController -> editPrices()
         pCBns.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pCBns);
 
-        JLabel pMlk = new JLabel("1fl of milk - 2.50");     //<------------------- change value from AppController -> editPrices()
+        JLabel pMlk = new JLabel("1fl of milk: 2.50");     //<------------------- change value from AppController -> editPrices()
         pMlk.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pMlk);
 
-        JLabel pWtr = new JLabel("1fl of water - 0.50");    //<------------------- change value from AppController -> editPrices()
+        JLabel pWtr = new JLabel("1fl of water: 0.50");    //<------------------- change value from AppController -> editPrices()
         pWtr.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pWtr);
 
-        JLabel pScup = new JLabel("Small cup  base price - 50.00");     //<------------------- change value from AppController -> editPrices()
+        JLabel pScup = new JLabel("Small cup  base price: 50.00");     //<------------------- change value from AppController -> editPrices()
         pScup.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pScup);
 
-        JLabel pMcup = new JLabel("Medium cup base price - 60.00");     //<------------------- change value from AppController -> editPrices()
+        JLabel pMcup = new JLabel("Medium cup base price: 60.00");     //<------------------- change value from AppController -> editPrices()
         pMcup.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pMcup);
 
-        JLabel pLcup = new JLabel("Large cup base price - 70.00");      //<------------------- change value from AppController -> editPrices()
+        JLabel pLcup = new JLabel("Large cup base price: 70.00");      //<------------------- change value from AppController -> editPrices()
         pLcup.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pLcup);
 
+		JLabel pExta = new JLabel("Additional syrups or toppings: 2.00");      //<------------------- change value from AppController -> editPrices()
+        pExta.setFont(new Font("Arial", Font.BOLD, 20));
+        mainPanel.add(pExta);
+
         mainPanel.add(Box.createVerticalStrut(15));
+
+		mainPanel.add(espr);
+        mainPanel.add(Box.createVerticalStrut(5));
+
+		mainPanel.add(dMlk);
+        mainPanel.add(Box.createVerticalStrut(5));
+
+		mainPanel.add(dWtr);
+        mainPanel.add(Box.createVerticalStrut(5));
 
 		mainPanel.add(sCup);
         mainPanel.add(Box.createVerticalStrut(5));
@@ -409,13 +462,7 @@ public class AppView extends JFrame {
 		mainPanel.add(lCup);
         mainPanel.add(Box.createVerticalStrut(5));
 
-		mainPanel.add(cBns);
-        mainPanel.add(Box.createVerticalStrut(5));
-
-		mainPanel.add(dMlk);
-        mainPanel.add(Box.createVerticalStrut(5));
-
-		mainPanel.add(dWtr);
+		mainPanel.add(exta);
         mainPanel.add(Box.createVerticalStrut(20));
 
         label2 = new JLabel("If you wish to change, select a buttton, enter price and click save ");
@@ -745,7 +792,7 @@ public class AppView extends JFrame {
         mainPanel.add(Box.createVerticalStrut(20));
 
         label4 = new JLabel("AVAILABLE ITEMS:");
-        label4.setFont(new Font("Arial", Font.BOLD, 22));
+        label4.setFont(new Font("Arial", Font.BOLD, 21));
         mainPanel.add(label4);
 		label4.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -762,8 +809,13 @@ public class AppView extends JFrame {
         mainPanel.add(cappucino);
         mainPanel.add(Box.createVerticalStrut(20));
 
+		JLabel trns = new JLabel("Transactions:");
+        trns.setFont(new Font("Arial", Font.BOLD, 22));
+        mainPanel.add(trns);
+		trns.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel drink = new JLabel("Drink: _________");
-        drink.setFont(new Font("Arial", Font.BOLD, 22));
+        drink.setFont(new Font("Arial", Font.BOLD, 21));
         mainPanel.add(drink);
 
         mainPanel.add(Box.createVerticalStrut(20));
@@ -883,6 +935,22 @@ public class AppView extends JFrame {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
+        label1 = new JLabel("What would you like to do?");
+        label1.setFont(new Font("Arial", Font.BOLD, 25));
+        mainPanel.add(label1);
+		mainPanel.add(Box.createVerticalStrut(10));
+
+        mainPanel.add(mLoc);
+        mainPanel.add(mPrc);
+		mainPanel.add(mRtn);
+
+        this.add(mainPanel, BorderLayout.CENTER);
+    }
+
+	public void mSetLocation() {
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
         label1 = new JLabel("What location do you want your truck to stay in?");
         label1.setFont(new Font("Arial", Font.BOLD, 25));
         mainPanel.add(label1);
@@ -892,7 +960,7 @@ public class AppView extends JFrame {
         mainPanel.add(mContinue);
 
         this.add(mainPanel, BorderLayout.CENTER);
-    }
+	}
 
 	public void mSetPrices(){
 		mainPanel = new JPanel();
@@ -909,14 +977,29 @@ public class AppView extends JFrame {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        label1 = new JLabel("Dashboard Text");
+        label1 = new JLabel("ALL TRUCKS:");
         label1.setFont(new Font("Arial", Font.BOLD, 25));
         mainPanel.add(label1);
 		mainPanel.add(Box.createVerticalStrut(10));
 
-		label1 = new JLabel("Is there a specific truck you'd like to see?");
-        label1.setFont(new Font("Arial", Font.BOLD, 15));
-        mainPanel.add(label1);
+		label2 = new JLabel("Total amount of ingredients in all trucks:");
+        label2.setFont(new Font("Arial", Font.BOLD, 25));
+        mainPanel.add(label2);
+		mainPanel.add(Box.createVerticalStrut(10));
+
+		label3 = new JLabel("Order types:");
+        label3.setFont(new Font("Arial", Font.BOLD, 25));
+        mainPanel.add(label3);
+		mainPanel.add(Box.createVerticalStrut(10));
+
+		label3 = new JLabel("Order sizes:");
+        label3.setFont(new Font("Arial", Font.BOLD, 25));
+        mainPanel.add(label3);
+		mainPanel.add(Box.createVerticalStrut(10));
+
+		label4 = new JLabel("Is there a specific truck you'd like to see?");
+        label4.setFont(new Font("Arial", Font.BOLD, 20));
+        mainPanel.add(label4);
 		mainPanel.add(Box.createVerticalStrut(10));
 
 		mainPanel.add(y);
@@ -981,7 +1064,8 @@ public class AppView extends JFrame {
 		dashboardBtn.addActionListener(listener);
 		javaJeepR.addActionListener(listener);
         javaJeepS.addActionListener(listener);
-        proceed.addActionListener(listener);
+        rProceed.addActionListener(listener);
+		sProceed.addActionListener(listener);
 		bin1.addActionListener(listener);
 		bin2.addActionListener(listener);
 		bin3.addActionListener(listener);
@@ -990,6 +1074,8 @@ public class AppView extends JFrame {
 		bin6.addActionListener(listener);
 		bin7.addActionListener(listener);
 		bin8.addActionListener(listener);
+		bin9.addActionListener(listener);
+		bin10.addActionListener(listener);
 		nxt.addActionListener(listener);
 		sCup.addActionListener(listener);
         mCup.addActionListener(listener);
@@ -997,7 +1083,10 @@ public class AppView extends JFrame {
         cBns.addActionListener(listener);
         dMlk.addActionListener(listener);
         dWtr.addActionListener(listener);
+		espr.addActionListener(listener);
+		exta.addActionListener(listener);
 		enter.addActionListener(listener);
+		exit.addActionListener(listener);
         save.addActionListener(listener);
         confirm.addActionListener(listener);
 		mainMenu.addActionListener(listener);
@@ -1026,8 +1115,12 @@ public class AppView extends JFrame {
 		prev.addActionListener(listener);
 		mContinue.addActionListener(listener);
         sconfirm.addActionListener(listener);
+		mLoc.addActionListener(listener);
+		mPrc.addActionListener(listener);
+		mRtn.addActionListener(listener);
 		y.addActionListener(listener);
 		n.addActionListener(listener);
+		dnxt.addActionListener(listener);
 	}
 
 	public void setDocumentListener(DocumentListener listener) {
