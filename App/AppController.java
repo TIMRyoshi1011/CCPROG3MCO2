@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.text.Document;
 import javax.swing.event.DocumentEvent;
@@ -53,17 +54,17 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("Dashboard")) {
 			clearGUI();
 			view.dashboard();
-			//dashboardController();
+			// dashboardController();
 		} 
+
+		else if (e.getActionCommand().equals("JavaJeep+")) {
+            System.out.println("P"); //placeholder for test/ to delete
+            // Pass S to the model
+        }
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
             System.out.println("R");  //placeholder for test/ to delete
             // Pass R to the model
-        }
-
-        else if (e.getActionCommand().equals("JavaJeep+")) {
-            System.out.println("P"); //placeholder for test/ to delete
-            // Pass S to the model
         }
 
         else if (e.getActionCommand().equals("Proceed")) {
@@ -224,11 +225,6 @@ public class AppController implements ActionListener, DocumentListener {
             view.homeScreen();
 		}
 
-		else if (e.getActionCommand().equals("Return")) {
-            clearGUI();
-			view.optionList();
-        }
-
 		else if (e.getActionCommand().equals("Yes")) {
 			clearGUI();
             view.order();
@@ -286,26 +282,7 @@ public class AppController implements ActionListener, DocumentListener {
 			view.optionList();
         }
 
-		else if (e.getActionCommand().equals("<")) { 
-			clearGUI();
-			view.optionList();
-        }
-
-		else if (e.getActionCommand().equals("Continue")) {
-            if (view.mLocation.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(view, "Please enter a location.");
-                return; // Do not proceed if the text field is empty
-            }
-
-            else {
-                System.out.println(view.getMLoc()); // Pass getTextField() to the model - placeholder for test/ to delete
-                removeUpdate(null); // Clear the text field after proceeding
-				clearGUI();
-                view.mSetPrices();
-            }
-        }
-
-        else if (e.getActionCommand().equals("confirm")) {
+		else if (e.getActionCommand().equals("Return")) {
             clearGUI();
 			view.optionList();
         }
@@ -350,6 +327,11 @@ public class AppController implements ActionListener, DocumentListener {
 			view.simulateAmounts();
         }
 
+		else if (e.getActionCommand().equals("<")) { 
+			clearGUI();
+			view.optionList();
+        }
+
 		else if (e.getActionCommand().equals("Previous")) {
             if (view.amount.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(view, "Please enter an amount.");
@@ -364,7 +346,31 @@ public class AppController implements ActionListener, DocumentListener {
             }
         }
 
-		else if (e.getActionCommand().equals("Home")) {
+		else if (e.getActionCommand().equals("Continue")) {
+            if (view.mLocation.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(view, "Please enter a location.");
+                return; // Do not proceed if the text field is empty
+            }
+
+            else {
+                System.out.println(view.getMLoc()); // Pass getTextField() to the model - placeholder for test/ to delete
+                removeUpdate(null); // Clear the text field after proceeding
+				clearGUI();
+                view.mSetPrices();
+            }
+        }
+
+        else if (e.getActionCommand().equals("confirm")) {
+            clearGUI();
+			view.optionList();
+        }
+
+		else if (e.getActionCommand().equals("yes")) {
+            //clearGUI();
+            System.out.println("yes");
+        }
+
+		else if (e.getActionCommand().equals("no")) {
             clearGUI();
             view.homeScreen();
         }
@@ -383,24 +389,23 @@ public class AppController implements ActionListener, DocumentListener {
     public void removeUpdate(DocumentEvent e) {
         // Handle text removal
 		view.location.setText("");
+		view.amount.setText("");
 		view.price.setText("");
 		view.toSimulate.setText("");
 		view.drink.setText("");
-		view.amount.setText("");
+		view.mLocation.setText("");
     }
 
     @Override
     public void changedUpdate(DocumentEvent e) {
         // Handle text change
+
     }
 
 	public void clearGUI() {
-		view.headerPanel.removeAll();
-			view.headerPanel.revalidate();
-			view.headerPanel.repaint();
-			view.mainPanel.removeAll();
-			view.mainPanel.revalidate();
-			view.mainPanel.repaint();
+		view.mainPanel.removeAll();
+		view.mainPanel.revalidate();
+		view.mainPanel.repaint();
 	}
 
 	/**
