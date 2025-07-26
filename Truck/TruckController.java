@@ -6,6 +6,7 @@ import StorageBin.*;
 import Transaction.*;
 import App.*;
 import Espresso.*;
+import Ingredient.*;
 
 /**
  * A coffee trucks controller
@@ -205,8 +206,9 @@ public class TruckController {
   	 * 5. Print all information.
 	 */
 	public void simulateSale(){
-		boolean end = false, drinkIsAvail;
+		boolean end = false, exit, drinkIsAvail;
 		ArrayList<String> menu;
+		ArrayList<ExtraIngr> extraSyrups = new ArrayList<ExtraIngr>();
 		String choice, choice2, choice3;
 		int intChoice;
 		Espresso espresso;
@@ -275,6 +277,26 @@ public class TruckController {
 								choice3 = scan.nextLine();
 								intChoice = AppModel.toInt(choice3);
 							} while (intChoice < 0);
+
+							exit = false;
+							do {
+								ArrayList<String> availSyrups = model.getSyrups();
+								if (availSyrups.isEmpty()) exit = true;
+
+								view.printFeedback("Choose a syrup to add:");
+								for (int i = 0; i < availSyrups.size(); i++)
+									view.printFeedback(String.format("- %s", availSyrups.get(i)));
+								view.printFeedback("Enter 'END' to stop");
+
+								choice3 = scan.nextLine();
+								if (choice3.trim().equalsIgnoreCase("end")) exit = true;
+								else if (!availSyrups.contains(choice3))
+									view.printFeedback("Invalid input");
+								else {
+									view.printFeedback("Syrup added!");
+									extraSyrups.add(new ExtraIngr(choice3, 1f));
+								}
+							} while (!exit);
 						}
 
 						else{
@@ -282,7 +304,7 @@ public class TruckController {
 							intChoice = 0;
 						}
 
-						TransactionController newT = new TransactionController(choice, choice2, espresso, intChoice);
+						TransactionController newT = new TransactionController(choice, choice2, espresso, intChoice, extraSyrups);
 						
 						if (!model.isEspressoAvail(newT.getEspresso(), newT.getEspresso().getEspresso(), model.getIngrdientAmount())) {
 							view.printFeedback("Not enough coffee or water for that brew.");

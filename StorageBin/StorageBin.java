@@ -41,13 +41,13 @@ public class StorageBin{
 
 		if (amt < 0) return false;
 
-		else if (type.equals("water") && amt < 640f) contents = new Water(amt);
-		else if (type.equals("milk") && amt < 640f) contents = new Milk(amt);
-		else if (type.equals("coffee") && amt < 1008f) contents = new Coffee(amt);
-		else if (type.equals("scup") && amt < 80f) contents = new SmallCup(amt);
-		else if (type.equals("mcup") && amt < 64f) contents = new MediumCup(amt);
-		else if (type.equals("lcup") && amt < 40f) contents = new LargeCup(amt);
-        else if (amt < 640) contents = new ExtraIngr(type, amt);
+		else if (type.equals("water") && amt <= 640f) contents = new Water(amt);
+		else if (type.equals("milk") && amt <= 640f) contents = new Milk(amt);
+		else if (type.equals("coffee") && amt <= 1008f) contents = new Coffee(amt);
+		else if (type.equals("scup") && amt <= 80f) contents = new SmallCup(amt);
+		else if (type.equals("mcup") && amt <= 64f) contents = new MediumCup(amt);
+		else if (type.equals("lcup") && amt <= 40f) contents = new LargeCup(amt);
+        else if (amt <= 500f) contents = new ExtraIngr(type, amt);
 
         else return false;
 
@@ -68,7 +68,8 @@ public class StorageBin{
 			case "Small": if (newAmt > 80) wontOverfill = false; break;
 			case "Medium": if (newAmt > 64) wontOverfill = false; break;
 			case "Large": if (newAmt > 40) wontOverfill = false; break;
-			default: if (newAmt > 640) wontOverfill = false; break; // water, milk, and extraIngr
+			case "Milk": case "Water": if (newAmt > 640) wontOverfill = false; break;
+			default: if (newAmt > 500) wontOverfill = false; break;
 		}
 
 		if (wontOverfill && amt >= 0) {

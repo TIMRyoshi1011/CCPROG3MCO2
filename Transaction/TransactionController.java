@@ -16,9 +16,13 @@ public class TransactionController{
  	 * Construction for transaction.
    	 * Upon construction all transaction details are calculated, including ingredient amount and cost.
      	 * @param type The drink type
-       	 * @param size The size of the drink. 
+       	 * @param size The size of the drink.
+       	 * @param espresso The brew of the espresso
+       	 * @param extraShots The num of extrashots
+       	 * @param extraIngr ArrayList of extra syrups 
 	 */
-	public TransactionController(String type, String size, Espresso espresso, int extraShots){
+	public TransactionController(String type, String size, Espresso espresso, int extraShots,
+		ArrayList<ExtraIngr> extraIngr){
 		char shorthand = size.toUpperCase().charAt(0);
 		view = new TransactionView();
 
@@ -29,6 +33,8 @@ public class TransactionController{
 			case "latte": model = new LatteModel(shorthand, espresso, extraShots); break;
 			case "cappucino": model = new CappucinoModel(shorthand, espresso, extraShots); break;
 		}
+
+		for (ExtraIngr ingr : extraIngr) model.addSyrup(ingr);
 	}
 
 	/**

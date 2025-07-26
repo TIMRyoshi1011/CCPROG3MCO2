@@ -98,4 +98,12 @@ public class AbstractTransactionModel{
 	public Espresso getEspresso(){
 		return espresso;
 	}
+
+	/**
+	 * Adds a syrup to the drink
+	 * @param syrup Syrup to be added
+	 */
+	public void addSyrup(ExtraIngr syrup){
+		ingredients.add(syrup);
+	}
 }

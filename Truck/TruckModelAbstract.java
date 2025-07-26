@@ -346,4 +346,21 @@ public abstract class TruckModelAbstract {
 
 		return false;
 	}
+
+	/**
+	 * Returns a string list of the available syrups in the storagebins.
+	 * @return An arraylist of the names of syrups. else if trucktype is R, null
+	 */
+	public ArrayList<String> getSyrups(){
+		ArrayList<String> syrups = new ArrayList<String>();
+		Ingredient contents;
+
+		for (StorageBin bin : STORAGEBINS){
+			contents = bin.getContents();
+			if (contents instanceof ExtraIngr)
+				syrups.add(contents.getType());
+		}
+
+		return syrups;
+	}
 }
