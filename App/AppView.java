@@ -144,7 +144,7 @@ public class AppView extends JFrame {
 		homeScreen();
 
 		setVisible(true);
-		setResizable(false);
+		//setResizable(false);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
