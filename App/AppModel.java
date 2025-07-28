@@ -56,55 +56,6 @@ public class AppModel {
 	}
 
 	/**
-	 * Sets the location of the truck.
-	 * @param truck The truck that will have its type be changed.
-	 * @param locInpt The location inputted.
-	 * @return true if it was successful, false if not.
-	 */
-	public boolean setLocation(TruckController truck, String locInpt){
-		boolean avail = true; // true = location is available
-
-		for (TruckController iTruck : TRUCKS){
-			if (iTruck.getLocation().equals(locInpt))
-				avail = false; // false = location is not available
-		}
-
-		if (avail){
-			truck.setLocation(locInpt);}
-			
-		return avail;
-	}
-
-	/** 
- 	 * Sets the price of the ingredient. Price is static and affects all Ingredient instances. 
-   	 * @param type The ingredient type that will have a new price.
-     * @param price The new price
-     * @return true if successful, false otherwise
-	 */
-	public boolean setPrice(String type, float price){
-		boolean result = true;
-		switch (type){
-			case "espresso": Espresso.setPrice(price); break;
-			case "water": Water.setPrice(price); break;
-			case "milk": Milk.setPrice(price); break;
-			case "extra": ExtraIngr.setPrice(price); break;
-			case "scup": SmallCup.setPrice(price); break;
-			case "mcup": MediumCup.setPrice(price); break;
-			case "lcup": LargeCup.setPrice(price); break;
-			default: result = false; break;
-		}
-		return result;
-	}
-
-	/**
-	 * Adds a truck to the trucks arraylist.
-	 * @param truck The truck to be added.
-	 */
-	public void addTruck(TruckController truck){
-		this.TRUCKS.add(truck);
-	}
-
-	/**
 	 * Returns the arraylist of trucks.
 	 * @return Arraylist of trucks
 	 */
@@ -194,4 +145,55 @@ public class AppModel {
 	public TruckController getTruck(int truckIndx){
 		return TRUCKS.get(truckIndx);
 	}
+
+	/**
+	 * Sets the location of the truck.
+	 * @param truck The truck that will have its type be changed.
+	 * @param locInpt The location inputted.
+	 * @return true if it was successful, false if not.
+	 */
+	public boolean setLocation(TruckController truck, String locInpt){
+		boolean avail = true; // true = location is available
+
+		for (TruckController iTruck : TRUCKS){
+			if (iTruck.getLocation().equals(locInpt))
+				avail = false; // false = location is not available
+		}
+
+		if (avail){
+			truck.setLocation(locInpt);}
+			
+		return avail;
+	}
+
+	/** 
+ 	 * Sets the price of the ingredient. Price is static and affects all Ingredient instances. 
+   	 * @param type The ingredient type that will have a new price.
+     * @param price The new price
+     * @return true if successful, false otherwise
+	 */
+	public boolean setPrice(String type, float price){
+		boolean result = true;
+		switch (type){
+			case "espresso": Espresso.setPrice(price); break;
+			case "water": Water.setPrice(price); break;
+			case "milk": Milk.setPrice(price); break;
+			case "extra": ExtraIngr.setPrice(price); break;
+			case "scup": SmallCup.setPrice(price); break;
+			case "mcup": MediumCup.setPrice(price); break;
+			case "lcup": LargeCup.setPrice(price); break;
+			default: result = false; break;
+		}
+		return result;
+	}
+
+	/**
+	 * Adds a truck to the trucks arraylist.
+	 * @param truck The truck to be added.
+	 */
+	public void addTruck(TruckController truck){
+		this.TRUCKS.add(truck);
+	}
+
+
 }
