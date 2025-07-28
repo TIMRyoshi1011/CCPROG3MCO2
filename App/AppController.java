@@ -67,7 +67,7 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep+")) {
             System.out.println("P"); //placeholder for test/ to delete
-			tempTruck = new TruckController('P'); 
+			tempTruck = new TruckController('P');  // Create a Truck P
 
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
@@ -86,7 +86,7 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
             System.out.println("R");  //placeholder for test/ to delete
-			tempTruck = new TruckController('R'); 
+			tempTruck = new TruckController('R');  // Create a Truck R
 
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
@@ -111,7 +111,7 @@ public class AppController implements ActionListener, DocumentListener {
 
 			else {
 				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
-				model.setLocation(tempTruck, view.getLoc());
+				model.setLocation(tempTruck, view.getLoc());  	// set location of truck
 				removeUpdate(null);
 				clearGUI();
 				view.rSetTruckBins();
@@ -126,7 +126,7 @@ public class AppController implements ActionListener, DocumentListener {
 
 			else {
 				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
-				model.setLocation(tempTruck, view.getLoc());
+				model.setLocation(tempTruck, view.getLoc());   	// set location of truck
 				removeUpdate(null);
 				clearGUI();
 				view.sSetTruckBins();
