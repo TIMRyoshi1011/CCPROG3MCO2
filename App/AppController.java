@@ -28,6 +28,8 @@ public class AppController implements ActionListener, DocumentListener {
 	/** Scanner to be used throughout the whole app implementation. */
 	private Scanner scan = new Scanner(System.in);
 
+	TruckController tempTruck;
+
 	/**
 	 * Constructor for the AppController.
 	 * @param model The model of the controller.
@@ -63,7 +65,8 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep+")) {
             System.out.println("P"); //placeholder for test/ to delete
-            // Pass S to the model
+			tempTruck = new TruckController('P'); 	// Create a Truck P
+			
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
 			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -81,7 +84,8 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
             System.out.println("R");  //placeholder for test/ to delete
-            // Pass R to the model
+			tempTruck = new TruckController('R'); 	// Create a Truck R
+			
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
 			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -104,7 +108,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
+				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete
+				model.setLocation(tempTruck, view.getLoc()); 	// set location of truck
 				removeUpdate(null);
 				clearGUI();
 				view.rSetTruckBins();
@@ -118,7 +123,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
+				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete
+				model.setLocation(tempTruck, view.getLoc()); 	// set location of truck
 				removeUpdate(null);
 				clearGUI();
 				view.sSetTruckBins();
