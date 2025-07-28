@@ -41,6 +41,7 @@ public class AbstractTransactionModel{
 
 		drinkCost = cup.getPrice();
 		ingredients = new ArrayList<Ingredient>();
+		drinkCost += espresso.getEspresso() * espresso.getPrice();
 	}
 
 	/**
@@ -105,5 +106,6 @@ public class AbstractTransactionModel{
 	 */
 	public void addSyrup(ExtraIngr syrup){
 		ingredients.add(syrup);
+		drinkCost += syrup.getPrice();
 	}
 }

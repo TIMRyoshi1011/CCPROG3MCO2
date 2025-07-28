@@ -138,7 +138,8 @@ public class AppModel {
 	}
 
 	/**
-	 * Returns a truck given an index
+	 * Returns a truck given an index.
+	 * It is ASSUMED that the truckIndx is a valid index.
 	 * @param truckIndx the index of the truck to be returned
 	 * @return the truck at index truckindx
 	 */
@@ -174,7 +175,7 @@ public class AppModel {
 	 */
 	public boolean setPrice(String type, float price){
 		boolean result = true;
-		switch (type){
+		switch (type.toLowerCase()){
 			case "espresso": Espresso.setPrice(price); break;
 			case "water": Water.setPrice(price); break;
 			case "milk": Milk.setPrice(price); break;

@@ -73,6 +73,7 @@ public abstract class TruckModelAbstract {
 
 	/**
 	 * Get a bin given its index
+	 * It is always ASSUMED that the bin is a correct index.
 	 * @param binIndx index of bin to be returned
 	 * @return Bin under binIndx
 	 */
@@ -94,6 +95,23 @@ public abstract class TruckModelAbstract {
 	 */
 	public ArrayList<TransactionController> getTransactions(){
 		return TRANSACTIONS;
+	}
+
+	/**
+	 * Returns a string list of the available syrups in the storagebins.
+	 * @return An arraylist of the names of syrups. else if trucktype is R, null
+	 */
+	public ArrayList<String> getSyrups(){
+		ArrayList<String> syrups = new ArrayList<String>();
+		Ingredient contents;
+
+		for (StorageBin bin : STORAGEBINS){
+			contents = bin.getContents();
+			if (contents instanceof ExtraIngr && !syrups.contains(contents.getType()))
+				syrups.add(contents.getType());
+		}
+
+		return syrups;
 	}
 
 	/**
@@ -345,22 +363,5 @@ public abstract class TruckModelAbstract {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Returns a string list of the available syrups in the storagebins.
-	 * @return An arraylist of the names of syrups. else if trucktype is R, null
-	 */
-	public ArrayList<String> getSyrups(){
-		ArrayList<String> syrups = new ArrayList<String>();
-		Ingredient contents;
-
-		for (StorageBin bin : STORAGEBINS){
-			contents = bin.getContents();
-			if (contents instanceof ExtraIngr)
-				syrups.add(contents.getType());
-		}
-
-		return syrups;
 	}
 }

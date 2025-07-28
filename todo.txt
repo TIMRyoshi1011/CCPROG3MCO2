@@ -2,4 +2,4 @@ TO-DO (RE: Model)
 - getTotalTransactionTypes in AppModel - hashmap instead of arraylist
 - isEspressoAvail in TMA - waterAmt
 - Make more methods package-protected
-
+- getTotalIngredients in AppModel - hashmap instead of arraylist
