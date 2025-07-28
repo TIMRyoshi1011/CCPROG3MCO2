@@ -29,6 +29,8 @@ public class AppController implements ActionListener, DocumentListener {
 	private Scanner scan = new Scanner(System.in);
 
 	TruckController tempTruck;
+	String choice, choice2;
+	float floatChoice;
 
 	/**
 	 * Constructor for the AppController.
@@ -65,8 +67,8 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep+")) {
             System.out.println("P"); //placeholder for test/ to delete
-			tempTruck = new TruckController('P'); 	// Create a Truck P
-			
+			tempTruck = new TruckController('P'); 
+
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
 			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -84,8 +86,8 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
             System.out.println("R");  //placeholder for test/ to delete
-			tempTruck = new TruckController('R'); 	// Create a Truck R
-			
+			tempTruck = new TruckController('R'); 
+
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
 			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -108,8 +110,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete
-				model.setLocation(tempTruck, view.getLoc()); 	// set location of truck
+				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
+				model.setLocation(tempTruck, view.getLoc());
 				removeUpdate(null);
 				clearGUI();
 				view.rSetTruckBins();
@@ -123,8 +125,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete
-				model.setLocation(tempTruck, view.getLoc()); 	// set location of truck
+				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
+				model.setLocation(tempTruck, view.getLoc());
 				removeUpdate(null);
 				clearGUI();
 				view.sSetTruckBins();
@@ -183,34 +185,42 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("Small Cup")) {
             System.out.println("Small Cup");  // Send Small Cup to the model - placeholder for test/ to delete
+			choice = "scup"; // set choice to scup
         }
 
         else if (e.getActionCommand().equals("Medium Cup")) {
             System.out.println("Medium Cup");  // Send Medium Cup to the model - placeholder for test/ to delete
+			choice = "mcup"; // set choice to mcup
         }
 
         else if (e.getActionCommand().equals("Large Cup")) {
             System.out.println("Large Cup");  // Send Large Cup to the model - placeholder for test/ to delete
+			choice = "lcup"; // set choice to lcup
         }
 
         else if (e.getActionCommand().equals("Coffee Beans")) {
             System.out.println("Coffee Beans");  // Send Coffee Beans to the model - placeholder for test/ to delete
+			choice = "coffee"; // set choice to coffee
         }
 
         else if (e.getActionCommand().equals("Milk")) {
             System.out.println("Milk");  // Send Milk to the model - placeholder for test/ to delete
+			choice = "milk"; // set choice to milk
         }
 
         else if (e.getActionCommand().equals("Water")) {
             System.out.println("Water");  // Send Water to the model - placeholder for test/ to delete
+			choice = "water"; // set choice to water
         }
 
 		else if (e.getActionCommand().equals("Espresso")) {
             System.out.println("Espresso");  // Send Water to the model - placeholder for test/ to delete
+			choice = "espresso"; // set choice to espresso
         }
 
 		else if (e.getActionCommand().equals("Extra")) {
             System.out.println("Extra");  // Send Water to the model - placeholder for test/ to delete
+			choice = "extra"; // set choice to extra
         }
 
 		else if (e.getActionCommand().equals("Enter")) {
@@ -240,8 +250,13 @@ public class AppController implements ActionListener, DocumentListener {
 
             else {
                 System.out.println(view.getPrice());  // Send getPrice() to the model - placeholder for test/ to delete
+
+				choice2 = view.getPrice(); // set choice2 to text from text field
+				floatChoice = model.toFloat(choice2); 
+				model.setPrice(choice, floatChoice); // setting price
+
+				JOptionPane.showMessageDialog(view, "Saved");
 				removeUpdate(null);
-                System.out.println("Saved");  //placeholder, to remove
             }
         }
 
