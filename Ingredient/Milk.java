@@ -6,7 +6,7 @@ package Ingredient;
  */
 public class Milk extends Ingredient{
 	/** Static variable representing its price */
-	private static float price = 2.f;
+	private static float price = 2f;
 
 	/**
 	 * Constructor for milk

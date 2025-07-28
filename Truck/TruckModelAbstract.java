@@ -243,8 +243,9 @@ public abstract class TruckModelAbstract {
 
 			for (char size : cupShorthands){
 				try{tempDrink = drinkTypes[i].getConstructor(char.class, char.class).newInstance(size, TRUCK_TYPE);}
-				catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e)
-					{System.out.println("error"); tempDrink = null;};
+				catch(NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+					e.printStackTrace();
+					tempDrink = null;};
 
 				if (tempDrink != null && hasCup(size, inventory) && areIngredientsAvailable(tempDrink, inventory)){
 					strTemp.append(" ").append(size);

@@ -281,6 +281,7 @@ public class TruckController {
 							exit = false;
 							do {
 								ArrayList<String> availSyrups = model.getSyrups();
+								extraSyrups = new ArrayList<ExtraIngr>();
 								if (availSyrups.isEmpty()) exit = true;
 
 								view.printFeedback("Choose a syrup to add:");

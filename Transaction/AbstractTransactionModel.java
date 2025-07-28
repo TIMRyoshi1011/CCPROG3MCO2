@@ -33,15 +33,12 @@ public class AbstractTransactionModel{
 		drinkSize = size;
 
 		switch (size){
-			case 'S': cup = new SmallCup(1); break;
-			case 'M': cup = new MediumCup(1); break;
-			case 'L': cup = new LargeCup(1); break;
-			default: cup = new SmallCup(1); break;
+			case 'S': cup = new SmallCup(1); drinkCost = SmallCup.getPrice(); break;
+			case 'M': cup = new MediumCup(1); drinkCost = MediumCup.getPrice(); break;
+			case 'L': cup = new LargeCup(1); drinkCost = LargeCup.getPrice(); break;
+			default: cup = new SmallCup(1); drinkCost = SmallCup.getPrice(); break;
 		}
-
-		drinkCost = cup.getPrice();
 		ingredients = new ArrayList<Ingredient>();
-		drinkCost += espresso.getEspresso() * espresso.getPrice();
 	}
 
 	/**

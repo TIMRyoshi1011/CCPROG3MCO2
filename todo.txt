@@ -3,3 +3,4 @@ TO-DO (RE: Model)
 - isEspressoAvail in TMA - waterAmt
 - Make more methods package-protected
 - getTotalIngredients in AppModel - hashmap instead of arraylist
+- setBin in StorageBin - check if truckType is P or R. also check if storagebin = 8 or 10

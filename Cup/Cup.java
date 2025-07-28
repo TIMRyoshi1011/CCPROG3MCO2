@@ -9,8 +9,6 @@ public abstract class Cup extends Ingredient{
 	private float fl;
 	/** A shorthand character for the cup, used in view */
 	private char shorthand;
-	/** Price for the cup */
-	private static float price;
 
 	/**
 	 * Constructor for the class.
@@ -40,21 +38,5 @@ public abstract class Cup extends Ingredient{
 	 */
 	public char getShorthand(){
 		return shorthand;
-	}
-
-	/**
-	 * Returns the price of the base price of the cup.
-	 * @return The price of the cup
-	 */
-	public static float getPrice(){
-		return price;
-	}
-
-	/**
-	 * Sets the price of the cup.
-	 * @param price The new price of the cup
-	 */
-	public static void setPrice(float p){
-		price = p;
 	}
 }
