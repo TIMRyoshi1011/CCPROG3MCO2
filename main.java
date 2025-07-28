@@ -11,12 +11,6 @@ import Cup.*;
  * No real functions happen, this is mostly just so the AppController, model, and view can be initialized.
  */
 public class main{
-	/** Model for the main app. */
-	private static AppModel appM;
-
-	/** View for the main app. */
-	private static AppView appV;
-
 	/** Controller for the main app. */
 	private static AppController appC;
 
@@ -25,10 +19,10 @@ public class main{
 	 * Initializes the main apps' MVC.
 	 */
 	public static void main(String args[]){
-		appM = new AppModel();
-		appV = new AppView();
+		AppModel appM = new AppModel();
+		AppView appV = new AppView();
 		appC = new AppController(appM, appV);
 
-		//appC.mainMenu();
+		appC.mainMenu();
 	}
 }
