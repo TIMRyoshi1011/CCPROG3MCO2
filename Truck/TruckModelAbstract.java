@@ -133,17 +133,17 @@ public abstract class TruckModelAbstract {
 	/**
 	 * Given the details of a drink made using its transaction info,
 	 * the storage bin will be edited to deduce the ingredients used to make the drink.
-	 * @param t The drink details
+	 * @param newT The drink details
 	 */
-	public void reduceBins(TransactionController t){
-		reduce("Coffee", t.getEspresso().getCoffee());
-		reduce("Water", t.getEspresso().getWater());
+	public void reduceBins(TransactionController newT){
+		reduce("Coffee", newT.getEspresso().getCoffee());
+		reduce("Water", newT.getEspresso().getWater());
 
-		for (Ingredient ingr : t.getIngredients()){
+		for (Ingredient ingr : newT.getIngredients()){
 			reduce(ingr.getType(), ingr.getAmt());
 		}
 
-		switch (t.getDrinkSize()){
+		switch (newT.getDrinkSize()){
 			case 'S': reduce("Small", 1); break;
 			case 'M': reduce("Medium", 1); break;
 			case 'L': reduce("Large", 1); break;

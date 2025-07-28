@@ -8,9 +8,9 @@ import Espresso.*;
  */
 public class TransactionController{
 	/** Model of the transaction */
-	AbstractTransactionModel model;
+	private AbstractTransactionModel model;
 	/** View of the transaction */
-	TransactionView view;
+	private TransactionView view;
 
 	/**
  	 * Construction for transaction.

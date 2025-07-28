@@ -30,26 +30,6 @@ public abstract class Espresso{
 	}
 
 	/**
-	 * Brews the espresso.
-	 * Sets the values of espresso, coffee, water, and extrashots
-	 * @param extraShots Number of extra shots
-	 * @param cupFl The amount of fl of espresso the drink should have (ignoring extra shots)
-	 */
-	public void brewEspresso(int extraShots, float cupFl){
-		int i;
-		espresso = cupFl;
-		coffee = cupFl * (1.0f/((float)waterRatio + 1.0f)) * 28.34952f;
-		water = cupFl * ((float)waterRatio/((float)waterRatio + 1.0f));
-
-		this.extraShots = extraShots;
-		for (i = 0; i < extraShots; i++){
-			coffee += (1.0f/((float)waterRatio + 1.0f)) * 28.34952f;
-			water += ((float)waterRatio/((float)waterRatio + 1.0f));
-			espresso += 1.0f;
-		}
-	}
-
-	/**
 	 * Returns the amount of espresso total
 	 * @return The amount of espresso
 	 */
@@ -95,5 +75,25 @@ public abstract class Espresso{
 	 */
 	public static void setPrice(float p){
 		price = p;
+	}
+
+	/**
+	 * Brews the espresso.
+	 * Sets the values of espresso, coffee, water, and extrashots
+	 * @param extraShots Number of extra shots
+	 * @param cupFl The amount of fl of espresso the drink should have (ignoring extra shots)
+	 */
+	public void brewEspresso(int extraShots, float cupFl){
+		int i;
+		espresso = cupFl;
+		coffee = cupFl * (1.0f/((float)waterRatio + 1.0f)) * 28.34952f;
+		water = cupFl * ((float)waterRatio/((float)waterRatio + 1.0f));
+
+		this.extraShots = extraShots;
+		for (i = 0; i < extraShots; i++){
+			coffee += (1.0f/((float)waterRatio + 1.0f)) * 28.34952f;
+			water += ((float)waterRatio/((float)waterRatio + 1.0f));
+			espresso += 1.0f;
+		}
 	}
 }

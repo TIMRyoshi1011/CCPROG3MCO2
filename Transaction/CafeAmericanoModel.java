@@ -13,6 +13,8 @@ public class CafeAmericanoModel extends AbstractTransactionModel {
 	/**
 	 * Constructor for a cafe americano
 	 * @param size The size of the drink
+	 * @param espresso The espresso brew
+	 * @param extraShots Amount of extra shots
 	 */
 	public CafeAmericanoModel(char size, Espresso espresso, int extraShots){
 		super("cafe americano", size);
