@@ -26,6 +26,14 @@ public class AppView extends JFrame {
 	protected String Bin9 = "BIN is empty";
 	protected String Bin10 = "BIN is empty";
 
+	protected String prc1 = "1.50";
+	protected String prc2 = "2.50";
+	protected String prc3 = "0.50";
+	protected String prc4 = "50.00";
+	protected String prc5 = "60.00";
+	protected String prc6 = "70.00";
+	protected String prc7 = "2.00";
+
 	protected JPanel mainPanel;
 
 	protected JLabel label1;
@@ -444,31 +452,31 @@ public class AppView extends JFrame {
 
         mainPanel.add(Box.createVerticalStrut(20));
 
-        JLabel pCBns = new JLabel("1 shot espresso: 1.50");  //<------------------- change value from AppController -> editPrices()
+        JLabel pCBns = new JLabel("1 shot espresso: " + prc1); 
         pCBns.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pCBns);
 
-        JLabel pMlk = new JLabel("1fl of milk: 2.50");     //<------------------- change value from AppController -> editPrices()
+        JLabel pMlk = new JLabel("1fl of milk: " + prc2); 
         pMlk.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pMlk);
 
-        JLabel pWtr = new JLabel("1fl of water: 0.50");    //<------------------- change value from AppController -> editPrices()
+        JLabel pWtr = new JLabel("1fl of water: " + prc3);   
         pWtr.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pWtr);
 
-        JLabel pScup = new JLabel("Small cup  base price: 50.00");     //<------------------- change value from AppController -> editPrices()
+        JLabel pScup = new JLabel("Small cup  base price: " + prc4);    
         pScup.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pScup);
 
-        JLabel pMcup = new JLabel("Medium cup base price: 60.00");     //<------------------- change value from AppController -> editPrices()
+        JLabel pMcup = new JLabel("Medium cup base price: " + prc5);     
         pMcup.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pMcup);
 
-        JLabel pLcup = new JLabel("Large cup base price: 70.00");      //<------------------- change value from AppController -> editPrices()
+        JLabel pLcup = new JLabel("Large cup base price: " + prc6);      
         pLcup.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pLcup);
 
-		JLabel pExta = new JLabel("Additional syrups or toppings: 2.00");      //<------------------- change value from AppController -> editPrices()
+		JLabel pExta = new JLabel("Additional syrups or toppings: " + prc7);     
         pExta.setFont(new Font("Arial", Font.BOLD, 20));
         mainPanel.add(pExta);
 

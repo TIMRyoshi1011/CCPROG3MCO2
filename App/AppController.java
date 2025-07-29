@@ -179,16 +179,22 @@ public class AppController implements ActionListener, DocumentListener {
 			binNo = 6;
         }
 
+		else if (e.getActionCommand().equals("BIN #8")) {
+			clearGUI();
+			view.setAmounts(); 
+			binNo = 7;
+        }
+
 		else if (e.getActionCommand().equals("BIN #9")) {
 			clearGUI();
 			view.setAmounts();
-			binNo = 7;
+			binNo = 8;
         }
 
 		else if (e.getActionCommand().equals("BIN #10")) {
 			clearGUI();
 			view.setAmounts();
-			binNo = 8;
+			binNo = 9;
         }
 
 		else if (e.getActionCommand().equals(">")) { 
@@ -235,7 +241,6 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-				
 				String toConvert = view.getAmount();
 				tempTruck.model.setBin(tempTruck.model.getBin(binNo), choice, stringToFloat(toConvert));
                 
@@ -278,6 +283,10 @@ public class AppController implements ActionListener, DocumentListener {
 				else if(binNo == 9) {
 					view.Bin10 = "Type: " + choice + ", Amount: " + view.getAmount();
 				}
+
+				else if(binNo == 9) {
+					view.Bin10 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
 				removeUpdate(null); 
 				clearGUI();
 				if(truckType == 'R')
@@ -290,7 +299,7 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("Exit")) {
 			clearGUI();
 			if(truckType == 'R')
-					view.rSetTruckBins(); 
+				view.rSetTruckBins(); 
 			else if(truckType == 'P')
 				view.sSetTruckBins(); 
 		}
@@ -302,13 +311,40 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
+				model.setPrice(choice, stringToFloat(view.getPrice())); // setting price
 
-				choice2 = view.getPrice(); // set choice2 to text from text field
-				floatChoice = model.toFloat(choice2); 
-				model.setPrice(choice, floatChoice); // setting price
+				if(choice == "espresso") {
+					view.prc1 = view.getPrice();
+				}
 
+				else if(choice == "milk") {
+					view.prc2 = view.getPrice();
+				}
+
+				else if(choice == "water") {
+					view.prc3 = view.getPrice();
+				}
+
+				else if(choice == "scup") {
+					view.prc4 = view.getPrice();
+				}
+
+				else if(choice == "mcup") {
+					view.prc5 = view.getPrice();
+				}
+
+				else if(choice == "lcup") {
+					view.prc6 = view.getPrice();
+				}
+
+				else if(choice == "extra") {
+					view.prc7 = view.getPrice();
+				}
+				
 				JOptionPane.showMessageDialog(view, "Saved");
 				removeUpdate(null);
+				clearGUI();
+				view.setPrices();
             }
         }
 
@@ -403,6 +439,14 @@ public class AppController implements ActionListener, DocumentListener {
 			view.Bin8 = "BIN is empty";
 			view.Bin9 = "BIN is empty";
 			view.Bin10 = "BIN is empty";
+
+			view.prc1 = "1.50";
+			view.prc2 = "2.50";
+			view.prc3 = "0.50";
+			view.prc4 = "50.00";
+			view.prc5 = "60.00";
+			view.prc6 = "70.00";
+			view.prc7 = "2.00";
         }
 
 		else if (e.getActionCommand().equals("Next")) {
