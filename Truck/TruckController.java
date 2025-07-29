@@ -34,6 +34,10 @@ public class TruckController {
 		}
 	}
 
+	public char getType() {
+		return model.getType();
+	}
+
 	/**
 	 * Returns the truck's location.
 	 * This is necessary for trucks to see if a location has already been taken.
