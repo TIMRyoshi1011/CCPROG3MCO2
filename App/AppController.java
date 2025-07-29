@@ -28,11 +28,11 @@ public class AppController implements ActionListener, DocumentListener {
 	/** Scanner to be used throughout the whole app implementation. */
 	private Scanner scan = new Scanner(System.in);
 
-	char truckType;
-	TruckController tempTruck;
-	String choice, choice2;
-	float floatChoice;
-	int binNo;
+	private char truckType;
+	private TruckController tempTruck;
+	private String choice, choice2;
+	private float floatChoice;
+	private int binNo;
 
 	/**
 	 * Constructor for the AppController.
@@ -55,6 +55,24 @@ public class AppController implements ActionListener, DocumentListener {
 		if (e.getActionCommand().equals("Create Truck")) {
 			clearGUI();
 			view.createNewTruck();
+			view.Bin1 = "BIN is empty";
+			view.Bin2 = "BIN is empty";
+			view.Bin3 = "BIN is empty";
+			view.Bin4 = "BIN is empty";
+			view.Bin5 = "BIN is empty";
+			view.Bin6 = "BIN is empty";
+			view.Bin7 = "BIN is empty";
+			view.Bin8 = "BIN is empty";
+			view.Bin9 = "BIN is empty";
+			view.Bin10 = "BIN is empty";
+
+			view.prc1 = "1.50";
+			view.prc2 = "2.50";
+			view.prc3 = "0.50";
+			view.prc4 = "50.00";
+			view.prc5 = "60.00";
+			view.prc6 = "70.00";
+			view.prc7 = "2.00";
 			// /createTruck();
 		} 
 		
@@ -429,24 +447,9 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("Main Menu")) {
 			clearGUI();
             view.homeScreen();
-			view.Bin1 = "BIN is empty";
-			view.Bin2 = "BIN is empty";
-			view.Bin3 = "BIN is empty";
-			view.Bin4 = "BIN is empty";
-			view.Bin5 = "BIN is empty";
-			view.Bin6 = "BIN is empty";
-			view.Bin7 = "BIN is empty";
-			view.Bin8 = "BIN is empty";
-			view.Bin9 = "BIN is empty";
-			view.Bin10 = "BIN is empty";
 
-			view.prc1 = "1.50";
-			view.prc2 = "2.50";
-			view.prc3 = "0.50";
-			view.prc4 = "50.00";
-			view.prc5 = "60.00";
-			view.prc6 = "70.00";
-			view.prc7 = "2.00";
+			view.type = tempTruck.getType();
+			view.locate = tempTruck.getLocation();
         }
 
 		else if (e.getActionCommand().equals("Next")) {
@@ -504,7 +507,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-
+				view.brew = view.getDrink();
+				view.size = "Small";
 				removeUpdate(null);
 				clearGUI();
                 view.orderHere();
@@ -518,7 +522,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-
+				view.brew = view.getDrink();
+				view.size = "Medium";
 				removeUpdate(null);
                 clearGUI();
                 view.orderHere();
@@ -532,7 +537,8 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-
+				view.brew = view.getDrink();
+				view.size = "large";
 				removeUpdate(null);
                 clearGUI();
                 view.orderHere();
@@ -552,41 +558,49 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("BIN 1")) {
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 0;
         }
 
 		else if (e.getActionCommand().equals("BIN 2")) {  
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 1;
         }
 
 		else if (e.getActionCommand().equals("BIN 3")) {
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 2;
         }
 
 		else if (e.getActionCommand().equals("BIN 4")) {
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 3;
         }
 
 		else if (e.getActionCommand().equals("BIN 5")) {
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 4;
         }
 
 		else if (e.getActionCommand().equals("BIN 6")) { 
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 5;
         }
 
 		else if (e.getActionCommand().equals("BIN 7")) {
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 6;
         }
 
 		else if (e.getActionCommand().equals("BIN 8")) {
 			clearGUI();
 			view.simulateAmounts();
+			binNo = 7;
         }
 
 		else if (e.getActionCommand().equals("<")) { 
@@ -601,6 +615,49 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
+				if(binNo == 0) {
+					view.Bin1 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 1) {
+					view.Bin2 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 2) {
+					view.Bin3 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 3) {
+					view.Bin4 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 4) {
+					view.Bin5 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 5) {
+					view.Bin6 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 6) {
+					view.Bin7 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 7) {
+					view.Bin8 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 8) {
+					view.Bin9 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 9) {
+					view.Bin10 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 9) {
+					view.Bin10 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
 
                 removeUpdate(null); 
                 clearGUI();
@@ -615,7 +672,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-
+				view.locate = view.getMLoc();
 				clearGUI();
                 view.maintainance();
             }
@@ -644,12 +701,8 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("yes")) {
 			clearGUI();
 			view.mainPanel.add(Box.createVerticalStrut(15));
-			view.label1 = new JLabel("Choose a truck to simulate:");
-			view.label1.setFont(new Font("Arial", Font.BOLD, 20));
-			view.mainPanel.add(view.label1);
-			view.mainPanel.add(Box.createVerticalStrut(15));
 
-			view.label2 = new JLabel("#1 || Type: _ || Location: ______           /* To add more */"); //<------------replace with values from CreateTruck
+			view.label2 = new JLabel("#1 Type: " + tempTruck.getType() + " || Location: " + tempTruck.getLocation()); 
 			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
 			view.mainPanel.add(view.label2);
 
@@ -679,7 +732,7 @@ public class AppController implements ActionListener, DocumentListener {
 
 				removeUpdate(null);
                 clearGUI();
-				view.homeScreen(); //<---------------------- not supposed to be this one
+				view.homeScreen();
             } 
         }
 		
