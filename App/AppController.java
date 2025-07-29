@@ -455,7 +455,7 @@ public class AppController implements ActionListener, DocumentListener {
                 return; // Do not proceed if the text field is empty
             }
             else {
-                System.out.println(view.getSimulation()); // Pass getSimulation() to the model - placeholder for test/ to delete
+
 				removeUpdate(null);
                 clearGUI();
 				view.optionList();
@@ -504,8 +504,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
-				System.out.println("Small"); //placeholder for test/ to delete
+
 				removeUpdate(null);
 				clearGUI();
                 view.orderHere();
@@ -519,8 +518,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
-				System.out.println("Medium"); //placeholder for test/ to delete
+
 				removeUpdate(null);
                 clearGUI();
                 view.orderHere();
@@ -534,8 +532,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getDrink());  // Pass getDrink() to the model - placeholder for test/ to delete
-				System.out.println("large"); //placeholder for test/ to delete
+
 				removeUpdate(null);
                 clearGUI();
                 view.orderHere();
@@ -604,7 +601,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getAmount());  // Send getAmount() to the model - placeholder for test/ to delete
+
                 removeUpdate(null); 
                 clearGUI();
                 view.simulateTruckBins();
@@ -618,8 +615,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getMLoc()); // Pass getTextField() to the model - placeholder for test/ to delete
-                removeUpdate(null); // Clear the text field after proceeding
+
 				clearGUI();
                 view.maintainance();
             }
@@ -680,7 +676,7 @@ public class AppController implements ActionListener, DocumentListener {
                 return; // Do not proceed if the text field is empty
             }
             else {
-                System.out.println(view.getSimulation()); // Pass getSimulation() to the model - placeholder for test/ to delete
+
 				removeUpdate(null);
                 clearGUI();
 				view.homeScreen(); //<---------------------- not supposed to be this one
