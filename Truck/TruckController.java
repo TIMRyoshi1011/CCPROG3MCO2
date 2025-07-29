@@ -13,7 +13,7 @@ import Ingredient.*;
  */
 public class TruckController {
 	/** The truck controller's model */
-	private TruckModelAbstract model;
+	public TruckModelAbstract model;
 	/** The truck controller's view */
 	private TruckView view;
 	/** Scanner for the whole file */
