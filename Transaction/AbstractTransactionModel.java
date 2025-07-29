@@ -102,7 +102,16 @@ public class AbstractTransactionModel{
 	 * @param syrup Syrup to be added
 	 */
 	public void addSyrup(ExtraIngr syrup){
-		ingredients.add(syrup);
+		boolean preExisted = false;
+
+		for (Ingredient ingr : ingredients){
+			if (ingr.getType().equals(syrup.getType())){
+				ingr.increaseAmt(1f);
+				preExisted = true;
+			}
+		}
+
+		if (!preExisted) ingredients.add(syrup);
 		drinkCost += syrup.getPrice();
 	}
 }

@@ -15,7 +15,7 @@ public class PlusModel extends TruckModelAbstract{
 
 		numBins = 10;
 		for (i = 0; i < numBins; i++){
-			STORAGEBINS.add(new StorageBin());
+			STORAGEBINS.add(new StorageBin(i));
 		}
 	}
 }

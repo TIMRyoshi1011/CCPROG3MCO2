@@ -15,7 +15,7 @@ public class RegularModel extends TruckModelAbstract{
 
 		numBins = 8;
 		for (i = 0; i < numBins; i++){
-			STORAGEBINS.add(new StorageBin());
+			STORAGEBINS.add(new StorageBin(i));
 		}
 	}
 }

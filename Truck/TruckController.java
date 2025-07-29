@@ -34,6 +34,10 @@ public class TruckController {
 		}
 	}
 
+	/**
+	 * Returns the truck's type
+	 * @return The type of the truck.
+	 */
 	public char getType() {
 		return model.getType();
 	}

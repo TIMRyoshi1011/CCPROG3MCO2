@@ -11,14 +11,21 @@ import Cup.*;
 public class StorageBin{
 	/** The ingredient contents of the storage bin. */
 	private Ingredient contents;
+	/** Checks if the bin is meant to hold only syrups. */
+	private boolean forSyrups;
 
 	/**
  	 * Constructor for the storage bin.
    	 * A list of storage bins are automatically created when a truck is made, and this is the only time a storage bin is made.
 	 * Following this, all storage bins are automatically initiated empty.
+	 * @param indx - The index the bin holds in the truck it is in. This is to check if it can hold syrups.
   	 */
-	public StorageBin(){
+	public StorageBin(int indx){
 		contents = null;
+		if (indx >= 8)
+			forSyrups = true;
+		else 
+			forSyrups = false;
 	}
 
 	/**
@@ -41,13 +48,13 @@ public class StorageBin{
 
 		if (amt < 0) return false;
 
-		else if (type.equals("water") && amt <= 640f) contents = new Water(amt);
-		else if (type.equals("milk") && amt <= 640f) contents = new Milk(amt);
-		else if (type.equals("coffee") && amt <= 1008f) contents = new Coffee(amt);
-		else if (type.equals("scup") && amt <= 80f) contents = new SmallCup(amt);
-		else if (type.equals("mcup") && amt <= 64f) contents = new MediumCup(amt);
-		else if (type.equals("lcup") && amt <= 40f) contents = new LargeCup(amt);
-        else if (amt <= 500f) contents = new ExtraIngr(type, amt);
+		else if (!forSyrups && type.equals("water") && amt <= 640f) contents = new Water(amt);
+		else if (!forSyrups && type.equals("milk") && amt <= 640f) contents = new Milk(amt);
+		else if (!forSyrups && type.equals("coffee") && amt <= 1008f) contents = new Coffee(amt);
+		else if (!forSyrups && type.equals("scup") && amt <= 80f) contents = new SmallCup(amt);
+		else if (!forSyrups && type.equals("mcup") && amt <= 64f) contents = new MediumCup(amt);
+		else if (!forSyrups && type.equals("lcup") && amt <= 40f) contents = new LargeCup(amt);
+        else if (forSyrups && amt <= 500f) contents = new ExtraIngr(type, amt);
 
         else return false;
 

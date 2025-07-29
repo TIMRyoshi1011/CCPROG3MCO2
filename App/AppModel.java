@@ -113,9 +113,9 @@ public class AppModel {
 		for (TruckController truck : TRUCKS){
 			for (TransactionController transaction : truck.getTransactions()){
 				switch(transaction.getDrinkSize()){
-					case 's': totalTransaction[0]++; break;
-					case 'm': totalTransaction[1]++; break;
-					case 'l': totalTransaction[2]++; break;
+					case 's': case 'S':totalTransaction[0]++; break;
+					case 'm': case 'M': totalTransaction[1]++; break;
+					case 'l': case 'L': totalTransaction[2]++; break;
 				}
 
 				switch(transaction.getDrinkType().toLowerCase()){

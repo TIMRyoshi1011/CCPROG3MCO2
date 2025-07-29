@@ -270,6 +270,23 @@ public abstract class TruckModelAbstract {
 	 * @param inventory The amount of each ingredient the truck has
 	 * @return true if there is enough, false if not.
 	 */
+	public boolean isEspressoAvail(Espresso shot, float flAmt, float waterAmt, HashMap<String, Float> inventory){
+		if (inventory.getOrDefault("Coffee", 0.0f) < shot.getCoffee() ||
+			inventory.getOrDefault("Water", 0.0f) < (shot.getWater() + waterAmt)){
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Given an espresso shot, checks if there is enough for it.
+	 * Seperate function in case waterAmt is not used.
+	 * @param shot The espresso in the drink brew
+	 * @param flAmt The amount of fl the espresso will be
+	 * @param inventory The amount of each ingredient the truck has
+	 * @return true if there is enough, false if not.
+	 */
 	public boolean isEspressoAvail(Espresso shot, float flAmt, HashMap<String, Float> inventory){
 		if (inventory.getOrDefault("Coffee", 0.0f) < shot.getCoffee() ||
 			inventory.getOrDefault("Water", 0.0f) < shot.getWater()){
