@@ -28,9 +28,11 @@ public class AppController implements ActionListener, DocumentListener {
 	/** Scanner to be used throughout the whole app implementation. */
 	private Scanner scan = new Scanner(System.in);
 
+	char truckType;
 	TruckController tempTruck;
 	String choice, choice2;
 	float floatChoice;
+	int binNo;
 
 	/**
 	 * Constructor for the AppController.
@@ -45,6 +47,9 @@ public class AppController implements ActionListener, DocumentListener {
 		view.setDocumentListener(this);
 	}
 
+	/**
+	 * Sets the acton performed of the buttons in the program
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Create Truck")) {
@@ -67,7 +72,8 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep+")) {
 
-			tempTruck = new TruckController('P');  // Create a Truck P
+			tempTruck = new TruckController('P'); 
+			truckType = 'P';
 
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
@@ -86,8 +92,8 @@ public class AppController implements ActionListener, DocumentListener {
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
 
-			tempTruck = new TruckController('R');  // Create a Truck R
-
+			tempTruck = new TruckController('R'); 
+			truckType = 'R';
 			view.mainPanel.add(Box.createVerticalStrut(25));
        		view.label2 = new JLabel("Enter Location: ");
 			view.label2.setFont(new Font("Arial", Font.BOLD, 15));
@@ -110,7 +116,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				model.setLocation(tempTruck, view.getLoc());  	// set location of truck
+				model.setLocation(tempTruck, view.getLoc());  
 				removeUpdate(null);
 				clearGUI();
 				view.rSetTruckBins();
@@ -124,7 +130,7 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				model.setLocation(tempTruck, view.getLoc());   	// set location of truck
+				model.setLocation(tempTruck, view.getLoc());   
 				removeUpdate(null);
 				clearGUI();
 				view.sSetTruckBins();
@@ -134,46 +140,55 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("BIN #1")) {
 			clearGUI();
 			view.setAmounts();
+			binNo = 0;
         }
 
 		else if (e.getActionCommand().equals("BIN #2")) {  
 			clearGUI();
 			view.setAmounts();
+			binNo = 1;
         }
 
 		else if (e.getActionCommand().equals("BIN #3")) {
 			clearGUI();
 			view.setAmounts();
+			binNo = 2;
         }
 
 		else if (e.getActionCommand().equals("BIN #4")) {
 			clearGUI();
 			view.setAmounts();
+			binNo = 3;
         }
 
 		else if (e.getActionCommand().equals("BIN #5")) {
 			clearGUI();
 			view.setAmounts();
+			binNo = 4;
         }
 
 		else if (e.getActionCommand().equals("BIN #6")) { 
 			clearGUI();
 			view.setAmounts();
+			binNo = 5;
         }
 
 		else if (e.getActionCommand().equals("BIN #7")) {
 			clearGUI();
 			view.setAmounts(); 
+			binNo = 6;
         }
 
 		else if (e.getActionCommand().equals("BIN #9")) {
 			clearGUI();
 			view.setAmounts();
+			binNo = 7;
         }
 
 		else if (e.getActionCommand().equals("BIN #10")) {
 			clearGUI();
 			view.setAmounts();
+			binNo = 8;
         }
 
 		else if (e.getActionCommand().equals(">")) { 
@@ -182,42 +197,34 @@ public class AppController implements ActionListener, DocumentListener {
         }
 
 		else if (e.getActionCommand().equals("Small Cup")) {
-            System.out.println("Small Cup");  // Send Small Cup to the model - placeholder for test/ to delete
 			choice = "scup"; // set choice to scup
         }
 
         else if (e.getActionCommand().equals("Medium Cup")) {
-            System.out.println("Medium Cup");  // Send Medium Cup to the model - placeholder for test/ to delete
 			choice = "mcup"; // set choice to mcup
         }
 
         else if (e.getActionCommand().equals("Large Cup")) {
-            System.out.println("Large Cup");  // Send Large Cup to the model - placeholder for test/ to delete
 			choice = "lcup"; // set choice to lcup
         }
 
         else if (e.getActionCommand().equals("Coffee Beans")) {
-            System.out.println("Coffee Beans");  // Send Coffee Beans to the model - placeholder for test/ to delete
 			choice = "coffee"; // set choice to coffee
         }
 
         else if (e.getActionCommand().equals("Milk")) {
-            System.out.println("Milk");  // Send Milk to the model - placeholder for test/ to delete
 			choice = "milk"; // set choice to milk
         }
 
         else if (e.getActionCommand().equals("Water")) {
-            System.out.println("Water");  // Send Water to the model - placeholder for test/ to delete
 			choice = "water"; // set choice to water
         }
 
 		else if (e.getActionCommand().equals("Espresso")) {
-            System.out.println("Espresso");  // Send Water to the model - placeholder for test/ to delete
 			choice = "espresso"; // set choice to espresso
         }
 
 		else if (e.getActionCommand().equals("Extra")) {
-            System.out.println("Extra");  // Send Water to the model - placeholder for test/ to delete
 			choice = "extra"; // set choice to extra
         }
 
@@ -228,16 +235,64 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getAmount());  // Send getAmount() to the model - placeholder for test/ to delete
-                removeUpdate(null); 
+				
+				String toConvert = view.getAmount();
+				tempTruck.model.setBin(tempTruck.model.getBin(binNo), choice, stringToFloat(toConvert));
+                
+				if(binNo == 0) {
+					view.Bin1 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 1) {
+					view.Bin2 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 2) {
+					view.Bin3 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 3) {
+					view.Bin4 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 4) {
+					view.Bin5 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 5) {
+					view.Bin6 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 6) {
+					view.Bin7 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 7) {
+					view.Bin8 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 8) {
+					view.Bin9 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+
+				else if(binNo == 9) {
+					view.Bin10 = "Type: " + choice + ", Amount: " + view.getAmount();
+				}
+				removeUpdate(null); 
 				clearGUI();
-				view.rSetTruckBins(); // Buggy
+				if(truckType == 'R')
+					view.rSetTruckBins(); 
+				else if(truckType == 'P')
+					view.sSetTruckBins(); 
             }
         }
 
 		else if (e.getActionCommand().equals("Exit")) {
 			clearGUI();
-			view.rSetTruckBins(); // Buggy
+			if(truckType == 'R')
+					view.rSetTruckBins(); 
+			else if(truckType == 'P')
+				view.sSetTruckBins(); 
 		}
 
         else if (e.getActionCommand().equals("Save")) {
@@ -247,7 +302,6 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
             else {
-                System.out.println(view.getPrice());  // Send getPrice() to the model - placeholder for test/ to delete
 
 				choice2 = view.getPrice(); // set choice2 to text from text field
 				floatChoice = model.toFloat(choice2); 
@@ -276,45 +330,57 @@ public class AppController implements ActionListener, DocumentListener {
 			view.label3.setAlignmentX(Component.RIGHT_ALIGNMENT);
 			view.mainPanel.add(Box.createVerticalStrut(10));
 
-			JLabel bin1Cnts = new JLabel("Storage Bin #1 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin1Cnts = new JLabel("Storage Bin #1 - " + view.Bin1); 
 			bin1Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin1Cnts);
 			bin1Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin2Cnts = new JLabel("Storage Bin #2 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin2Cnts = new JLabel("Storage Bin #2 - " + view.Bin2); 
 			bin2Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin2Cnts);
 			bin2Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin3Cnts = new JLabel("Storage Bin #3 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin3Cnts = new JLabel("Storage Bin #3 - " + view.Bin3);
 			bin3Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin3Cnts);
 			bin3Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin4Cnts = new JLabel("Storage Bin #4 - Bin is empty"); //<------------------ rreplace value from TruckController -> setBins()
+			JLabel bin4Cnts = new JLabel("Storage Bin #4 - " + view.Bin4);
 			bin4Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin4Cnts);
 			bin4Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin5Cnts = new JLabel("Storage Bin #5 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin5Cnts = new JLabel("Storage Bin #5 - " + view.Bin5); 
 			bin5Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin5Cnts);
 			bin5Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin6Cnts = new JLabel("Storage Bin #6 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin6Cnts = new JLabel("Storage Bin #6 - " + view.Bin6);
 			bin6Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin6Cnts);
 			bin6Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin7Cnts = new JLabel("Storage Bin #7 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin7Cnts = new JLabel("Storage Bin #7 - " + view.Bin7); 
 			bin7Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin7Cnts);
 			bin7Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
-			JLabel bin8Cnts = new JLabel("Storage Bin #8 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			JLabel bin8Cnts = new JLabel("Storage Bin #8 - " + view.Bin8);
 			bin8Cnts.setFont(new Font("Arial", Font.BOLD, 20));
 			view.mainPanel.add(bin8Cnts);
 			bin8Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			if(truckType == 'P') {
+				JLabel bin9Cnts = new JLabel("Storage Bin #9 - " + view.Bin9);
+				bin9Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+				view.mainPanel.add(bin9Cnts);
+				bin9Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+				JLabel bin10Cnts = new JLabel("Storage Bin #10 - " + view.Bin10);
+				bin10Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+				view.mainPanel.add(bin10Cnts);
+				bin10Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			}
 
 			view.mainPanel.add(Box.createVerticalStrut(35));
 
@@ -327,6 +393,16 @@ public class AppController implements ActionListener, DocumentListener {
 		else if (e.getActionCommand().equals("Main Menu")) {
 			clearGUI();
             view.homeScreen();
+			view.Bin1 = "BIN is empty";
+			view.Bin2 = "BIN is empty";
+			view.Bin3 = "BIN is empty";
+			view.Bin4 = "BIN is empty";
+			view.Bin5 = "BIN is empty";
+			view.Bin6 = "BIN is empty";
+			view.Bin7 = "BIN is empty";
+			view.Bin8 = "BIN is empty";
+			view.Bin9 = "BIN is empty";
+			view.Bin10 = "BIN is empty";
         }
 
 		else if (e.getActionCommand().equals("Next")) {
@@ -572,11 +648,47 @@ public class AppController implements ActionListener, DocumentListener {
 		}
 	}
 
+	/**
+	 * Converts a string to an int
+	 * @param str the string to be converted
+	 * @return int value
+	 */
+	public static int stringToInt(String str) {
+        try {
+            return Integer.parseInt(str);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input: " + str + " is not a valid number.");
+            return 0; 
+        }
+    }
+
+	/**
+	 * Converts a string to a float
+	 * @param str the string to be converted
+	 * @return float value
+	 */
+	public static float stringToFloat(String str) {
+        try {
+            return Float.parseFloat(str);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input: " + str + " is not a valid float.");
+            return 0.0f; 
+        }
+    }
+
+	/**
+	 * For inserting update in a text field
+	 * @param e to handle document event
+	 */
 	@Override
     public void insertUpdate(DocumentEvent e) {
         // Handle text insertion
     }
 
+	/**
+	 * For removing update in a text field
+	 * @param e to handle document event
+	 */
     @Override
     public void removeUpdate(DocumentEvent e) {
         // Handle text removal
@@ -588,12 +700,19 @@ public class AppController implements ActionListener, DocumentListener {
 		view.mLocation.setText("");
     }
 
+	/**
+	 * For changing update in a text field
+	 * @param e to handle document event
+	 */
     @Override
     public void changedUpdate(DocumentEvent e) {
         // Handle text change
 
     }
 
+	/**
+	 * Clears the GUI
+	 */
 	public void clearGUI() {
 		view.mainPanel.removeAll();
 		view.mainPanel.revalidate();

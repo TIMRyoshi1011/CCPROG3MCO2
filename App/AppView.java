@@ -14,7 +14,19 @@ import javax.swing.event.DocumentListener;
  * View for the main app interface
  */
 public class AppView extends JFrame { 
-	protected JPanel mainPanel;			//panels must not be private to be accessed by the controller
+
+	protected String Bin1 = "BIN is empty";
+	protected String Bin2 = "BIN is empty";
+	protected String Bin3 = "BIN is empty";
+	protected String Bin4 = "BIN is empty";
+	protected String Bin5 = "BIN is empty";
+	protected String Bin6 = "BIN is empty";
+	protected String Bin7 = "BIN is empty";
+	protected String Bin8 = "BIN is empty";
+	protected String Bin9 = "BIN is empty";
+	protected String Bin10 = "BIN is empty";
+
+	protected JPanel mainPanel;
 
 	protected JLabel label1;
 	protected JLabel label2;
@@ -22,7 +34,7 @@ public class AppView extends JFrame {
 	private JLabel label4;
  
 	// Buttons for the home screen
-	private JButton createBtn = new JButton("Create Truck");		//buttons must be initialized so that the button is not = null
+	private JButton createBtn = new JButton("Create Truck");
 	private JButton simulateBtn = new JButton("Simulate Truck");
 	private JButton dashboardBtn = new JButton("Dashboard");
 
@@ -31,7 +43,7 @@ public class AppView extends JFrame {
 	// Components for Create Truck
 	private JButton javaJeepS = new JButton("JavaJeep+");
     private JButton javaJeepR = new JButton("JavaJeep");
-    protected JTextField location = new JTextField(20);		// TextField must not be private to be accessed by the controller
+    protected JTextField location = new JTextField(20);
 	protected JButton rProceed = new JButton("Proceed");
 	protected JButton sProceed = new JButton("proceed");
 
@@ -145,12 +157,6 @@ public class AppView extends JFrame {
 	private JButton n = new JButton("no");
 	protected JButton dnxt = new JButton("next");
 
-	/* SUGGESTION: since lots of the programs parts concerns choosing an option from a set of lists, 
-				   there could be a general option that prints a list of choices given the number
-				   of choices and the labels of each choice. Unsure how to work around this with 
-				   button inputs though, but will think about it when we reach the GUI implementation
-				   stage. */
-
 	public AppView() {
 		super("JavaJeep");
 		setLayout(new FlowLayout());
@@ -165,6 +171,9 @@ public class AppView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	/**
+	 * Displays the GUI for the home screen
+	 */
 	public void homeScreen() {
 	    mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -187,6 +196,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Displays the GUI when Create Truck is clicked
+	 */
 	public void createNewTruck() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -206,6 +218,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI for the regular truck
+	 */
 	public void rSetTruckBins() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -217,6 +232,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI for the special truck
+	 */
 	public void sSetTruckBins() {
 		mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -227,7 +245,7 @@ public class AppView extends JFrame {
 		bin9.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin9Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin9Cnts = new JLabel(Bin9); //<------------------ replace value from TruckController -> setBins()
         bin9Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin9Cnts);
 		bin9Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -237,7 +255,7 @@ public class AppView extends JFrame {
 		bin10.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin10Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin10Cnts = new JLabel(Bin10); //<------------------ replace value from TruckController -> setBins()
         bin10Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin10Cnts);
 		bin10Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -248,6 +266,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Displays the GUI for the storage bins
+	 */
 	public void binList() {
 		label1 = new JLabel("Storage Bin Contents: ");
         label1.setFont(new Font("Arial", Font.BOLD, 20));
@@ -259,7 +280,7 @@ public class AppView extends JFrame {
 		bin1.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin1Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin1Cnts = new JLabel(Bin1); //<------------------ replace value from TruckController -> setBins()
         bin1Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin1Cnts);
 		bin1Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -269,7 +290,7 @@ public class AppView extends JFrame {
 		bin2.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin2Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin2Cnts = new JLabel(Bin2); //<------------------ replace value from TruckController -> setBins()
         bin2Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin2Cnts);
 		bin2Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -279,7 +300,7 @@ public class AppView extends JFrame {
 		bin3.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin3Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin3Cnts = new JLabel(Bin3); //<------------------ replace value from TruckController -> setBins()
         bin3Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin3Cnts);
 		bin3Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -289,7 +310,7 @@ public class AppView extends JFrame {
 		bin4.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin4Cnts = new JLabel("- BIN is empty"); //<------------------ rreplace value from TruckController -> setBins()
+		JLabel bin4Cnts = new JLabel(Bin4); //<------------------ rreplace value from TruckController -> setBins()
         bin4Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin4Cnts);
 		bin4Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -299,7 +320,7 @@ public class AppView extends JFrame {
 		bin5.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin5Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin5Cnts = new JLabel(Bin5); //<------------------ replace value from TruckController -> setBins()
         bin5Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin5Cnts);
 		bin5Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -309,7 +330,7 @@ public class AppView extends JFrame {
 		bin6.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin6Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin6Cnts = new JLabel(Bin6); //<------------------ replace value from TruckController -> setBins()
         bin6Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin6Cnts);
 		bin6Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -319,7 +340,7 @@ public class AppView extends JFrame {
 		bin7.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin7Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin7Cnts = new JLabel(Bin7); //<------------------ replace value from TruckController -> setBins()
         bin7Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin7Cnts);
 		bin7Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -329,7 +350,7 @@ public class AppView extends JFrame {
 		bin8.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		mainPanel.add(Box.createVerticalStrut(5));
 
-		JLabel bin8Cnts = new JLabel("- BIN is empty"); //<------------------ replace value from TruckController -> setBins()
+		JLabel bin8Cnts = new JLabel(Bin8); //<------------------ replace value from TruckController -> setBins()
         bin8Cnts.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(bin8Cnts);
 		bin8Cnts.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -348,6 +369,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI for choosing an amount of items to put in the bin
+	 */
 	public void amountList() {
 		label1 = new JLabel("Max quanitity for all items: ");
         label1.setFont(new Font("Arial", Font.BOLD, 20));
@@ -396,6 +420,9 @@ public class AppView extends JFrame {
         mainPanel.add(amount);
 	}
 
+	/**
+	 * Displays the GUI for setting a price of items in the bin
+	 */
 	public void setPrices(){
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -407,6 +434,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI for the list of prices for each item
+	 */
 	public void priceList() {
 		label1 = new JLabel("Below are the current prices for each ingredient: ");
         label1.setFont(new Font("Arial", Font.BOLD, 25));
@@ -484,6 +514,9 @@ public class AppView extends JFrame {
         mainPanel.add(label4);
 	}
  
+	/**
+	 * Displays the GUI of the information of the created truck
+	 */
 	public void truckInfo() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -494,12 +527,14 @@ public class AppView extends JFrame {
 		label1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         
-
 		this.add(mainPanel, BorderLayout.CENTER);
 
         /* ----------------------------------------------------------------------- */
     }
 
+	/**
+	 * Displays the GUI when Simulate Truck is clicked
+	 */
 	public void truckSimulate() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -509,7 +544,7 @@ public class AppView extends JFrame {
         mainPanel.add(label1);
 		mainPanel.add(Box.createVerticalStrut(15));
 
-        label2 = new JLabel("#1 || Type: _ || Location: ______           /* To add more */"); //<------------replace with values from CreateTruck
+        label2 = new JLabel("#1 || Type: || Location: "); //<------------replace with values from CreateTruck
         label2.setFont(new Font("Arial", Font.BOLD, 15));
         mainPanel.add(label2);
 
@@ -525,6 +560,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI of the selection of options in Simulate Truck
+	 */
 	public void optionList() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -557,6 +595,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI when deciding to order
+	 */
 	public void choose() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -597,6 +638,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI when making an order
+	 */
 	public void order() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -638,6 +682,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI of the order simulation
+	 */
 	public void orderHere() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -683,6 +730,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI when viewing the truck info
+	 */
 	public void simulateTruckInfo() {
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -767,6 +817,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI when editing the bins of a truck
+	 */
 	public void simulateTruckBins() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -862,6 +915,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI when editing the amounts in the bin of a truck
+	 */
 	public void simulateAmounts() {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -889,6 +945,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI setting the location of a truck
+	 */
 	public void mSetLocation() {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -904,6 +963,9 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
 	}
 
+	/**
+	 * Displays the GUI when editing the prices of a truck
+	 */
 	public void mSetPrices(){
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -915,6 +977,9 @@ public class AppView extends JFrame {
 		this.add(mainPanel, BorderLayout.CENTER);
     }
 
+	/**
+	 * Displays the GUI of the dashboard
+	 */
 	public void dashboard() { 
         mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -952,54 +1017,101 @@ public class AppView extends JFrame {
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
-	public String getLoc() { //For Location via Text Field
+	/**
+	 * Gets the location entered in the text field
+	 * @returns the location entered
+	 */
+	public String getLoc() {
 		return location.getText(); 
 	}
 
-	public void setLoc(String loc) { //For Location via Text Field
+	/**
+	 * Sets the location entered in the text field
+	 */
+	public void setLoc(String loc) {
 		location.setText(loc);
     }
 
-	public String getAmount() { //For Amount via Text Field
+	/**
+	 * Gets the amount entered in the text field
+	 * @returns the amount entered
+	 */
+	public String getAmount() {
 		return amount.getText(); 
 	}
 
-	public void setAmount(String qty) { //For Amount via Text Field
+	/**
+	 * Sets the amount entered in the text field
+	 */
+	public void setAmount(String qty) { 
 		amount.setText(qty);
     }
 
-	public String getPrice() { //For Price via Text Field
+	/**
+	 * Gets the price entered in the text field
+	 * @returns the price entered
+	 */
+	public String getPrice() { 
 		return price.getText(); 
 	}
 
-	public void setPrice(String tPrice) { //For Price via Text Field
+	/**
+	 * Sets the price entered in the text field
+	 * @returns the price entered
+	 */
+	public void setPrice(String tPrice) { 
 		price.setText(tPrice);
     }
 
-	public String getSimulation() { //For choosing a truck
+	/**
+	 * Gets the truck number entered in the text field
+	 * @returns the truck number entered
+	 */
+	public String getSimulation() {
 		return toSimulate.getText(); 
 	}
 
-	public void setSimulation(String simulate) {//For choosing a truck
+	/**
+	 * Sets the truck number entered in the text field
+	 */
+	public void setSimulation(String simulate) {
 		toSimulate.setText(simulate);
     }
 
-	public String getDrink() { //For Amount via Text Field
+	/**
+	 * Gets the chosen drink entered in the text field
+	 * @returns the chosen drink entered
+	 */
+	public String getDrink() { 
 		return drink.getText(); 
 	}
 
-	public void setDrink(String tDrink) { //For Amount via Text Field
+	/**
+	 * Sets the drink entered in the text field
+	 */
+	public void setDrink(String tDrink) { 
 		drink.setText(tDrink);
     }
 
+	/**
+	 * Gets the location in the text field for the simulation
+	 * @return new location of the truck
+	 */
 	public String getMLoc() {
 		return mLocation.getText(); 
 	}
 
+	/**
+	 * Sets the location in the text field for the simulation
+	 */
 	public void setMLoc(String locate) {
 		mLocation.setText(locate);
     }
 
+	/**
+	 * Sets an action listener for all buttons in the program
+	 * @param listener to set listener
+	 */
 	public void setActionListener(ActionListener listener) {
 		createBtn.addActionListener(listener);
 		simulateBtn.addActionListener(listener);
@@ -1065,6 +1177,10 @@ public class AppView extends JFrame {
 		dnxt.addActionListener(listener);
 	}
 
+	/**
+	 * Sets a document listener for all text fields in the program
+	 * @param listener to set listener
+	 */
 	public void setDocumentListener(DocumentListener listener) {
 	    location.getDocument().addDocumentListener(listener);
 		amount.getDocument().addDocumentListener(listener);
