@@ -18,7 +18,7 @@ public class AppView extends JFrame {
 
 	protected JLabel label1;
 	protected JLabel label2;
-	private JLabel label3;
+	protected JLabel label3;
 	private JLabel label4;
  
 	// Buttons for the home screen
@@ -77,7 +77,7 @@ public class AppView extends JFrame {
 	private JButton confirm = new JButton("Confirm");
 
 	// Button to return to home screen at the end of Create Truck
-	private JButton mainMenu = new JButton("Main Menu");
+	protected JButton mainMenu = new JButton("Main Menu");
 
 	/* ----------------GUI Components for Create Truck -------------------*/
 	
@@ -493,65 +493,7 @@ public class AppView extends JFrame {
         mainPanel.add(label1);
 		label1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        mainPanel.add(Box.createVerticalStrut(35));
-
-        label2 = new JLabel("Type: _ || Location: ______"); //<------------replace with values from CreateTruck
-        label2.setFont(new Font("Arial", Font.BOLD, 25));
-        mainPanel.add(label2);
-		label2.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        mainPanel.add(Box.createVerticalStrut(35));
-
-        label3 = new JLabel("Storage Bins Contain...");
-        label3.setFont(new Font("Arial", Font.BOLD, 25));
-        mainPanel.add(label3);
-		label3.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		mainPanel.add(Box.createVerticalStrut(10));
-
-        JLabel bin1Cnts = new JLabel("Storage Bin #1 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin1Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin1Cnts);
-		bin1Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin2Cnts = new JLabel("Storage Bin #2 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin2Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin2Cnts);
-		bin2Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin3Cnts = new JLabel("Storage Bin #3 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin3Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin3Cnts);
-		bin3Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin4Cnts = new JLabel("Storage Bin #4 - Bin is empty"); //<------------------ rreplace value from TruckController -> setBins()
-        bin4Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin4Cnts);
-		bin4Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin5Cnts = new JLabel("Storage Bin #5 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin5Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin5Cnts);
-		bin5Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin6Cnts = new JLabel("Storage Bin #6 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin6Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin6Cnts);
-		bin6Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin7Cnts = new JLabel("Storage Bin #7 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin7Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin7Cnts);
-		bin7Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-		JLabel bin8Cnts = new JLabel("Storage Bin #8 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
-        bin8Cnts.setFont(new Font("Arial", Font.BOLD, 20));
-        mainPanel.add(bin8Cnts);
-		bin8Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
-        mainPanel.add(Box.createVerticalStrut(35));
-
-        mainPanel.add(mainMenu);
-		mainMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
 
 		this.add(mainPanel, BorderLayout.CENTER);
 

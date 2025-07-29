@@ -66,7 +66,7 @@ public class AppController implements ActionListener, DocumentListener {
 		} 
 
 		else if (e.getActionCommand().equals("JavaJeep+")) {
-            System.out.println("P"); //placeholder for test/ to delete
+
 			tempTruck = new TruckController('P');  // Create a Truck P
 
 			view.mainPanel.add(Box.createVerticalStrut(25));
@@ -85,7 +85,7 @@ public class AppController implements ActionListener, DocumentListener {
         }
 
 		else if (e.getActionCommand().equals("JavaJeep")) {
-            System.out.println("R");  //placeholder for test/ to delete
+
 			tempTruck = new TruckController('R');  // Create a Truck R
 
 			view.mainPanel.add(Box.createVerticalStrut(25));
@@ -110,7 +110,6 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
 				model.setLocation(tempTruck, view.getLoc());  	// set location of truck
 				removeUpdate(null);
 				clearGUI();
@@ -125,7 +124,6 @@ public class AppController implements ActionListener, DocumentListener {
             }
 
 			else {
-				System.out.println(view.getLoc());  // Send getLoc() to the model - placeholder for test/ to delete 
 				model.setLocation(tempTruck, view.getLoc());   	// set location of truck
 				removeUpdate(null);
 				clearGUI();
@@ -263,7 +261,68 @@ public class AppController implements ActionListener, DocumentListener {
         else if (e.getActionCommand().equals("Confirm")) {
             clearGUI();
 			view.truckInfo();
-        }
+			view.mainPanel.add(Box.createVerticalStrut(35));
+
+			view.label2 = new JLabel("Type: " + tempTruck.getType() + " || Location: " + tempTruck.getLocation()); 
+			view.label2.setFont(new Font("Arial", Font.BOLD, 25));
+			view.mainPanel.add(view.label2);
+			view.label2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+			view.mainPanel.add(Box.createVerticalStrut(35));
+
+			view.label3 = new JLabel("Storage Bins Contain...");
+			view.label3.setFont(new Font("Arial", Font.BOLD, 25));
+			view.mainPanel.add(view.label3);
+			view.label3.setAlignmentX(Component.RIGHT_ALIGNMENT);
+			view.mainPanel.add(Box.createVerticalStrut(10));
+
+			JLabel bin1Cnts = new JLabel("Storage Bin #1 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin1Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin1Cnts);
+			bin1Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin2Cnts = new JLabel("Storage Bin #2 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin2Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin2Cnts);
+			bin2Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin3Cnts = new JLabel("Storage Bin #3 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin3Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin3Cnts);
+			bin3Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin4Cnts = new JLabel("Storage Bin #4 - Bin is empty"); //<------------------ rreplace value from TruckController -> setBins()
+			bin4Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin4Cnts);
+			bin4Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin5Cnts = new JLabel("Storage Bin #5 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin5Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin5Cnts);
+			bin5Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin6Cnts = new JLabel("Storage Bin #6 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin6Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin6Cnts);
+			bin6Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin7Cnts = new JLabel("Storage Bin #7 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin7Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin7Cnts);
+			bin7Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			JLabel bin8Cnts = new JLabel("Storage Bin #8 - Bin is empty"); //<------------------ replace value from TruckController -> setBins()
+			bin8Cnts.setFont(new Font("Arial", Font.BOLD, 20));
+			view.mainPanel.add(bin8Cnts);
+			bin8Cnts.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+			view.mainPanel.add(Box.createVerticalStrut(35));
+
+			view.mainPanel.add(view.mainMenu);
+			view.mainMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
+			view.revalidate();
+			view.repaint();
+		}
 
 		else if (e.getActionCommand().equals("Main Menu")) {
 			clearGUI();
