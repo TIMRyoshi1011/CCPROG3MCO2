@@ -31,15 +31,12 @@ public class TransactionView{
 		float water, ArrayList<Ingredient> ingredients){
 
 		System.out.printf("Brewing %.2f fl espresso...\n", espresso);
-		AppView.pause();
 		System.out.printf("\t%.2f grams of coffee...\n", coffee);
-		AppView.pause();
 		System.out.printf("\t%.2f fl of water...\n", water);
-		AppView.pause();
 
 		for (Ingredient ingr : ingredients){
 			System.out.printf("Adding %.2f fl of %s...\n\n", ingr.getAmt(), ingr.getType().toLowerCase());
-			AppView.pause();
+
 		}
 
 		System.out.printf("%s %s successfully brewed!\n", size, type);

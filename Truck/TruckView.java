@@ -91,7 +91,7 @@ public class TruckView {
 			System.out.println();
 			counter++;
 
-			AppView.pause();
+			
 		}
 	}
 
