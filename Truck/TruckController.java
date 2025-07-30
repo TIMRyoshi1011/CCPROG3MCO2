@@ -7,6 +7,12 @@ import Transaction.*;
 import App.*;
 import Espresso.*;
 import Ingredient.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.awt.event.ActionEvent;
 
 /**
  * A coffee trucks controller
@@ -19,13 +25,17 @@ public class TruckController {
 	/** Scanner for the whole file */
 	private Scanner scan = new Scanner(System.in);
 
+	/** AppView frame being kept to keep the same frame*/
+	private AppView appView;
+
 	/**
 	 * Initializes the model and view of the truck.
 	 * Collects user information to add the details for the truck.
 	 * @param type The type of the truck
 	 */
-	public TruckController(char type){
-		this.view = new TruckView();
+	public TruckController(char type, AppView appView){
+		this.view = new TruckView(appView);
+		this.appView = appView;
 		switch(type){
 			case 'P':
 				model = new PlusModel(); break;
@@ -87,89 +97,83 @@ public class TruckController {
 	/**
 	 * Given list of bins, choose a bin to set.
 	 */
-	public void setBins(){
-		boolean inptCheck, success = false;
-		String choice; int intChoice;
+	public void setBins() {
+		view.showSetStorageBins(
+			model.getBins(),
 
-		do {
-			view.printSetStorageBins(model.getBins());
-			choice = scan.nextLine();
-			intChoice = AppModel.toInt(choice);
+			// ActionListener for editing bins
+			e -> {
+				JButton source = (JButton) e.getSource();
+				int binIndex = (int) source.getClientProperty("binIndex");
+				editStorageBin(model.getBin(binIndex), this::setBins);
+			},
 
-			System.out.println(model.getNumBins());
-			if (intChoice < 1 || intChoice > model.getNumBins()) inptCheck = false;
-			else inptCheck = true;
+			// ActionListener for "Done" button
+			e -> appView.setOutput("Exiting bin editing...")
+		);
+	}
 
-			if (choice.toUpperCase().equals("END")) success = true;
-			else if (inptCheck) editStorageBin(model.getBin(intChoice-1));
-			else {view.printFeedback("Please check your input..."); scan.nextLine();}
-		} while (!success);
+
+	/**
+	 * Selects an edit action for the storage bins
+	 * @param bin The storage bin being edited.
+	 * @param onExit A runnable for it to go back to the setBins() instance it was called from
+	 */
+	public void editStorageBin(StorageBin bin, Runnable onExit){
+		view.showEditBin(
+			bin,
+			bin.getContents() == null,
+			e -> setStorageBin(bin, () -> editStorageBin(bin, onExit)),
+			e -> replenishStorageBin(bin, () -> editStorageBin(bin, onExit)),
+			e -> {
+				model.emptyBin(bin);
+				appView.setOutput("Bin has been emptied.");
+				editStorageBin(bin, onExit);
+			},
+			e-> onExit.run()
+		);
 	}
 
 	/**
-	 * Controls the app when a storage bin is being edited.
-	 * @param bin The storage bin being edited.
+	 * Sets a storage bin, rewriting its entire contents.
+	 * @param bin Bin to be edited
+	 * @param onExit runnable to let it go back to the editStorageBin it was called from
 	 */
-	public void editStorageBin(StorageBin bin){
-		String choice, choice2; int intChoice; float floatChoice;
-		boolean exit = false, success;
+	public void setStorageBin(StorageBin bin, Runnable onExit){
+		ArrayList<ActionListener> listeners = new ArrayList<>();
 
-		while (!exit){
-			view.printEditBin(bin, bin.getContents() == null);
-			choice = scan.nextLine();
-			intChoice = AppModel.toInt(choice);
+		String[] types = {"scup", "mcup", "lcup", "coffee", "milk", "water", "syrup"};
+		for (String type : types) {
+			listeners.add(e -> {
+				JButton source = (JButton) e.getSource();
+				JTextField inputField = (JTextField) source.getClientProperty("inputField");
+				String input = inputField.getText().trim();
+				float amount = AppModel.toFloat(input);
 
-			switch(intChoice){
-				case 1:
-					// setbin
-					view.printMaxQuantity();
-					view.printFeedback("Type:");
-					choice = scan.nextLine();
-					view.printFeedback("Amount:");
-					choice2 = scan.nextLine();
-					floatChoice = AppModel.toFloat(choice2);
+				if (amount <= 0) {
+					appView.setOutput("Please enter a valid positive amount.");
+					return;
+				}
 
-					if (floatChoice != -1){
-						success = model.setBin(bin, choice, floatChoice);
-						if (!success) view.printFeedback("Please check input...");
-						else view.printFeedback("Success! Press enter to continue.");
-					}
-					else view.printFeedback("Please check input...");
-					scan.nextLine();
-					break;
-
-				case 2:
-					// replenish
-					view.printFeedback("What is the new quantity of the item?");
-					choice = scan.nextLine();
-					floatChoice = AppModel.toFloat(choice);
-
-					if (floatChoice >= 0){
-						success = model.replenishBin(bin, floatChoice);
-						if (!success) view.printFeedback("Can not fit in bin!");
-						else view.printFeedback("Successfully replenished!");
-					}
-					else view.printFeedback("Error in input!");
-					scan.nextLine();
-					break;
-
-				case 3:
-					// empty
-					model.emptyBin(bin);
-					view.printFeedback("Bin has been emptied!");
-					scan.nextLine();
-					break;
-
-				case 0:
-					// exit
-					exit = true;
-					break;
-
-				default:
-					view.printFeedback("Invalid input!");
-					scan.nextLine();
-			}
+				boolean success = model.setBin(bin, type, amount);
+				if (!success) {
+					appView.setOutput("Please check input: bin may exceed max capacity.");
+				} else {
+					appView.setOutput("Success! Bin set to " + type + " with " + amount + " units.");
+					onExit.run();
+				}
+			});
 		}
+
+		view.showSetStorageBin(listeners);
+	}
+
+	/**
+	 * Replenishes a storage bin's contents
+	 * @param bin Bin to be edited
+	 */
+	public void replenishStorageBin(StorageBin bin, Runnable onExit){
+
 	}
 
 	/**
@@ -320,7 +324,7 @@ public class TruckController {
 						}
 
 						else{
-							AppView.pause();
+							
 
 							model.processTransaction(newT);
 

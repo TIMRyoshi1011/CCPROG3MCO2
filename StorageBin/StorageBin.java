@@ -111,17 +111,27 @@ public class StorageBin{
 	/**
  	 * Prints the info of the bin.
    	 * This includes the amount of items in the bin and the type of items in the bin.
-     	 */
-	public void printBinInfo(){
+     * @return A string showing the contents of the bin.
+     */
+	public String getBinInfo() {
+		StringBuilder sb = new StringBuilder();
+
 		if (contents != null) {
-	            System.out.print("Type: " + contents.getType() + ", Amount: " + contents.getAmt());
-		    if (contents.getType().equals("Coffee")) System.out.print("grams");
-		    else if (contents instanceof Cup) System.out.print("pcs");
-		    else System.out.print("fl");
-	        } 
-		
-		else {
-	            System.out.print("Bin is empty.");
-	        }
+			sb.append("Type: ").append(contents.getType())
+			  .append(", Amount: ").append(contents.getAmt());
+
+			if (contents.getType().equals("Coffee")) {
+				sb.append(" grams");
+			} else if (contents instanceof Cup) {
+				sb.append(" pcs");
+			} else {
+				sb.append(" fl");
+			}
+		} else {
+			sb.append("Bin is empty.");
+		}
+
+		return sb.toString();
 	}
+
 }

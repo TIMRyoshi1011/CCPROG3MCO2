@@ -4,10 +4,33 @@ import java.util.ArrayList;
 import Transaction.*;
 import App.*;
 import StorageBin.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import javax.swing.event.DocumentListener;
 /**
  * A coffee truck's view
  */
 public class TruckView {
+	/** The appview, used to change the frame and switch cards */
+	private AppView appView;
+
+	/** Panel for setting storageBins */
+	private JPanel setStorageBinsPanel;
+
+	/** Panel for selecting what to do with storageBin */
+	private JPanel storageBinActionSelection;
+
+	/** Panel for changing contents of storagebin */
+	private JPanel changeBinContentsPanel;
+
+	/**
+	 * Constructor for truckview, setting the appview
+	 */
+	public TruckView(AppView appView){
+		this.appView = appView;
+	}
+
 	/**
 	 * Prints a feedback label
 	 */
@@ -18,54 +41,136 @@ public class TruckView {
 	/**
 	 * Prints the screen when the user is looking at a trucks storage bin inventory,
 	 * with the intent of changing its contents. 
-	 * @param truck The truck which will have its storage bin altered.
+	 * @param bins The bins to be printed
+	 * @param binselectAction the actionListener for when a bin gets clicked
+	 * @param endAction the actionlistener for when 
 	 */
-	public void printSetStorageBins(ArrayList<StorageBin> bins){
-		int counter = 1;
-		AppView.clear();
-		System.out.println("Here are the current contents of your storage bins:");
+	public void showSetStorageBins(ArrayList<StorageBin> bins, ActionListener binSelectAction, ActionListener endAction) {
+		setStorageBinsPanel = new JPanel();
+		setStorageBinsPanel.setLayout(new BoxLayout(setStorageBinsPanel, BoxLayout.Y_AXIS));
+		setStorageBinsPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-		for (StorageBin bin : bins){
-			System.out.printf("BIN #%d... ", (counter));
-			bin.printBinInfo();					
-			System.out.print("\n");
+		setStorageBinsPanel.add(new JLabel("Here are the current contents of your storage bins:"));
+		setStorageBinsPanel.add(Box.createVerticalStrut(10));
+
+		// Add one button per bin
+		int counter = 1;
+		for (StorageBin bin : bins) {
+			String binInfo = String.format("BIN #%d - %s", counter, bin.getBinInfo());
+
+			JButton binButton = new JButton("Edit Bin #" + counter);
+			binButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+			binButton.putClientProperty("binIndex", counter - 1); // Store the index (0-based)
+
+			binButton.addActionListener(binSelectAction);
+
+			setStorageBinsPanel.add(new JLabel(binInfo));
+			setStorageBinsPanel.add(binButton);
+			setStorageBinsPanel.add(Box.createVerticalStrut(10));
+
 			counter++;
 		}
 
-		System.out.println();
-		System.out.println("Select a bin to edit, enter END to exit.");
-		System.out.print(">> ");
+		// Exit button at bottom
+		JButton endButton = new JButton("Done");
+		endButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		endButton.addActionListener(endAction);
+
+		setStorageBinsPanel.add(Box.createVerticalStrut(20));
+		setStorageBinsPanel.add(endButton);
+
+		JScrollPane scrollPane = new JScrollPane(setStorageBinsPanel);
+		scrollPane.setBorder(null); // Optional: remove border to match aesthetic
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16); // Smoother scrolling
+
+		// Add the scroll pane instead of the plain panel
+		appView.addPanel(scrollPane, "setStorageBins");
+		appView.showPanel("setStorageBins");
 	}
+
 
 	/**
 	 * Prints the screen when a storage bin is being edited
 	 * @param bin The bin being edited.
 	 * @param isEmpty Boolean checking if a bin is empty
 	 */
-	public void printEditBin(StorageBin bin, boolean isEmpty){
-		AppView.clear();
-		bin.printBinInfo();
-		System.out.println();
-		System.out.println("1 - Set bin contents");
-		if (!isEmpty){
-			System.out.println("2 - Replenish bin contents");
-			System.out.println("3 - Empty bin contents");
-		}
-		System.out.println("0 - Exit");
+	public void showEditBin(StorageBin bin, boolean isEmpty, ActionListener setBinAction, 
+                        ActionListener replenishAction, ActionListener emptyAction, 
+                        ActionListener exitAction){
+
+		storageBinActionSelection = new JPanel();
+		storageBinActionSelection.setLayout(new BoxLayout(storageBinActionSelection, BoxLayout.Y_AXIS));
+		storageBinActionSelection.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+
+	    JButton setBinBtn = new JButton("Set bin contents");
+	    setBinBtn.addActionListener(setBinAction);
+	    storageBinActionSelection.add(setBinBtn);
+
+	    if (!isEmpty){
+		    JButton replenishBinBtn = new JButton("Replenish bin contents");
+		    replenishBinBtn.addActionListener(replenishAction);
+		    storageBinActionSelection.add(replenishBinBtn);
+
+
+		    JButton emptyBinBtn = new JButton("Empty bin contents");
+		    emptyBinBtn.addActionListener(emptyAction);
+		    storageBinActionSelection.add(emptyBinBtn);
+	    }
+
+	    JButton exitBtn = new JButton("Exit");
+	    exitBtn.addActionListener(exitAction);
+	    storageBinActionSelection.add(exitBtn);
+
+	    appView.addPanel(storageBinActionSelection, "storageBinActionSelection");
+		appView.showPanel("storageBinActionSelection");
 	}
 
 	/**
 	 * Prints the max quantity of each ingredient. 
+	 * @param actions The actionlisteners for the buttons
 	 */
-	public void printMaxQuantity(){
-		AppView.clear();
-		System.out.println("Max quantity for all items:");
-		System.out.println("Small Cup - 80pcs [enter: 'scup']");
-		System.out.println("Medium Cup - 64pcs [enter: 'mcup']");
-		System.out.println("Large Cup - 40pcs [enter: 'lcup']");
-		System.out.println("Coffee Beans - 1008grams [enter: 'coffee']");
-		System.out.println("Milk - 640fl [enter: 'milk']");
-		System.out.println("Water - 640fl [enter: 'water']");
+	public void showSetStorageBin(ArrayList<ActionListener> actions){
+		changeBinContentsPanel = new JPanel();
+		changeBinContentsPanel.setLayout(new BoxLayout(changeBinContentsPanel, BoxLayout.Y_AXIS));
+		changeBinContentsPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+
+		changeBinContentsPanel.add(new JLabel("Max. capacity of each ingredient:"));
+
+		String[] ingredients = {
+			"Small Cup - 80pcs",
+			"Medium Cup - 64pcs",
+			"Large Cup - 40pcs",
+			"Coffee Beans - 1008grams",
+			"Milk - 640fl",
+			"Water - 640fl",
+			"Syrups - 500fl"
+		};
+
+		String[] keys = {"Small Cup", "Medium Cup", "Large Cup", "Coffee", "Milk", "Water", "Syrup"};
+
+		for (int i = 0; i < ingredients.length; i++) {
+			JPanel row = new JPanel();
+			row.setLayout(new FlowLayout(FlowLayout.LEFT));
+			
+			JLabel label = new JLabel(ingredients[i]);
+			JTextField amtField = new JTextField(5);
+			JButton button = new JButton("Set");
+
+			button.setActionCommand(keys[i]);
+			button.putClientProperty("inputField", amtField);
+			button.addActionListener(actions.get(i));
+
+			row.add(label);
+			row.add(new JLabel("Amount:"));
+			row.add(amtField);
+			row.add(button);
+			changeBinContentsPanel.add(row);
+			changeBinContentsPanel.add(Box.createVerticalStrut(5));
+
+			appView.addPanel(changeBinContentsPanel, "setBin");
+		}
+
+		appView.showPanel("setBin");
 	}
 
 	/**
@@ -87,7 +192,7 @@ public class TruckView {
 
 		for (StorageBin bin : bins) {
 			System.out.printf("Storage bin #%d - ", (counter));
-			bin.printBinInfo();
+			bin.getBinInfo();
 			System.out.println();
 			counter++;
 
