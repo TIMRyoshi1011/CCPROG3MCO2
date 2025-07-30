@@ -37,6 +37,9 @@ public class AppView extends JFrame {
     /** JPanel for setting truck location */
     private JPanel setLocationPanel;
 
+    /** JPanel for maintenance */
+    private JPanel maintenancePanel;
+
     /**
      * Constructor for AppView. Sets all GUI components.
      */
@@ -354,8 +357,30 @@ public class AppView extends JFrame {
     }
 
 
+	/**
+     * Shows the panel that is in charge of maintaining the truck.
+     * @param actions ActionListener for each respective button controlled by the controller
+     */
+    public void doMaintenance(ActionListener[] actions){
+        maintenancePanel = new JPanel(new GridLayout(5, 1));
+        maintenancePanel.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
 
-    public void printFeedback(String msg){
-        System.out.println(msg);
+        maintenancePanel.add(new JLabel("What would you like to do?"), BorderLayout.NORTH);
+
+        plusButton = new JButton("Change Location");
+        regularButton = new JButton("Edit Prices");
+        JButton exitButton = new JButton("Exit");
+
+        plusButton.addActionListener(actions[0]);
+        regularButton.addActionListener(actions[1]);
+        regularButton.addActionListener(actions[2]);
+
+        maintenancePanel.add(plusButton);
+        maintenancePanel.add(regularButton);
+        maintenancePanel.add(exitButton);
+
+        cardPanel.add(maintenancePanel, "maintenancePanel");
+
+        cardLayout.show(cardPanel, "maintenancePanel");
     }
 }

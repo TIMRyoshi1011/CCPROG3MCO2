@@ -218,23 +218,6 @@ public class TruckView {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * Shows the screen when the user is replenishing the contents of the bin
 	 * @param onSubmit runs upon the user submitting their input, tells controllers to use input
@@ -313,4 +296,22 @@ public class TruckView {
 		appView.addPanel(fullTrackInfoPanel, "truckInfoPanel");
 		appView.showPanel("truckInfoPanel");
 	}
+
+	/**
+	 * Prints the contents of the menu
+	 * @param menu The menu to be printed
+	 */
+	public void printMenu(ArrayList<String> menu) {
+		System.out.println("AVAILABLE ITEMS:");
+
+		for (String item : menu) {
+			System.out.println(item);
+		}
+		System.out.println();
+	}
+
+
+
+
+
 }

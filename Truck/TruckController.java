@@ -106,7 +106,7 @@ public class TruckController {
 				int binIndex = (int) source.getClientProperty("binIndex");
 				editStorageBin(model.getBin(binIndex), () -> setBins(onDone));
 			},
-			
+
 			e -> onDone.run()
 		);
 	}
@@ -229,14 +229,10 @@ public class TruckController {
 	}
 
 	/**
- 	 * Simulates a sale. In simulating, it performs:
-   	 * 1. Customer ordering a drink. Display menu.
-     	 * 2. Calculate the amount of ingredients for the drink
-       	 * 3. Deduce that amount from the respective storage bins.
-	 * 4. Create a new transaction variable containing all information, add it to transactions list.
-  	 * 5. Print all information.
+	 * Start of simulate sale, prompts user to make order.
+	 * @param onDone Runnable if user wants to go back.
 	 */
-	public void simulateSale(){
+	public void simulateSale(Runnable onDone) {
 		boolean end = false, exit, drinkIsAvail;
 		ArrayList<String> menu;
 		ArrayList<ExtraIngr> extraSyrups = new ArrayList<ExtraIngr>();
@@ -255,7 +251,7 @@ public class TruckController {
 			}
 
 			else{
-				//view.printMenu(menu);
+				view.printMenu(menu);
 
 				view.printFeedback("Would you like to make an order? (y/n)");
 				choice = scan.nextLine().trim();
@@ -349,11 +345,13 @@ public class TruckController {
 
 							newT.printBrew();
 							//newT.printTransaction();
+							
+							onDone.run();
 						}
 					}
 				}
 
-				else { view.printFeedback("Please check your input."); scan.nextLine();}
+				else { view.printFeedback("Please check your input."); onDone.run();}
 			}
 		}
 	}

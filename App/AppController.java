@@ -116,7 +116,7 @@ public class AppController {
 
         actions[0] = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                model.getTruck(index).simulateSale();
+                model.getTruck(index).simulateSale(() -> simulateTruck(index));
             }
         };
         actions[1] = new ActionListener() {
@@ -131,7 +131,7 @@ public class AppController {
         };
         actions[3] = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Set maintenance
+                truckMaintenance(model.getTruck(index), () -> simulateTruck(index));
             }
         };
         actions[4] = new ActionListener() {
@@ -148,6 +148,7 @@ public class AppController {
      * Provides a birds-eye view of all trucks.
      */
     public void dashboard(){
+        /*
         boolean end = false;
         String choice;
         int truckIndx, i;
@@ -156,7 +157,7 @@ public class AppController {
             view.printDashboard(model.getTrucks(), model.getTotalIngredients(), 
                 model.getTotalEarnings(), model.getTotalTransactionTypes());
 
-            view.printFeedback("Is there a specific truck you'd like to see? (y/n)");
+            //view.printFeedback("Is there a specific truck you'd like to see? (y/n)");
             choice = scan.nextLine();
 
             switch(choice.toLowerCase().charAt(0)){
@@ -168,13 +169,13 @@ public class AppController {
                     if (truckIndx >= 0 && truckIndx < model.getNumTrucks()){
                         //model.getTruck(truckIndx).truckFullInfo(); scan.nextLine();
                     }
-                    else view.printFeedback("Truck index is not valid.");
+                    //else view.printFeedback("Truck index is not valid.");
                     
                 case 'n': end = true; break;
                 default: {view.printFeedback("Please check your input"); scan.nextLine(); break;}
             }
         } while (!end);
-
+        */
     }
 
     /**
@@ -208,13 +209,13 @@ public class AppController {
      */
     public void editPrices(Runnable onDone) {
         HashMap<String, Float> prices = new HashMap<>();
-        prices.put("espresso", Espresso.getPrice());
-        prices.put("milk", Milk.getPrice());
-        prices.put("water", Water.getPrice());
-        prices.put("scup", SmallCup.getPrice());
-        prices.put("mcup", MediumCup.getPrice());
-        prices.put("lcup", LargeCup.getPrice());
-        prices.put("extra", ExtraIngr.getPrice());
+        prices.put("Espresso", Espresso.getPrice());
+        prices.put("Milk", Milk.getPrice());
+        prices.put("Water", Water.getPrice());
+        prices.put("Small Cup", SmallCup.getPrice());
+        prices.put("Medium Cup", MediumCup.getPrice());
+        prices.put("Large Cup", LargeCup.getPrice());
+        prices.put("Syrups", ExtraIngr.getPrice());
 
         ArrayList<ActionListener> actions = new ArrayList<>();
 
@@ -229,13 +230,13 @@ public class AppController {
                 boolean success = false;
 
                 switch (thisIngredient) {
-                    case "espresso": Espresso.setPrice(newPrice); success = true; break;
-                    case "milk": Milk.setPrice(newPrice); success = true; break;
-                    case "water": Water.setPrice(newPrice); success = true; break;
-                    case "scup": SmallCup.setPrice(newPrice); success = true; break;
-                    case "mcup": MediumCup.setPrice(newPrice); success = true; break;
-                    case "lcup": LargeCup.setPrice(newPrice); success = true; break;
-                    case "extra": ExtraIngr.setPrice(newPrice); success = true; break;
+                    case "Espresso": Espresso.setPrice(newPrice); success = true; break;
+                    case "Milk": Milk.setPrice(newPrice); success = true; break;
+                    case "Water": Water.setPrice(newPrice); success = true; break;
+                    case "Small Cup": SmallCup.setPrice(newPrice); success = true; break;
+                    case "Medium Cup": MediumCup.setPrice(newPrice); success = true; break;
+                    case "Large Cup": LargeCup.setPrice(newPrice); success = true; break;
+                    case "Syrups": ExtraIngr.setPrice(newPrice); success = true; break;
                 }
 
                 if (success) {
@@ -259,20 +260,15 @@ public class AppController {
     /**
      * Maintain the truck. Change it's location or prices.
      * @param truck truck being maintained
+     * @param onDone runnable that dictates what to do when done
      */
-    public void truckMaintenance(TruckController truck){
-        boolean end = false;
-        String choice; int intChoice;
+    public void truckMaintenance(TruckController truck, Runnable onDone){
+        ActionListener[] actions = new ActionListener[3];
 
-        while (!end){
-            view.printMaintenanceSelect();
-            choice = scan.nextLine();
+        actions[0] = e -> setTruckLocation(truck, onDone);
+        actions[1] = e -> editPrices(onDone);
+        actions[2] = e -> onDone.run();
 
-            intChoice = AppModel.toInt(choice);
-           /* if (intChoice == 1) setTruckLocation(truck);
-            else if (intChoice == 2) editPrices();
-            else if (intChoice == 3) end = true;
-            else view.printFeedback("Please check your input.");*/
-        }
+        view.doMaintenance(actions);
     }
 }
