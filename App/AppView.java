@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.event.DocumentListener;
+import java.util.HashMap;
 
 /**
  * View for the main interface
@@ -172,6 +173,59 @@ public class AppView extends JFrame {
         cardLayout.show(cardPanel, "setLocation");
     }
 
+    /**
+     * Panel for when the price is being edited 
+     * @param prices HashMap of the current ingredients and their prices
+     * @param updateListener Actionlistener for when a price is edited
+     * @param doneListener ActionListener when the user is done with the showEditPricesPanel
+     */
+	public void showEditPricesPanel(
+	    HashMap<String, Float> prices,
+	    ArrayList<ActionListener> setPriceActions,
+	    ActionListener doneListener
+	) {
+	    JPanel editPricesPanel = new JPanel();
+	    editPricesPanel.setLayout(new BoxLayout(editPricesPanel, BoxLayout.Y_AXIS));
+	    editPricesPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+
+	    editPricesPanel.add(new JLabel("Set Ingredient Prices (Applies to ALL trucks):"));
+	    editPricesPanel.add(Box.createVerticalStrut(10));
+
+	    int index = 0;
+	    for (HashMap.Entry<String, Float> entry : prices.entrySet()) {
+	        String ingredient = entry.getKey();
+	        Float currentPrice = entry.getValue();
+
+	        JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	        JLabel label = new JLabel(ingredient + " (Current: " + String.format("%.2f", currentPrice) + ")");
+	        JTextField priceField = new JTextField(5);
+	        JButton setButton = new JButton("Set");
+
+	        setButton.setActionCommand(ingredient);
+	        setButton.putClientProperty("priceField", priceField);
+	        setButton.addActionListener(setPriceActions.get(index++));
+
+	        row.add(label);
+	        row.add(new JLabel("New Price:"));
+	        row.add(priceField);
+	        row.add(setButton);
+
+	        editPricesPanel.add(row);
+	        editPricesPanel.add(Box.createVerticalStrut(5));
+	    }
+
+	    // Done button at the bottom
+	    JButton doneButton = new JButton("Done");
+	    doneButton.addActionListener(doneListener);
+	    JPanel donePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	    donePanel.add(doneButton);
+
+	    editPricesPanel.add(Box.createVerticalStrut(10));
+	    editPricesPanel.add(donePanel);
+
+	    cardPanel.add(editPricesPanel, "editPrices");
+	    cardLayout.show(cardPanel, "editPrices");
+	}
 
 
 
@@ -191,32 +245,6 @@ public class AppView extends JFrame {
 
 
 
-
-
-
-
-
-
-    public void printFeedback(String msg){
-        System.out.println(msg);
-    }
-
-    public void printSetPrice(){
-        clear();
-        System.out.println("The prices of drinks for all coffee trucks are equal, and is determined by the amount of an ingredient and it's base price, as well as the cup size.\n");
-        System.out.println("Below are the current prices for each ingredient:");
-        System.out.printf("1 shot espresso: %.2f\n", Espresso.getPrice());
-        System.out.printf("1fl of milk: %.2f\n", Milk.getPrice());
-        System.out.printf("1fl of water: %.2f\n", Water.getPrice());
-        System.out.printf("Small cup base price: %.2f\n", SmallCup.getPrice());
-        System.out.printf("Medium cup base price: %.2f\n", MediumCup.getPrice());
-        System.out.printf("Large cup base price: %.2f\n", LargeCup.getPrice());
-        System.out.printf("Additional syrups or toppings: %.2f\n", ExtraIngr.getPrice());
-        System.out.println();
-
-        System.out.println("Enter an ingredient who's price you'd like to change ['water','milk','espresso','scup','mcup','lcup','extra']. If you'd like to exit, enter END.");
-        System.out.print(">> ");
-    }
 
     /**
      * Prints the screen allowing the user to pick a truck
@@ -331,5 +359,11 @@ public class AppView extends JFrame {
         } catch (Exception e) {
             System.out.println("Error clearing console: " + e.getMessage());
         }
+    }
+
+
+
+    public void printFeedback(String msg){
+        System.out.println(msg);
     }
 }

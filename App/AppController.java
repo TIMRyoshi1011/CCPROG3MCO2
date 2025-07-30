@@ -1,12 +1,16 @@
 package App;
 
 import Truck.*;
+import Espresso.*;
+import Ingredient.*;
+import Cup.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 
 /**
  * Controller for the main app interface.
@@ -55,19 +59,29 @@ public class AppController {
      * Called when the user wants to create a new truck.
      */
     public void createTruck(){
-        String choice; int intChoice;
-        boolean success = false, inptCheck, end;
-
         /* Set truck type */
         ActionListener[] actions = new ActionListener[2];
 
         actions[0] = e -> {
             setTruckType('P');
-            setTruckLocation(tempTruck, true);
+            setTruckLocation(tempTruck, () -> {
+                tempTruck.setBins(() -> {
+                    editPrices(() -> {
+                        view.setOutput("Truck creation complete!");
+                    });
+                });
+            });
         };
+
         actions[1] = e -> {
             setTruckType('R');
-            setTruckLocation(tempTruck, true);
+            setTruckLocation(tempTruck, () -> {
+                tempTruck.setBins(() -> {
+                    editPrices(() -> {
+                        view.setOutput("Truck creation complete!");
+                    });
+                });
+            });
         };
 
         view.showSetType(actions);
@@ -113,7 +127,7 @@ public class AppController {
                         break;
                     case 3:
                         // restock storage bins
-                        model.getTruck(truckIndx).setBins();
+                        //model.getTruck(truckIndx).setBins(this::simulateSale);
                         break;
                     case 4:
                         // set maintenance
@@ -176,7 +190,7 @@ public class AppController {
      * Sets the location of a truck
      * @param truck truck being edited
      */
-    public void setTruckLocation(TruckController truck){
+    public void setTruckLocation(TruckController truck, Runnable onDone){
         view.showSetLocation(e -> {
             JButton source = (JButton) e.getSource();
             String location = (String) source.getClientProperty("location");
@@ -185,53 +199,63 @@ public class AppController {
             if (!success) {
                 view.setOutput("There's already a truck here!");
             }
-            else view.setOutput("Truck location set to: " + location);
-        });
-    }
-
-    /**
-     * Sets the location of a truck
-     * @param truck truck being edited
-     */
-    public void setTruckLocation(TruckController truck, boolean inCreateTruck){
-        view.showSetLocation(e -> {
-            JButton source = (JButton) e.getSource();
-            String location = (String) source.getClientProperty("location");
-
-            success = model.setLocation(truck, location);
-            if (!success) {
-                view.setOutput("There's already a truck here!");
-            }
-            else {view.setOutput("Truck location set to: " + location); tempTruck.setBins();}
+            else {view.setOutput("Truck location set to: " + location); onDone.run();}
         });
     }
 
     /**
      * Controls the app when the prices are being edited.
+     * @param onDone Runnable to decide what to do after being called
      */
-    public void editPrices(){
-        String choice, choice2;
-        float floatChoice;
-        boolean success, end = false;
+    public void editPrices(Runnable onDone) {
+        HashMap<String, Float> prices = new HashMap<>();
+        prices.put("espresso", Espresso.getPrice());
+        prices.put("milk", Milk.getPrice());
+        prices.put("water", Water.getPrice());
+        prices.put("scup", SmallCup.getPrice());
+        prices.put("mcup", MediumCup.getPrice());
+        prices.put("lcup", LargeCup.getPrice());
+        prices.put("extra", ExtraIngr.getPrice());
 
-        while (!end){
-            view.printSetPrice();
-            choice = scan.nextLine();
+        ArrayList<ActionListener> actions = new ArrayList<>();
 
-            if (choice.toUpperCase().equals("END")) end = true;
-            else{
-                view.printFeedback("Enter the new price: (THIS IS EFFECTIVE FOR ALL TRUCKS)");
-                choice2 = scan.nextLine();
-                floatChoice = model.toFloat(choice2);
-                success = model.setPrice(choice, floatChoice);
+        for (String ingredient : prices.keySet()) {
+            final String thisIngredient = ingredient;
 
-                if (success) view.printFeedback("Price successfully changed!");
-                else view.printFeedback("Please check your input...");
+            actions.add(e -> {
+                JButton btn = (JButton) e.getSource();
+                JTextField field = (JTextField) btn.getClientProperty("priceField");
+                float newPrice = AppModel.toFloat(field.getText()); // Fixed to use AppModel
 
-                scan.nextLine();
-            }
-        }   
+                boolean success = false;
+
+                switch (thisIngredient) {
+                    case "espresso": Espresso.setPrice(newPrice); success = true; break;
+                    case "milk": Milk.setPrice(newPrice); success = true; break;
+                    case "water": Water.setPrice(newPrice); success = true; break;
+                    case "scup": SmallCup.setPrice(newPrice); success = true; break;
+                    case "mcup": MediumCup.setPrice(newPrice); success = true; break;
+                    case "lcup": LargeCup.setPrice(newPrice); success = true; break;
+                    case "extra": ExtraIngr.setPrice(newPrice); success = true; break;
+                }
+
+                if (success) {
+                    view.setOutput("Price updated for " + thisIngredient); // Changed from showMessage
+                } else {
+                    view.setOutput("Failed to update price.");
+                }
+
+                editPrices(onDone);
+            });
+        }
+
+        view.showEditPricesPanel(prices, actions, e -> {
+            view.setOutput("All prices updated."); // Changed from showMessage
+            onDone.run(); // Call the provided callback
+        });
     }
+
+
 
     /**
      * Maintain the truck. Change it's location or prices.
@@ -246,10 +270,10 @@ public class AppController {
             choice = scan.nextLine();
 
             intChoice = AppModel.toInt(choice);
-            if (intChoice == 1) setTruckLocation(truck);
+           /* if (intChoice == 1) setTruckLocation(truck);
             else if (intChoice == 2) editPrices();
             else if (intChoice == 3) end = true;
-            else view.printFeedback("Please check your input.");
+            else view.printFeedback("Please check your input.");*/
         }
     }
 }

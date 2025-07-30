@@ -97,7 +97,7 @@ public class TruckController {
 	/**
 	 * Given list of bins, choose a bin to set.
 	 */
-	public void setBins() {
+	public void setBins(Runnable onDone) {
 		view.showSetStorageBins(
 			model.getBins(),
 
@@ -105,11 +105,11 @@ public class TruckController {
 			e -> {
 				JButton source = (JButton) e.getSource();
 				int binIndex = (int) source.getClientProperty("binIndex");
-				editStorageBin(model.getBin(binIndex), this::setBins);
+				editStorageBin(model.getBin(binIndex), () -> setBins(onDone));
 			},
 
 			// ActionListener for "Done" button
-			e -> appView.setOutput("Exiting bin editing...")
+			e -> onDone.run()
 		);
 	}
 
