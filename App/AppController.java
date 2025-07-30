@@ -45,7 +45,7 @@ public class AppController {
         ActionListener[] actions = new ActionListener[4];
 
         actions[0] = e -> createTruck(() -> mainMenu()); 
-        actions[1] = e -> simulateTruck(); 
+        actions[1] = e -> truckSelection(); 
         actions[2] = e -> dashboard(); 
         actions[3] = e -> {
             view.setOutput("Thank you for using JavaJeeps!");
@@ -68,6 +68,7 @@ public class AppController {
             setTruckLocation(tempTruck, () -> {
                 tempTruck.setBins(() -> {
                     editPrices(() -> {
+                        model.addTruck(tempTruck);
                         tempTruck.truckInfo(() -> onDone.run());
                     });
                 });
@@ -79,6 +80,7 @@ public class AppController {
             setTruckLocation(tempTruck, () -> {
                 tempTruck.setBins(() -> {
                     editPrices(() -> {
+                        model.addTruck(tempTruck);
                         tempTruck.truckInfo(() -> onDone.run());
                     });
                 });
@@ -90,60 +92,56 @@ public class AppController {
     }
 
     /**
+     * Gets a truck selected.
+     */
+    public void truckSelection() {
+        view.showTruckSelections(model.getTrucks(), new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int index = Integer.parseInt(e.getActionCommand());
+                simulateTruck(index);
+            }
+        });
+    }
+
+    /**
      * Simulates a truck. When choosing to simulate a truck, the user can: 
      * - Simulate a sale
      * - View truck informaiton
      * - Restock bins and perform maintenance.
+     * @param index Truck index
      */
-    public void simulateTruck(){
-        String choice;
-        boolean end = false, exitTruck = true;
-        int truckIndx, intChoice;
+    public void simulateTruck(int index){
+        ActionListener[] actions = new ActionListener[5];
 
-        do{
-            /* Selecting a truck to simulate */
-            view.printTruckOptions(model.getTrucks());
-            choice = scan.nextLine();
-            truckIndx = model.toInt(choice) - 1;
-
-            if (choice.equalsIgnoreCase("END")) end = true;
-            else if (truckIndx < 0) view.printFeedback("Please check your input!");
-            else exitTruck = false;
-
-            while (!exitTruck){
-
-                /* Selecting what to do with chosen truck. */
-                view.printSimulateOptions();
-                choice = scan.nextLine();
-                intChoice = model.toInt(choice);
-
-                switch(intChoice){
-                    case 1:
-                        model.getTruck(truckIndx).simulateSale();
-                        break;
-                    case 2:
-                        // print info
-                        //model.getTruck(truckIndx).truckFullInfo();
-                        scan.nextLine();
-                        break;
-                    case 3:
-                        // restock storage bins
-                        //model.getTruck(truckIndx).setBins(this::simulateSale);
-                        break;
-                    case 4:
-                        // set maintenance
-                        truckMaintenance(model.getTruck(truckIndx));
-                        break;
-                    case 5:
-                        // exit
-                        exitTruck = true;
-                        break;
-                    default:
-                        view.printFeedback("Please check your input!");
-                }
-
+        actions[0] = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                model.getTruck(index).simulateSale();
             }
-        } while(!end);
+        };
+        actions[1] = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                model.getTruck(index).truckInfo(() -> simulateTruck(index));
+            }
+        };
+        actions[2] = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                model.getTruck(index).setBins(() -> simulateTruck(index));
+            }
+        };
+        actions[3] = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Set maintenance
+            }
+        };
+        actions[4] = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mainMenu();
+            }
+        };
+
+        view.showSimulateActions(actions);
+
     }
 
     /**
@@ -163,7 +161,7 @@ public class AppController {
 
             switch(choice.toLowerCase().charAt(0)){
                 case 'y': 
-                    view.printTruckOptions(model.getTrucks());
+                  //  view.printTruckOptions(model.getTrucks());
                     choice = scan.nextLine();
                     truckIndx = model.toInt(choice);
 

@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.event.DocumentListener;
 import java.util.HashMap;
+import java.util.function.Consumer;
+
 
 /**
  * View for the main interface
@@ -120,23 +122,21 @@ public class AppView extends JFrame {
      * @param actions ActionListener for each respective button controlled by the controller
      */
     public void showSetType(ActionListener[] actions){
-        if (setTypePanel == null){
-            setTypePanel = new JPanel(new GridLayout(5, 1));
-	        setTypePanel.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
+        setTypePanel = new JPanel(new GridLayout(5, 1));
+        setTypePanel.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
 
-            setTypePanel.add(new JLabel("Select the truck type:"), BorderLayout.NORTH);
+        setTypePanel.add(new JLabel("Select the truck type:"), BorderLayout.NORTH);
 
-            plusButton = new JButton("Plus Truck");
-            regularButton = new JButton("Regular Truck");
+        plusButton = new JButton("Plus Truck");
+        regularButton = new JButton("Regular Truck");
 
-            plusButton.addActionListener(actions[0]);
-            regularButton.addActionListener(actions[1]);
+        plusButton.addActionListener(actions[0]);
+        regularButton.addActionListener(actions[1]);
 
-            setTypePanel.add(plusButton);
-            setTypePanel.add(regularButton);
+        setTypePanel.add(plusButton);
+        setTypePanel.add(regularButton);
 
-            cardPanel.add(setTypePanel, "setType");
-        }
+        cardPanel.add(setTypePanel, "setType");
 
         cardLayout.show(cardPanel, "setType");
     }
@@ -145,30 +145,29 @@ public class AppView extends JFrame {
      * Shows the screen when the type's location is being set.
      */
     public void showSetLocation(ActionListener confirmAction){
-        if (setLocationPanel == null){
-        	setLocationPanel = new JPanel();
-			setLocationPanel.setLayout(new BoxLayout(setLocationPanel, BoxLayout.Y_AXIS));
-	        setLocationPanel.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
+    	setLocationPanel = new JPanel();
+		setLocationPanel.setLayout(new BoxLayout(setLocationPanel, BoxLayout.Y_AXIS));
+        setLocationPanel.setBorder(BorderFactory.createEmptyBorder(40, 100, 40, 100));
 
-            setLocationPanel.add(new JLabel("What location do you want your truck to stay in?"), BorderLayout.NORTH);
-            setLocationPanel.add(new JLabel("To keep business efficient, we're limiting it to one truck per city!"));
+        setLocationPanel.add(new JLabel("What location do you want your truck to stay in?"), BorderLayout.NORTH);
+        setLocationPanel.add(new JLabel("To keep business efficient, we're limiting it to one truck per city!"));
 
 
-            JTextField locationField = new JTextField();
-            locationField.setMaximumSize(new Dimension(200, 25));
-            JButton confirmButton = new JButton("Confirm");
+        JTextField locationField = new JTextField();
+        locationField.setMaximumSize(new Dimension(200, 25));
+        JButton confirmButton = new JButton("Confirm");
 
-            confirmButton.setActionCommand("confirmLocation");
-            confirmButton.addActionListener(e -> {
-                confirmButton.putClientProperty("location", locationField.getText());
-                confirmAction.actionPerformed(e);
-            });
+        confirmButton.setActionCommand("confirmLocation");
+        confirmButton.addActionListener(e -> {
+            confirmButton.putClientProperty("location", locationField.getText());
+            confirmAction.actionPerformed(e);
+        });
 
-            setLocationPanel.add(locationField);
-            setLocationPanel.add(confirmButton);
+        setLocationPanel.add(locationField);
+        setLocationPanel.add(confirmButton);
 
-            cardPanel.add(setLocationPanel, "setLocation");
-        }
+        cardPanel.add(setLocationPanel, "setLocation");
+    
 
         cardLayout.show(cardPanel, "setLocation");
     }
@@ -228,56 +227,49 @@ public class AppView extends JFrame {
 	}
 
 
+	/**
+	 * Shows GUI screen to pick a truck.
+	 * @param trucks List of TruckControllers
+	 * @param buttonListener actionlistener to get iput
+	 */
+    public void showTruckSelections(ArrayList<TruckController> trucks, ActionListener buttonListener) {
+        JPanel truckSelect = new JPanel();
+        truckSelect.setLayout(new BoxLayout(truckSelect, BoxLayout.Y_AXIS));
+        truckSelect.add(new JLabel("Select a Truck:"));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Prints the screen allowing the user to pick a truck
-     * @param trucks Arraylist of trucks to print
-     */
-    public void printTruckOptions(ArrayList<TruckController> trucks){
-        int count = 1;
-
-        clear();
-
-        System.out.println("Choose a truck!"); 
-        for (TruckController truck : trucks){
-            System.out.printf("#%d || ", count);
-            //truck.truckBaseInfo();
-            count++;
+        for (int i = 0; i < trucks.size(); i++) {
+            JButton button = new JButton("Type: " + trucks.get(i).getType() + " || Location: " + trucks.get(i).getLocation());
+            button.setActionCommand(String.valueOf(i)); // pass index as command
+            button.addActionListener(buttonListener);
+            truckSelect.add(button);
         }
-        System.out.println("Enter \"END\" to exit.");
+
+	    cardPanel.add(truckSelect, "truckSelect");
+	    cardLayout.show(cardPanel, "truckSelect");
+    }
+    
+
+	/**
+	 * Shows GUI screen to simulate a truck.
+	 * @param actions Actionlisteners for the buttons
+	 */
+    public void showSimulateActions(ActionListener[] actions) {
+        JPanel simulateOptions = new JPanel();
+        simulateOptions.setLayout(new BoxLayout(simulateOptions, BoxLayout.Y_AXIS));
+        simulateOptions.add(new JLabel("Choose an option:", SwingConstants.CENTER));
+
+        String[] options = {"Simulate Sale", "View Truck Info", "Manage Storage Bins", "Truck Maintenance", "Exit"};
+
+        for (int i = 0; i < 5; i++) {
+            JButton btn = new JButton(options[i]);
+            btn.addActionListener(actions[i]);
+            simulateOptions.add(btn);
+        }
+
+	    cardPanel.add(simulateOptions, "simulateOptions");
+	    cardLayout.show(cardPanel, "simulateOptions");
     }
 
-    /**
-     * Prints the options the user can pick from when simulating a truck.
-     */
-    public void printSimulateOptions(){
-        clear();
-
-        System.out.println("What would you like to do?");
-        System.out.println("1 - Simulate sale");
-        System.out.println("2 - View truck information");
-        System.out.println("3 - Manage bins");
-        System.out.println("4 - Maintenance");
-        System.out.println("5 - Exit");
-        System.out.println();
-    }
 
     /**
      * Prints the dashboard

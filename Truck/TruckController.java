@@ -101,14 +101,12 @@ public class TruckController {
 		view.showSetStorageBins(
 			model.getBins(),
 
-			// ActionListener for editing bins
 			e -> {
 				JButton source = (JButton) e.getSource();
 				int binIndex = (int) source.getClientProperty("binIndex");
 				editStorageBin(model.getBin(binIndex), () -> setBins(onDone));
 			},
-
-			// ActionListener for "Done" button
+			
 			e -> onDone.run()
 		);
 	}
@@ -220,25 +218,6 @@ public class TruckController {
 			onExit
 		);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	/**
 	 * Prints the full info of a truck. Transaction, type, location, menu, and bins
