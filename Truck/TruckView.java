@@ -274,10 +274,11 @@ public class TruckView {
 	 * @param location the location of the truck
 	 * @param bins the storage bins of the truck
 	 * @param transacs The transactions of the truck
-	 * @param menu The menu of the truck
+	 * @param menu The menu of the truck,
+	 * @param onDone What to do when done
 	 */
 	public void printTruckFullInfo(char type, String location, ArrayList<StorageBin> bins,
-		ArrayList<TransactionController> transacs, ArrayList<String> menu){
+		ArrayList<TransactionController> transacs, ArrayList<String> menu, Runnable onDone){
 		
 		JPanel fullTrackInfoPanel = new JPanel();
 		fullTrackInfoPanel.setLayout(new BoxLayout(fullTrackInfoPanel, BoxLayout.Y_AXIS));
@@ -301,6 +302,13 @@ public class TruckView {
 		for (TransactionController transaction : transacs){
 			fullTrackInfoPanel.add(new JLabel("   " + transaction.getSummary()));
 		}
+
+	    JButton closeButton = new JButton("Close");
+	    closeButton.addActionListener(e -> {
+	        if (onDone != null) onDone.run();
+	    });
+
+	    fullTrackInfoPanel.add(closeButton);
 	
 		appView.addPanel(fullTrackInfoPanel, "truckInfoPanel");
 		appView.showPanel("truckInfoPanel");

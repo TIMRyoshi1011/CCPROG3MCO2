@@ -44,7 +44,7 @@ public class AppController {
     public void mainMenu(){
         ActionListener[] actions = new ActionListener[4];
 
-        actions[0] = e -> createTruck(); 
+        actions[0] = e -> createTruck(() -> mainMenu()); 
         actions[1] = e -> simulateTruck(); 
         actions[2] = e -> dashboard(); 
         actions[3] = e -> {
@@ -57,8 +57,9 @@ public class AppController {
 
     /**
      * Called when the user wants to create a new truck.
+     * @param onDone runnable to decide what to do after amking truck.
      */
-    public void createTruck(){
+    public void createTruck(Runnable onDone){
         /* Set truck type */
         ActionListener[] actions = new ActionListener[2];
 
@@ -67,7 +68,7 @@ public class AppController {
             setTruckLocation(tempTruck, () -> {
                 tempTruck.setBins(() -> {
                     editPrices(() -> {
-                        tempTruck.truckInfo();
+                        tempTruck.truckInfo(() -> onDone.run());
                     });
                 });
             });
@@ -78,7 +79,7 @@ public class AppController {
             setTruckLocation(tempTruck, () -> {
                 tempTruck.setBins(() -> {
                     editPrices(() -> {
-                        tempTruck.truckInfo();
+                        tempTruck.truckInfo(() -> onDone.run());
                     });
                 });
             });

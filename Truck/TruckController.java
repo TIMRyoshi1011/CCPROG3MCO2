@@ -243,9 +243,10 @@ public class TruckController {
 	/**
 	 * Prints the full info of a truck. Transaction, type, location, menu, and bins
 	 * @param truck The truck whos information is gonna be printed
+	 * @param onDone What to do when finished
 	 */
-	public void truckInfo(){
-		view.printTruckFullInfo(model.getType(), model.getLocation(), model.getBins(), model.getTransactions(), model.returnMenu());
+	public void truckInfo(Runnable onDone){
+		view.printTruckFullInfo(model.getType(), model.getLocation(), model.getBins(), model.getTransactions(), model.returnMenu(), onDone);
 	}
 
 	/**
