@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
  */
 public class TruckController {
 	/** The truck controller's model */
-	public TruckModelAbstract model;
+	private TruckModelAbstract model;
 	/** The truck controller's view */
 	private TruckView view;
 	/** Scanner for the whole file */
