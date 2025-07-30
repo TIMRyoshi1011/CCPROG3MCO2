@@ -63,13 +63,11 @@ public class AppController {
 
         actions[0] = e -> {
             setTruckType('P');
-            setTruckLocation(tempTruck);
-            tempTruck.setBins();
+            setTruckLocation(tempTruck, true);
         };
         actions[1] = e -> {
             setTruckType('R');
-            setTruckLocation(tempTruck);
-            tempTruck.setBins();
+            setTruckLocation(tempTruck, true);
         };
 
         view.showSetType(actions);
@@ -188,6 +186,23 @@ public class AppController {
                 view.setOutput("There's already a truck here!");
             }
             else view.setOutput("Truck location set to: " + location);
+        });
+    }
+
+    /**
+     * Sets the location of a truck
+     * @param truck truck being edited
+     */
+    public void setTruckLocation(TruckController truck, boolean inCreateTruck){
+        view.showSetLocation(e -> {
+            JButton source = (JButton) e.getSource();
+            String location = (String) source.getClientProperty("location");
+
+            success = model.setLocation(truck, location);
+            if (!success) {
+                view.setOutput("There's already a truck here!");
+            }
+            else {view.setOutput("Truck location set to: " + location); tempTruck.setBins();}
         });
     }
 

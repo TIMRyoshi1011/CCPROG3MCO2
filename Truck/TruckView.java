@@ -24,6 +24,9 @@ public class TruckView {
 	/** Panel for changing contents of storagebin */
 	private JPanel changeBinContentsPanel;
 
+	/** Panel for replenishing the bins */
+	private JPanel replenishPanel;
+
 	/**
 	 * Constructor for truckview, setting the appview
 	 */
@@ -173,6 +176,26 @@ public class TruckView {
 		appView.showPanel("setBin");
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
 	/**
 	 * Prints the base info (location, type) of a truck.
 	 * @param type The type of the truck to be printed
@@ -198,6 +221,39 @@ public class TruckView {
 
 			
 		}
+	}
+
+	/**
+	 * Shows the screen when the user is replenishing the contents of the bin
+	 * @param onSubmit runs upon the user submitting their input, tells controllers to use input
+	 * @param onCancel runs when the user cancels from replenishing
+	 @*/
+	public void showReplenishBinForm(ActionListener onSubmit, Runnable onCancel) {
+		JPanel replenishPanel = new JPanel();
+		replenishPanel.setLayout(new BoxLayout(replenishPanel, BoxLayout.Y_AXIS));
+		replenishPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+
+		replenishPanel.add(new JLabel("What is the new quantity of the item?"));
+
+		JPanel inputRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JTextField inputField = new JTextField(10);
+		JButton submitBtn = new JButton("Replenish");
+
+		submitBtn.putClientProperty("inputField", inputField);
+		submitBtn.addActionListener(onSubmit);
+
+		inputRow.add(new JLabel("Amount:"));
+		inputRow.add(inputField);
+		inputRow.add(submitBtn);
+		replenishPanel.add(inputRow);
+
+		JButton cancelBtn = new JButton("Cancel");
+		cancelBtn.addActionListener(e -> onCancel.run());
+		replenishPanel.add(Box.createVerticalStrut(10));
+		replenishPanel.add(cancelBtn);
+
+		appView.addPanel(replenishPanel, "replenishBin");
+		appView.showPanel("replenishBin");
 	}
 
 	/**

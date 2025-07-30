@@ -173,8 +173,52 @@ public class TruckController {
 	 * @param bin Bin to be edited
 	 */
 	public void replenishStorageBin(StorageBin bin, Runnable onExit){
+		view.showReplenishBinForm(
+			e -> {
+				JButton source = (JButton) e.getSource();
+				JTextField inputField = (JTextField) source.getClientProperty("inputField");
+				String input = inputField.getText().trim();
+				float amount = AppModel.toFloat(input);
 
+				if (amount < 0) {
+					appView.setOutput("Error in input!");
+					return;
+				}
+
+				boolean success = model.replenishBin(bin, amount);
+				if (!success) {
+					appView.setOutput("Cannot fit in bin!");
+				} else {
+					appView.setOutput("Successfully replenished!");
+				}
+
+				onExit.run();
+			},
+			onExit
+		);
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * Prints the base info (location, type) of a truck.
