@@ -46,7 +46,7 @@ public class AppController {
 
         actions[0] = e -> createTruck(() -> mainMenu()); 
         actions[1] = e -> truckSelection(); 
-        actions[2] = e -> dashboard(); 
+        actions[2] = e -> dashboard(() -> mainMenu()); 
         actions[3] = e -> {
             view.setOutput("Thank you for using JavaJeeps!");
             System.exit(0); 
@@ -146,36 +146,11 @@ public class AppController {
 
     /**
      * Provides a birds-eye view of all trucks.
+     * @param onDone Runnable to go back to main menu.
      */
-    public void dashboard(){
-        /*
-        boolean end = false;
-        String choice;
-        int truckIndx, i;
-
-        do {
-            view.printDashboard(model.getTrucks(), model.getTotalIngredients(), 
-                model.getTotalEarnings(), model.getTotalTransactionTypes());
-
-            //view.printFeedback("Is there a specific truck you'd like to see? (y/n)");
-            choice = scan.nextLine();
-
-            switch(choice.toLowerCase().charAt(0)){
-                case 'y': 
-                  //  view.printTruckOptions(model.getTrucks());
-                    choice = scan.nextLine();
-                    truckIndx = model.toInt(choice);
-
-                    if (truckIndx >= 0 && truckIndx < model.getNumTrucks()){
-                        //model.getTruck(truckIndx).truckFullInfo(); scan.nextLine();
-                    }
-                    //else view.printFeedback("Truck index is not valid.");
-                    
-                case 'n': end = true; break;
-                default: {view.printFeedback("Please check your input"); scan.nextLine(); break;}
-            }
-        } while (!end);
-        */
+    public void dashboard(Runnable onDone){
+        view.printDashboard(model.getTrucks(), model.getTotalIngredients(), 
+                model.getTotalEarnings(), model.getTotalTransactionTypes(), onDone);
     }
 
     /**
@@ -254,8 +229,6 @@ public class AppController {
             onDone.run();
         });
     }
-
-
 
     /**
      * Maintain the truck. Change it's location or prices.

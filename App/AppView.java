@@ -281,51 +281,50 @@ public class AppView extends JFrame {
      * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee
      * @param combinedSales Total earnings of all trucks
      * @param transacType Total amount of all types of drinks made
+     * @param onDone runnable to go back to main menu
      */
-    public void printDashboard(ArrayList<TruckController> trucks, float[] totalIngr, float combinedSales, int[] transacType){
-        clear();
-        System.out.println("ALL TRUCKS:");
+    public void printDashboard(ArrayList<TruckController> trucks, float[] totalIngr, float combinedSales, int[] transacType, Runnable onDone){
+   		JPanel dashboardPanel = new JPanel();
+		dashboardPanel.setLayout(new BoxLayout(dashboardPanel, BoxLayout.Y_AXIS));
+		dashboardPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-        /* Prints all trucks' base info */
-        //for (TruckController truck : trucks) truck.truckBaseInfo();
+		int counter = 1;
+		for (TruckController truck : trucks){
+			dashboardPanel.add(new JLabel("Type: " + truck.getType() + " || Location: " + truck.getLocation()));
+		}
 
-        /* Prints aggregate amount of ingredients all trucks have. 
-         * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee */
-        System.out.println();
-        System.out.println();
-        System.out.println("Total amount of ingredients in all trucks:");
+		dashboardPanel.add(new JLabel("Total amount of ingredients in all trucks"));
 
-        System.out.printf("\tSmall Cups: %.0f pcs", totalIngr[0]);
-        System.out.printf("\tMedium Cups: %.0f pcs", totalIngr[1]);
-        System.out.printf("\tLarge Cups: %.0f pcs", totalIngr[2]);
-        System.out.printf("\tCoffee: %.2f grams", totalIngr[3]);
-        System.out.printf("\tWater: %.2f fl", totalIngr[4]);
-        System.out.printf("\tMilk: %.2f fl\n", totalIngr[5]);
-
-        System.out.println();
-
-        /* Aggregate total. */
-        System.out.printf("\nTotal amount of earnings: %.2f", combinedSales);
-        System.out.println();
+		dashboardPanel.add(new JLabel(String.format("Small Cups: %.0f pcs", totalIngr[0])));
+		dashboardPanel.add(new JLabel(String.format("Medium Cups: %.0f pcs", totalIngr[1])));
+		dashboardPanel.add(new JLabel(String.format("Large Cups: %.0f pcs", totalIngr[2])));
+		dashboardPanel.add(new JLabel(String.format("Coffee: %.2f grams", totalIngr[3])));
+		dashboardPanel.add(new JLabel(String.format("Water: %.2f fl", totalIngr[4])));
+		dashboardPanel.add(new JLabel(String.format("Milk: %.2f fl\n", totalIngr[5])));
 
 
-        /* Amount of orders for specific types of drinks as well as sizes.
-         * 0 = small, 1 = medium, 2 = large, 3 = cafe americano, 4 = latte, 5 = cappucino */
-        System.out.printf("Total amount of sales: %f\n", combinedSales);
-        System.out.println("\nOrder types:");
+		dashboardPanel.add(new JLabel("Total amount of earnings: " + combinedSales));
 
-        System.out.printf("\tCafe Americano: %d", transacType[3]);
-        System.out.printf("\tLatte: %d", transacType[4]);
-        System.out.printf("\tCappucino: %d", transacType[5]);
+		dashboardPanel.add(new JLabel("Order types:"));
+		dashboardPanel.add(new JLabel(String.format("Cafe Americano: %d", transacType[3])));
+		dashboardPanel.add(new JLabel(String.format("Latte: %d", transacType[4])));
+		dashboardPanel.add(new JLabel(String.format("Cappucino: %d", transacType[5])));
 
-        System.out.println();
-        System.out.println("Order sizes:");
+		dashboardPanel.add(new JLabel("Order sizes:"));
 
-        System.out.printf("\tSmall: %d", transacType[0]);
-        System.out.printf("\tMedium: %d", transacType[1]);
-        System.out.printf("\tLarge: %d", transacType[2]);
+		dashboardPanel.add(new JLabel(String.format("Small: %d", transacType[0])));
+		dashboardPanel.add(new JLabel(String.format("Medium: %d", transacType[1])));
+		dashboardPanel.add(new JLabel(String.format("Large: %d", transacType[2])));
 
-        System.out.println();
+	    JButton closeButton = new JButton("Close");
+	    closeButton.addActionListener(e -> {
+	        if (onDone != null) onDone.run();
+	    });
+
+	    dashboardPanel.add(closeButton);
+	
+	    cardPanel.add(dashboardPanel, "dashboardPanel");
+	    cardLayout.show(cardPanel, "dashboardPanel");
     }
 
     /**
