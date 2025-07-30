@@ -27,6 +27,9 @@ public class TruckView {
 	/** Panel for replenishing the bins */
 	private JPanel replenishPanel;
 
+	/** Panel for printing truck's full info */
+	private JPanel fullTrackInfoPanel;
+
 	/**
 	 * Constructor for truckview, setting the appview
 	 */
@@ -146,10 +149,9 @@ public class TruckView {
 			"Coffee Beans - 1008grams",
 			"Milk - 640fl",
 			"Water - 640fl",
-			"Syrups - 500fl"
 		};
 
-		String[] keys = {"Small Cup", "Medium Cup", "Large Cup", "Coffee", "Milk", "Water", "Syrup"};
+		String[] keys = {"Small Cup", "Medium Cup", "Large Cup", "Coffee", "Milk", "Water"};
 
 		for (int i = 0; i < ingredients.length; i++) {
 			JPanel row = new JPanel();
@@ -170,58 +172,68 @@ public class TruckView {
 			changeBinContentsPanel.add(row);
 			changeBinContentsPanel.add(Box.createVerticalStrut(5));
 
-			appView.addPanel(changeBinContentsPanel, "setBin");
+			
 		}
 
+		appView.addPanel(changeBinContentsPanel, "setBin");
 		appView.showPanel("setBin");
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
 	/**
-	 * Prints the base info (location, type) of a truck.
-	 * @param type The type of the truck to be printed
-	 * @param location The location of the truck to be printed
+	 * Prints the max quantity of each ingredient. 
+	 * @param submitListener actionlistener for submit button
 	 */
-	public void printTruckBaseInfo(char type, String location){
-		System.out.printf("Type: %c || Location: %s\n", type, location);
+	public void showSetSyrupBin(ActionListener submitListener) {
+	    JPanel syrupPanel = new JPanel();
+	    syrupPanel.setLayout(new BoxLayout(syrupPanel, BoxLayout.Y_AXIS));
+	    syrupPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+
+	    JLabel labelField1 = new JLabel("Enter syrup name");
+	    JTextField inputField1 = new JTextField(15);
+
+	    JLabel labelField2 = new JLabel("Enter syrup amount (up to 500fl)");
+	    JTextField inputField2 = new JTextField(15);
+
+	    JButton submitButton = new JButton("Submit");
+
+	    submitButton.putClientProperty("input1", inputField1);
+	    submitButton.putClientProperty("input2", inputField2);
+
+	    submitButton.addActionListener(submitListener);
+
+	    syrupPanel.add(labelField1);
+	    syrupPanel.add(inputField1);
+	    syrupPanel.add(Box.createVerticalStrut(10));
+
+	    syrupPanel.add(labelField2);
+	    syrupPanel.add(inputField2);
+	    syrupPanel.add(Box.createVerticalStrut(15));
+
+	    syrupPanel.add(submitButton);
+
+		appView.addPanel(syrupPanel, "setSyrupBin");
+		appView.showPanel("setSyrupBin");
 	}
 
-	/**
-	 * Prints the bin info of a truck
-	 * @param truck The truck whos bin info is gonna be printed.
-	 */
-	public void printTruckBinInfo(ArrayList<StorageBin> bins){
-		int counter = 1;
-		System.out.println("Storage bins contain...");
 
-		for (StorageBin bin : bins) {
-			System.out.printf("Storage bin #%d - ", (counter));
-			bin.getBinInfo();
-			System.out.println();
-			counter++;
 
-			
-		}
-	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	/**
 	 * Shows the screen when the user is replenishing the contents of the bin
@@ -267,28 +279,30 @@ public class TruckView {
 	public void printTruckFullInfo(char type, String location, ArrayList<StorageBin> bins,
 		ArrayList<TransactionController> transacs, ArrayList<String> menu){
 		
-		printTruckBaseInfo(type, location);
-		printTruckBinInfo(bins);
+		JPanel fullTrackInfoPanel = new JPanel();
+		fullTrackInfoPanel.setLayout(new BoxLayout(fullTrackInfoPanel, BoxLayout.Y_AXIS));
+		fullTrackInfoPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-		System.out.println("\nMenu: ");
-		printMenu(menu);
-		
-		System.out.println("\nTransactions: ");
+		fullTrackInfoPanel.add(new JLabel("Type: " + type + " || Location: " + location));
+		fullTrackInfoPanel.add(new JLabel("Storage bin contents:"));
+		int counter = 1;
+
+		for(StorageBin bin : bins){
+			fullTrackInfoPanel.add(new JLabel("   Bin " + counter + " - " + bin.getBinInfo()));
+			counter++;
+		}
+
+		fullTrackInfoPanel.add(new JLabel("Menu:"));
+		for (String drink : menu){
+			fullTrackInfoPanel.add(new JLabel("   " + drink));
+		}
+
+		fullTrackInfoPanel.add(new JLabel("Transactions: "));
 		for (TransactionController transaction : transacs){
-			transaction.printTransaction();
+			fullTrackInfoPanel.add(new JLabel("   " + transaction.getSummary()));
 		}
-	}
-
-	/**
-	 * Prints the contents of the menu
-	 * @param menu The menu to be printed
-	 */
-	public void printMenu(ArrayList<String> menu) {
-		System.out.println("AVAILABLE ITEMS:");
-
-		for (String item : menu) {
-			System.out.println(item);
-		}
-		System.out.println();
+	
+		appView.addPanel(fullTrackInfoPanel, "truckInfoPanel");
+		appView.showPanel("truckInfoPanel");
 	}
 }

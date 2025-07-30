@@ -37,6 +37,14 @@ public class StorageBin{
 	}
 
 	/**
+	 * Returns whether or not the bin is for syrups.
+	 * @return True if hte bin is for syrups
+	 */
+	public boolean getIfSyrup(){
+		return forSyrups;
+	}
+
+	/**
  	 * This completely changes, or sets (if it is empty) a storage bin's contents with a new item.
    	 * @param type The type of item the storage bin will hold.
  	 * @param amt The amount of the item the storage bin will hold.
@@ -44,17 +52,16 @@ public class StorageBin{
 	 */
 	public boolean setBin(String type, float amt){
 		boolean validAmt = true;
-		type = type.toLowerCase();
 
 		if (amt < 0) return false;
 
-		else if (!forSyrups && type.equals("water") && amt <= 640f) contents = new Water(amt);
-		else if (!forSyrups && type.equals("milk") && amt <= 640f) contents = new Milk(amt);
-		else if (!forSyrups && type.equals("coffee") && amt <= 1008f) contents = new Coffee(amt);
-		else if (!forSyrups && type.equals("scup") && amt <= 80f) contents = new SmallCup(amt);
-		else if (!forSyrups && type.equals("mcup") && amt <= 64f) contents = new MediumCup(amt);
-		else if (!forSyrups && type.equals("lcup") && amt <= 40f) contents = new LargeCup(amt);
         else if (forSyrups && amt <= 500f) contents = new ExtraIngr(type, amt);
+		else if (!forSyrups && type.equals("Water") && amt <= 640f) contents = new Water(amt);
+		else if (!forSyrups && type.equals("Milk") && amt <= 640f) contents = new Milk(amt);
+		else if (!forSyrups && type.equals("Coffee") && amt <= 1008f) contents = new Coffee(amt);
+		else if (!forSyrups && type.equals("Small Cup") && amt <= 80f) contents = new SmallCup(amt);
+		else if (!forSyrups && type.equals("Medium Cup") && amt <= 64f) contents = new MediumCup(amt);
+		else if (!forSyrups && type.equals("Large Cup") && amt <= 40f) contents = new LargeCup(amt);
 
         else return false;
 

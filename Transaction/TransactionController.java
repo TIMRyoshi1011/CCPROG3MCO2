@@ -80,8 +80,8 @@ public class TransactionController{
 	/**
  	 * Prints all transaction info.
    	 */
-	public void printTransaction(){
-		view.printTransaction(model.getDrinkType(), model.getDrinkSize(), model.getPrice());
+	public String getSummary(){
+		return String.format("%s - %c", getDrinkType(), getDrinkSize());
 	}
 
 	/**

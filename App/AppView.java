@@ -258,7 +258,7 @@ public class AppView extends JFrame {
         System.out.println("Choose a truck!"); 
         for (TruckController truck : trucks){
             System.out.printf("#%d || ", count);
-            truck.truckBaseInfo();
+            //truck.truckBaseInfo();
             count++;
         }
         System.out.println("Enter \"END\" to exit.");
@@ -292,7 +292,7 @@ public class AppView extends JFrame {
         System.out.println("ALL TRUCKS:");
 
         /* Prints all trucks' base info */
-        for (TruckController truck : trucks) truck.truckBaseInfo();
+        //for (TruckController truck : trucks) truck.truckBaseInfo();
 
         /* Prints aggregate amount of ingredients all trucks have. 
          * 0 = scup, 1 = mcup, 2 = lcup, 3 = milk, 4 = water, 5 = coffee */

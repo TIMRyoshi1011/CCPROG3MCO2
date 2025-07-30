@@ -67,7 +67,7 @@ public class AppController {
             setTruckLocation(tempTruck, () -> {
                 tempTruck.setBins(() -> {
                     editPrices(() -> {
-                        view.setOutput("Truck creation complete!");
+                        tempTruck.truckInfo();
                     });
                 });
             });
@@ -78,7 +78,7 @@ public class AppController {
             setTruckLocation(tempTruck, () -> {
                 tempTruck.setBins(() -> {
                     editPrices(() -> {
-                        view.setOutput("Truck creation complete!");
+                        tempTruck.truckInfo();
                     });
                 });
             });
@@ -122,7 +122,7 @@ public class AppController {
                         break;
                     case 2:
                         // print info
-                        model.getTruck(truckIndx).truckFullInfo();
+                        //model.getTruck(truckIndx).truckFullInfo();
                         scan.nextLine();
                         break;
                     case 3:
@@ -167,7 +167,7 @@ public class AppController {
                     truckIndx = model.toInt(choice);
 
                     if (truckIndx >= 0 && truckIndx < model.getNumTrucks()){
-                        model.getTruck(truckIndx).truckFullInfo(); scan.nextLine();
+                        //model.getTruck(truckIndx).truckFullInfo(); scan.nextLine();
                     }
                     else view.printFeedback("Truck index is not valid.");
                     
@@ -240,7 +240,7 @@ public class AppController {
                 }
 
                 if (success) {
-                    view.setOutput("Price updated for " + thisIngredient); // Changed from showMessage
+                    view.setOutput("Price updated for " + thisIngredient);
                 } else {
                     view.setOutput("Failed to update price.");
                 }
@@ -250,8 +250,8 @@ public class AppController {
         }
 
         view.showEditPricesPanel(prices, actions, e -> {
-            view.setOutput("All prices updated."); // Changed from showMessage
-            onDone.run(); // Call the provided callback
+            view.setOutput("All prices updated."); 
+            onDone.run();
         });
     }
 

@@ -140,33 +140,56 @@ public class TruckController {
 	 * @param onExit runnable to let it go back to the editStorageBin it was called from
 	 */
 	public void setStorageBin(StorageBin bin, Runnable onExit){
-		ArrayList<ActionListener> listeners = new ArrayList<>();
+		if (!bin.getIfSyrup()){
+			ArrayList<ActionListener> listeners = new ArrayList<>();
 
-		String[] types = {"scup", "mcup", "lcup", "coffee", "milk", "water", "syrup"};
-		for (String type : types) {
-			listeners.add(e -> {
-				JButton source = (JButton) e.getSource();
-				JTextField inputField = (JTextField) source.getClientProperty("inputField");
-				String input = inputField.getText().trim();
-				float amount = AppModel.toFloat(input);
+			String[] types = {"Small Cup", "Medium Cup", "Large Cup", "Coffee", "Milk", "Water"};
+			for (String type : types) {
+				listeners.add(e -> {
+					JButton source = (JButton) e.getSource();
+					JTextField inputField = (JTextField) source.getClientProperty("inputField");
+					String input = inputField.getText().trim();
+					System.out.println(input);
+					float amount = AppModel.toFloat(input);
 
-				if (amount <= 0) {
-					appView.setOutput("Please enter a valid positive amount.");
-					return;
-				}
+					if (amount <= 0) {
+						appView.setOutput("Please enter a valid positive amount.");
+						return;
+					}
 
-				boolean success = model.setBin(bin, type, amount);
-				if (!success) {
-					appView.setOutput("Please check input: bin may exceed max capacity.");
-				} else {
-					appView.setOutput("Success! Bin set to " + type + " with " + amount + " units.");
-					onExit.run();
-				}
-			});
+					boolean success = model.setBin(bin, type, amount);
+					if (!success) {
+						appView.setOutput("Please check input: bin may exceed max capacity.");
+					} else {
+						appView.setOutput("Success! Bin set to " + type + " with " + amount);
+						onExit.run();
+					}
+				});
+			}
+
+			view.showSetStorageBin(listeners);
 		}
 
-		view.showSetStorageBin(listeners);
+		else{
+		    view.showSetSyrupBin(e -> {
+		        JButton submit = (JButton) e.getSource();
+		        JTextField field1 = (JTextField) submit.getClientProperty("input1");
+		        JTextField field2 = (JTextField) submit.getClientProperty("input2");
+
+		        String type = field1.getText().trim();
+		        String amount = field2.getText().trim();
+		        float fAmount = AppModel.toFloat(amount);
+
+		        if (!model.setBin(bin, type, fAmount)) {
+		            appView.setOutput("Invalid input format.");
+		        } else {
+		            appView.setOutput("Success! Bin set to " + type + " with " + amount);
+		            onExit.run();
+		        }
+		    });
+		}
 	}
+
 
 	/**
 	 * Replenishes a storage bin's contents
@@ -217,40 +240,12 @@ public class TruckController {
 
 
 
-
-
-
-	/**
-	 * Prints the base info (location, type) of a truck.
-	 * @param truck The truck whos info is gonna be printed.
-	 */
-	public void truckBaseInfo(){
-		view.printTruckBaseInfo(model.getType(), model.getLocation());
-	}
-
-	/**
-	 * Prints the bin info of a truck
-	 * @param truck The truck whos bin info is gonna be printed.
-	 */
-	public void truckBinInfo(){
-		view.printTruckBinInfo(model.getBins());
-	}
-
 	/**
 	 * Prints the full info of a truck. Transaction, type, location, menu, and bins
 	 * @param truck The truck whos information is gonna be printed
 	 */
-	public void truckFullInfo(){
-		view.printTruckBaseInfo(model.getType(), model.getLocation());
-		view.printTruckBinInfo(model.getBins());
-
-		System.out.println("\nMenu: ");
-		view.printMenu(model.returnMenu());
-		
-		System.out.println("\nTransactions: ");
-		for (TransactionController transaction : model.getTransactions()){
-			transaction.printTransaction();
-		}
+	public void truckInfo(){
+		view.printTruckFullInfo(model.getType(), model.getLocation(), model.getBins(), model.getTransactions(), model.returnMenu());
 	}
 
 	/**
@@ -280,7 +275,7 @@ public class TruckController {
 			}
 
 			else{
-				view.printMenu(menu);
+				//view.printMenu(menu);
 
 				view.printFeedback("Would you like to make an order? (y/n)");
 				choice = scan.nextLine().trim();
@@ -373,7 +368,7 @@ public class TruckController {
 							model.processTransaction(newT);
 
 							newT.printBrew();
-							newT.printTransaction();
+							//newT.printTransaction();
 						}
 					}
 				}
